@@ -86,8 +86,8 @@ export const Home = () => {
               </Link>
             </div>
 
-            <Link to="/" className="nav-item text-xl font-display font-bold text-foreground">
-              Your Name
+            <Link to="/" className="nav-item text-xl font-bold text-foreground font-serif text-center">
+              ​Portfolio 
             </Link>
 
             <div className="flex items-center gap-8">
