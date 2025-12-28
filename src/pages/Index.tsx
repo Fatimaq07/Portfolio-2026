@@ -1,13 +1,43 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useLenis } from '@/hooks/useLenis';
+import { Navbar } from '@/components/Navbar';
+import { HeroSection } from '@/components/HeroSection';
+import { AboutSection } from '@/components/AboutSection';
+import { SkillsSection } from '@/components/SkillsSection';
+import { ProjectsSection } from '@/components/ProjectsSection';
+import { ResumeSection } from '@/components/ResumeSection';
+import { ServicesSection } from '@/components/ServicesSection';
+import { ExperienceSection } from '@/components/ExperienceSection';
+import { ContactSection } from '@/components/ContactSection';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Index = () => {
+  useLenis();
+
+  useEffect(() => {
+    // Refresh ScrollTrigger after page load
+    ScrollTrigger.refresh();
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <main className="relative bg-background overflow-x-hidden">
+      <Navbar />
+      <HeroSection />
+      <AboutSection />
+      <SkillsSection />
+      <ProjectsSection />
+      <ResumeSection />
+      <ServicesSection />
+      <ExperienceSection />
+      <ContactSection />
+    </main>
   );
 };
 
