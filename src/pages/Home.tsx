@@ -3,67 +3,73 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import heroBg from '@/assets/hero-bg.jpg';
 import { ArrowUpRight } from 'lucide-react';
-
 export const Home = () => {
   const containerRef = useRef<HTMLElement>(null);
   const contactButtonRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+      const tl = gsap.timeline({
+        defaults: {
+          ease: 'power4.out'
+        }
+      });
 
       // Navbar animation
-      tl.fromTo(
-        '.nav-item',
-        { y: -30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, stagger: 0.1 },
-        0.3
-      );
+      tl.fromTo('.nav-item', {
+        y: -30,
+        opacity: 0
+      }, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.1
+      }, 0.3);
 
       // Hero text animations
-      tl.fromTo(
-        '.hero-intro',
-        { y: 60, opacity: 0, clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)' },
-        { y: 0, opacity: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)', duration: 1 },
-        0.5
-      );
-
-      tl.fromTo(
-        '.hero-name',
-        { y: 100, opacity: 0, clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)' },
-        { y: 0, opacity: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)', duration: 1.2 },
-        0.7
-      );
-
-      tl.fromTo(
-        '.hero-tagline',
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8 },
-        1.2
-      );
+      tl.fromTo('.hero-intro', {
+        y: 60,
+        opacity: 0,
+        clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)'
+      }, {
+        y: 0,
+        opacity: 1,
+        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+        duration: 1
+      }, 0.5);
+      tl.fromTo('.hero-name', {
+        y: 100,
+        opacity: 0,
+        clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)'
+      }, {
+        y: 0,
+        opacity: 1,
+        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+        duration: 1.2
+      }, 0.7);
+      tl.fromTo('.hero-tagline', {
+        y: 30,
+        opacity: 0
+      }, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8
+      }, 1.2);
 
       // Contact button rotation
       gsap.to('.contact-text', {
         rotation: 360,
         duration: 20,
         repeat: -1,
-        ease: 'none',
+        ease: 'none'
       });
     }, containerRef);
-
     return () => ctx.revert();
   }, []);
-
-  return (
-    <section
-      ref={containerRef}
-      className="relative min-h-screen overflow-hidden"
-    >
+  return <section ref={containerRef} className="relative min-h-screen overflow-hidden">
       {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroBg})` }}
-      >
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
+      backgroundImage: `url(${heroBg})`
+    }}>
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
       </div>
 
@@ -72,38 +78,23 @@ export const Home = () => {
         <div className="container mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-8">
-              <Link 
-                to="/about" 
-                className="nav-item text-sm font-medium text-foreground/90 hover:text-primary transition-colors"
-              >
+              <Link to="/about" className="nav-item text-sm font-medium text-foreground/90 hover:text-primary transition-colors">
                 About
               </Link>
-              <Link 
-                to="/projects" 
-                className="nav-item text-sm font-medium text-foreground/90 hover:text-primary transition-colors"
-              >
+              <Link to="/projects" className="nav-item text-sm font-medium text-foreground/90 hover:text-primary transition-colors">
                 Works
               </Link>
             </div>
 
-            <Link 
-              to="/" 
-              className="nav-item text-xl font-display font-bold text-foreground"
-            >
+            <Link to="/" className="nav-item text-xl font-display font-bold text-foreground">
               Your Name
             </Link>
 
             <div className="flex items-center gap-8">
-              <Link 
-                to="/skills" 
-                className="nav-item text-sm font-medium text-foreground/90 hover:text-primary transition-colors"
-              >
+              <Link to="/skills" className="nav-item text-sm font-medium text-foreground/90 hover:text-primary transition-colors">
                 Skills
               </Link>
-              <Link 
-                to="/experience" 
-                className="nav-item text-sm font-medium text-foreground/90 hover:text-primary transition-colors"
-              >
+              <Link to="/experience" className="nav-item text-sm font-medium text-foreground/90 hover:text-primary transition-colors">
                 Experience
               </Link>
             </div>
@@ -121,8 +112,7 @@ export const Home = () => {
               </p>
             </div>
             <div className="overflow-hidden">
-              <h1 className="hero-name text-6xl md:text-8xl lg:text-[10rem] font-display font-bold text-foreground leading-none tracking-tight">
-                YOUR NAME<span className="text-primary">.</span>
+              <h1 className="hero-name text-6xl md:text-8xl lg:text-[10rem] font-bold text-foreground leading-none tracking-tight font-serif">Fatima Qureshi.<span className="text-primary">.</span>
               </h1>
             </div>
             <p className="hero-tagline mt-6 text-lg md:text-xl text-foreground/80 max-w-xl">
@@ -132,23 +122,11 @@ export const Home = () => {
         </div>
 
         {/* Floating Contact Button */}
-        <div
-          ref={contactButtonRef}
-          className="absolute right-8 lg:right-16 bottom-32 lg:bottom-40"
-        >
-          <Link
-            to="/contact"
-            className="relative w-24 h-24 md:w-32 md:h-32 flex items-center justify-center group"
-          >
-            <svg
-              className="contact-text absolute w-full h-full"
-              viewBox="0 0 100 100"
-            >
+        <div ref={contactButtonRef} className="absolute right-8 lg:right-16 bottom-32 lg:bottom-40">
+          <Link to="/contact" className="relative w-24 h-24 md:w-32 md:h-32 flex items-center justify-center group">
+            <svg viewBox="0 0 100 100" className="contact-text absolute w-full h-full rounded-none">
               <defs>
-                <path
-                  id="circlePath"
-                  d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
-                />
+                <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
               </defs>
               <text className="text-[10px] md:text-[11px] fill-foreground uppercase tracking-[0.3em]">
                 <textPath href="#circlePath">
@@ -162,8 +140,6 @@ export const Home = () => {
           </Link>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Home;
