@@ -2,194 +2,183 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, ExternalLink } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface Project {
   id: number;
   title: string;
-  description: string;
   image: string;
   url: string;
-  tech: string[];
 }
 
 const projects: Project[] = [
   {
     id: 1,
-    title: 'NutriGen Healthcare',
-    description: 'A comprehensive healthcare platform for nutrition tracking and personalized diet plans.',
-    image: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=800&q=80',
-    url: 'https://nutrigen-healthcare.netlify.app/',
-    tech: ['React', 'Tailwind', 'Node.js'],
+    title: 'WHITE WATERFALL',
+    image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=600&q=80',
+    url: '#',
   },
   {
     id: 2,
-    title: 'AI Voice Assistant',
-    description: 'Intelligent voice-powered AI agent for customer support and automation.',
-    image: 'https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&q=80',
+    title: 'BLUE OCEAN',
+    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80',
     url: '#',
-    tech: ['Python', 'OpenAI', 'FastAPI'],
   },
   {
     id: 3,
-    title: 'Productivity Dashboard',
-    description: 'Real-time analytics and task management for modern teams.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
+    title: 'GREEN MEADOWS',
+    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80',
     url: '#',
-    tech: ['React', 'D3.js', 'PostgreSQL'],
   },
   {
     id: 4,
-    title: 'E-Commerce Platform',
-    description: 'Full-stack e-commerce solution with payment integration and inventory management.',
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80',
+    title: 'NUTRIGEN',
+    image: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=600&q=80',
+    url: 'https://nutrigen-healthcare.netlify.app/',
+  },
+  {
+    id: 5,
+    title: 'BLUE DEEP',
+    image: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=600&q=80',
     url: '#',
-    tech: ['Next.js', 'Stripe', 'MongoDB'],
+  },
+  {
+    id: 6,
+    title: 'ORANGE SUNSET',
+    image: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=600&q=80',
+    url: '#',
+  },
+  {
+    id: 7,
+    title: 'VIOLET DAWN',
+    image: 'https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=600&q=80',
+    url: '#',
   },
 ];
 
-const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
+const ProjectCard = ({ project, index, total }: { project: Project; index: number; total: number }) => {
   const [isHovered, setIsHovered] = useState(false);
+  
+  // Calculate position in the arc
+  const centerIndex = (total - 1) / 2;
+  const offset = index - centerIndex;
+  const rotateY = offset * 15; // Rotation angle for arc effect
+  const translateZ = Math.abs(offset) * -50; // Push outer cards back
+  const scale = 1 - Math.abs(offset) * 0.05; // Slightly smaller for outer cards
 
   return (
     <motion.a
       href={project.url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`project-card block relative cursor-pointer ${index % 2 === 0 ? 'from-left' : 'from-right'}`}
+      className="project-card relative flex-shrink-0 cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+      style={{
+        transformStyle: 'preserve-3d',
+        perspective: '1000px',
+      }}
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8, delay: index * 0.1 }}
     >
-      <div className="relative group perspective-1000">
-        {/* Main Card */}
+      <motion.div
+        className="relative"
+        style={{
+          transformStyle: 'preserve-3d',
+        }}
+        animate={{
+          rotateY: isHovered ? 0 : rotateY,
+          translateZ: isHovered ? 100 : translateZ,
+          scale: isHovered ? 1.15 : scale,
+        }}
+        transition={{ 
+          type: 'spring', 
+          stiffness: 200, 
+          damping: 25,
+        }}
+      >
+        {/* Title above card */}
         <motion.div
-          className="relative overflow-hidden rounded-2xl bg-card border border-border/30"
+          className="absolute -top-8 left-0 right-0 text-center z-10"
           animate={{
-            scale: isHovered ? 1.05 : 1,
-            y: isHovered ? -20 : 0,
-            rotateX: isHovered ? 5 : 0,
-            z: isHovered ? 50 : 0,
+            opacity: isHovered ? 1 : 0.7,
+            y: isHovered ? -5 : 0,
           }}
-          transition={{ 
-            type: 'spring', 
-            stiffness: 300, 
-            damping: 20,
-            duration: 0.4 
-          }}
-          style={{ transformStyle: 'preserve-3d' }}
         >
-          {/* Project Image */}
-          <div className="aspect-[16/10] overflow-hidden">
-            <motion.img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-full object-cover"
-              animate={{
-                scale: isHovered ? 1.1 : 1,
-              }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
-            />
-            
-            {/* Overlay on hover */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"
-              initial={{ opacity: 0.6 }}
-              animate={{ opacity: isHovered ? 0.9 : 0.6 }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
-
-          {/* Content */}
-          <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
-            <div className="flex items-center gap-2 mb-3">
-              {project.tech.map((t) => (
-                <span
-                  key={t}
-                  className="px-2 py-1 bg-primary/20 backdrop-blur-sm rounded text-xs text-primary font-medium"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-            
-            <h3 className="text-xl lg:text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
-              {project.title}
-              <motion.span
-                animate={{ 
-                  x: isHovered ? 4 : 0,
-                  y: isHovered ? -4 : 0,
-                }}
-                transition={{ duration: 0.2 }}
-              >
-                <ExternalLink className="w-5 h-5 text-primary" />
-              </motion.span>
-            </h3>
-            
-            <p className="text-sm text-muted-foreground line-clamp-2">
-              {project.description}
-            </p>
-
-            {/* View Project Button - appears on hover */}
-            <motion.div
-              className="mt-4 flex items-center gap-2 text-primary font-medium"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ 
-                opacity: isHovered ? 1 : 0,
-                y: isHovered ? 0 : 10,
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              <span>View Project</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </motion.div>
-          </div>
+          <span className="text-xs md:text-sm font-medium tracking-widest text-foreground/80 uppercase">
+            {project.title}
+          </span>
         </motion.div>
 
-        {/* Water Reflection Effect */}
-        <motion.div
-          className="absolute left-0 right-0 mt-2 overflow-hidden rounded-2xl pointer-events-none"
-          style={{
-            height: '40%',
-            transform: 'scaleY(-1)',
-            maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.3), transparent)',
-            WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.3), transparent)',
-          }}
-          animate={{
-            opacity: isHovered ? 0.4 : 0.2,
-            y: isHovered ? 10 : 0,
-          }}
-          transition={{ duration: 0.4 }}
-        >
-          <div className="relative overflow-hidden rounded-2xl blur-[2px]">
-            <div className="aspect-[16/10] overflow-hidden">
-              <img
-                src={project.image}
-                alt=""
-                className="w-full h-full object-cover opacity-60"
-              />
-            </div>
-          </div>
-          
-          {/* Water ripple effect */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent"
+        {/* Main Card */}
+        <div className="relative overflow-hidden rounded-lg w-32 h-48 md:w-40 md:h-56 lg:w-48 lg:h-72">
+          <motion.img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover"
             animate={{
-              backgroundPosition: isHovered ? ['0% 0%', '100% 100%'] : '0% 0%',
+              scale: isHovered ? 1.1 : 1,
             }}
-            transition={{
-              duration: 2,
-              repeat: isHovered ? Infinity : 0,
-              ease: 'linear',
+            transition={{ duration: 0.5 }}
+          />
+          
+          {/* Glow effect on hover */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              boxShadow: 'inset 0 0 30px rgba(0,0,0,0.5)',
+            }}
+            animate={{
+              boxShadow: isHovered 
+                ? 'inset 0 0 20px rgba(0,0,0,0.3), 0 0 60px rgba(56, 189, 248, 0.3)'
+                : 'inset 0 0 30px rgba(0,0,0,0.5)',
             }}
           />
-        </motion.div>
-      </div>
+        </div>
+
+        {/* Water Reflection */}
+        <div
+          className="absolute top-full left-0 right-0 overflow-hidden pointer-events-none"
+          style={{
+            height: '100%',
+            transform: 'scaleY(-1) translateY(0)',
+            maskImage: 'linear-gradient(to top, transparent 20%, rgba(0,0,0,0.4) 100%)',
+            WebkitMaskImage: 'linear-gradient(to top, transparent 20%, rgba(0,0,0,0.4) 100%)',
+          }}
+        >
+          <motion.div 
+            className="w-32 h-48 md:w-40 md:h-56 lg:w-48 lg:h-72 overflow-hidden rounded-lg"
+            animate={{
+              filter: isHovered ? 'blur(3px)' : 'blur(4px)',
+            }}
+          >
+            <img
+              src={project.image}
+              alt=""
+              className="w-full h-full object-cover opacity-40"
+            />
+          </motion.div>
+          
+          {/* Water ripple overlay */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(180deg, transparent 0%, rgba(0, 20, 40, 0.6) 50%, rgba(0, 30, 60, 0.8) 100%)',
+            }}
+            animate={{
+              opacity: [0.6, 0.8, 0.6],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+        </div>
+      </motion.div>
     </motion.a>
   );
 };
@@ -199,7 +188,6 @@ export const ProjectsSection = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Header animation
       gsap.fromTo('.projects-header', {
         y: 60,
         opacity: 0
@@ -214,59 +202,90 @@ export const ProjectsSection = () => {
           toggleActions: 'play none none reverse',
         }
       });
-
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} id="projects" className="relative py-32 lg:py-48 bg-background overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+    <section 
+      ref={sectionRef} 
+      id="projects" 
+      className="relative py-32 lg:py-48 overflow-hidden"
+      style={{
+        background: 'linear-gradient(180deg, hsl(var(--background)) 0%, hsl(210, 40%, 5%) 50%, hsl(210, 50%, 3%) 100%)',
+      }}
+    >
+      {/* Water floor gradient */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-1/2 pointer-events-none"
+        style={{
+          background: 'linear-gradient(180deg, transparent 0%, rgba(0, 30, 60, 0.3) 30%, rgba(0, 40, 80, 0.5) 60%, rgba(0, 50, 100, 0.4) 100%)',
+        }}
+      />
+      
+      {/* Ambient water reflections */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-1/3 pointer-events-none opacity-30"
+        style={{
+          background: 'radial-gradient(ellipse at center bottom, rgba(56, 189, 248, 0.2) 0%, transparent 70%)',
+        }}
+        animate={{
+          opacity: [0.2, 0.35, 0.2],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      />
 
       <div className="container mx-auto px-6 lg:px-12">
         {/* Header */}
-        <div className="projects-header mb-20 text-center">
+        <div className="projects-header mb-16 lg:mb-24 text-center">
           <span className="text-primary text-sm uppercase tracking-widest font-medium block mb-4">
             My Work
           </span>
           <h2 className="headline-lg">
             Featured Projects<span className="text-primary">.</span>
           </h2>
-          <p className="body-lg text-muted-foreground max-w-2xl mx-auto mt-6">
-            A selection of projects I've built, from healthcare platforms to AI-powered solutions.
-          </p>
         </div>
 
-        {/* Projects Grid with Water Reflection */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-20 lg:gap-x-12 lg:gap-y-28">
+        {/* Gallery - Curved Arc Layout */}
+        <div 
+          className="relative flex items-end justify-center gap-2 md:gap-4 lg:gap-6 pb-32"
+          style={{
+            perspective: '1200px',
+            transformStyle: 'preserve-3d',
+          }}
+        >
           {projects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
+            <ProjectCard 
+              key={project.id} 
+              project={project} 
+              index={index} 
+              total={projects.length}
+            />
           ))}
         </div>
 
-        {/* More Projects CTA */}
+        {/* Floating orb decoration */}
         <motion.div
-          className="text-center mt-24"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          <motion.a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium text-lg"
-            whileHover={{ scale: 1.05, gap: '16px' }}
-            whileTap={{ scale: 0.98 }}
-          >
-            View All Projects
-            <ArrowUpRight className="w-5 h-5" />
-          </motion.a>
-        </motion.div>
+          className="absolute bottom-20 left-1/4 w-8 h-8 rounded-full pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle, rgba(251, 191, 36, 0.8) 0%, rgba(251, 191, 36, 0.2) 70%, transparent 100%)',
+            boxShadow: '0 0 30px rgba(251, 191, 36, 0.5)',
+          }}
+          animate={{
+            y: [0, -15, 0],
+            opacity: [0.8, 1, 0.8],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
       </div>
     </section>
   );
