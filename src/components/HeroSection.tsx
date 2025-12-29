@@ -1,190 +1,153 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MagneticButton } from './MagneticButton';
-import { ChevronDown } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
+import heroBg from '@/assets/hero-bg.jpg';
+import { ArrowUpRight } from 'lucide-react';
 
 export const HeroSection = () => {
   const containerRef = useRef<HTMLElement>(null);
-  const headlineRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLDivElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-  const scrollIndicatorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Initial timeline for hero entrance
-      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+      const tl = gsap.timeline({
+        defaults: { ease: 'power4.out' }
+      });
 
-      // Headline reveal with clip-path
-      tl.fromTo(
-        '.hero-line',
-        {
-          y: 120,
-          opacity: 0,
-          clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)',
-        },
-        {
-          y: 0,
-          opacity: 1,
-          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-          duration: 1.2,
-          stagger: 0.15,
-        },
-        0.3
-      );
+      // Navbar animation
+      tl.fromTo('.nav-item', {
+        y: -30,
+        opacity: 0
+      }, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.1
+      }, 0.3);
 
-      // Subtitle lines
-      tl.fromTo(
-        '.subtitle-line',
-        {
-          y: 40,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.1,
-        },
-        '-=0.6'
-      );
+      // Hero text animations
+      tl.fromTo('.hero-intro', {
+        y: 60,
+        opacity: 0,
+        clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)'
+      }, {
+        y: 0,
+        opacity: 1,
+        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+        duration: 1
+      }, 0.5);
 
-      // CTA button
-      tl.fromTo(
-        ctaRef.current,
-        {
-          y: 30,
-          opacity: 0,
-          scale: 0.9,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          duration: 0.8,
-        },
-        '-=0.4'
-      );
-
-      // Scroll indicator
-      tl.fromTo(
-        scrollIndicatorRef.current,
-        {
-          y: 20,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.6,
-        },
-        '-=0.3'
-      );
-
-      // Parallax effect on scroll
-      gsap.to('.hero-content', {
+      tl.fromTo('.hero-name', {
         y: 100,
-        opacity: 0.3,
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1,
-        },
+        opacity: 0,
+        clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)'
+      }, {
+        y: 0,
+        opacity: 1,
+        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+        duration: 1.2
+      }, 0.7);
+
+      tl.fromTo('.hero-tagline', {
+        y: 30,
+        opacity: 0
+      }, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8
+      }, 1.2);
+
+      // Contact button rotation
+      gsap.to('.contact-text', {
+        rotation: 360,
+        duration: 20,
+        repeat: -1,
+        ease: 'none'
       });
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
-  const scrollToAbout = () => {
-    const aboutSection = document.getElementById('about');
-    aboutSection?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <section
-      ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background"
-    >
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-radial from-primary/5 via-transparent to-transparent opacity-50" />
-      
-      {/* Animated grid background */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(hsl(var(--muted-foreground) / 0.1) 1px, transparent 1px),
-                           linear-gradient(90deg, hsl(var(--muted-foreground) / 0.1) 1px, transparent 1px)`,
-          backgroundSize: '100px 100px'
-        }} />
+    <section ref={containerRef} id="hero" className="relative min-h-screen overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+        style={{ backgroundImage: `url(${heroBg})` }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
       </div>
 
-      <div className="hero-content container mx-auto px-6 lg:px-12 relative z-10">
-        <div className="max-w-6xl mx-auto">
-          {/* Role badges */}
-          <div className="flex flex-wrap gap-3 mb-8 overflow-hidden">
-            {['Full-Stack Developer', 'AI Agent Builder', 'Freelancer'].map((role, i) => (
-              <div
-                key={role}
-                className="subtitle-line px-4 py-2 rounded-full border border-primary/30 text-primary text-sm font-medium backdrop-blur-sm"
-                style={{ animationDelay: `${i * 0.1}s` }}
-              >
-                {role}
-              </div>
-            ))}
-          </div>
-
-          {/* Main headline */}
-          <h1 ref={headlineRef} className="headline-xl mb-8">
-            <div className="overflow-hidden">
-              <span className="hero-line block">Building</span>
+      {/* Navigation */}
+      <nav className="absolute top-0 left-0 right-0 z-50 py-6">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-8">
+              <button onClick={() => scrollToSection('about')} className="nav-item text-sm font-medium text-foreground/90 hover:text-primary transition-colors">
+                About
+              </button>
+              <button onClick={() => scrollToSection('projects')} className="nav-item text-sm font-medium text-foreground/90 hover:text-primary transition-colors">
+                Works
+              </button>
             </div>
-            <div className="overflow-hidden">
-              <span className="hero-line block text-gradient">Digital Products</span>
-            </div>
-            <div className="overflow-hidden">
-              <span className="hero-line block">That Matter</span>
-            </div>
-          </h1>
 
-          {/* Subtitle */}
-          <div ref={subtitleRef} className="max-w-2xl mb-12">
-            <p className="subtitle-line body-lg mb-2">
-              I craft intelligent systems and stunning interfaces
-            </p>
-            <p className="subtitle-line body-lg">
-              that transform ideas into impactful digital experiences.
-            </p>
-          </div>
+            <button onClick={() => scrollToSection('hero')} className="nav-item text-xl font-bold text-foreground font-serif text-center">
+              Portfolio
+            </button>
 
-          {/* CTA */}
-          <div ref={ctaRef} className="flex flex-wrap gap-4">
-            <MagneticButton onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
-              View My Work
-            </MagneticButton>
-            <MagneticButton 
-              className="bg-transparent border-2 border-foreground/20 text-foreground hover:border-primary hover:text-primary"
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              Get in Touch
-            </MagneticButton>
+            <div className="flex items-center gap-8">
+              <button onClick={() => scrollToSection('skills')} className="nav-item text-sm font-medium text-foreground/90 hover:text-primary transition-colors">
+                Skills
+              </button>
+              <button onClick={() => scrollToSection('experience')} className="nav-item text-sm font-medium text-foreground/90 hover:text-primary transition-colors">
+                Experience
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </nav>
 
-      {/* Scroll indicator */}
-      <div
-        ref={scrollIndicatorRef}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer group"
-        onClick={scrollToAbout}
-      >
-        <span className="text-xs uppercase tracking-widest text-muted-foreground group-hover:text-primary transition-colors">
-          Scroll
-        </span>
-        <ChevronDown className="w-5 h-5 text-muted-foreground animate-bounce group-hover:text-primary transition-colors" />
+      {/* Hero Content */}
+      <div className="relative z-10 min-h-screen flex flex-col justify-end pb-20 lg:pb-32">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="max-w-5xl">
+            <div className="overflow-hidden mb-2">
+              <p className="hero-intro text-lg md:text-xl text-foreground/90 font-medium">
+                __ Hello! I'm
+              </p>
+            </div>
+            <div className="overflow-hidden">
+              <h1 className="hero-name md:text-8xl lg:text-[10rem] font-bold text-foreground leading-none tracking-tight font-serif text-6xl">
+                Fatima Qureshi<span className="text-primary">.</span>
+              </h1>
+            </div>
+            <p className="hero-tagline mt-6 text-lg md:text-xl text-foreground/80 max-w-xl">
+              A Full-Stack Developer, AI Agent Builder & Freelancer.
+            </p>
+          </div>
+        </div>
+
+        {/* Floating Contact Button */}
+        <div className="absolute right-8 lg:right-16 bottom-32 lg:bottom-40">
+          <button onClick={() => scrollToSection('contact')} className="relative w-24 h-24 md:w-32 md:h-32 flex items-center justify-center group">
+            <svg viewBox="0 0 100 100" className="contact-text absolute w-full h-full rounded-none">
+              <defs>
+                <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
+              </defs>
+              <text className="text-[10px] md:text-[11px] fill-foreground uppercase tracking-[0.3em]">
+                <textPath href="#circlePath">
+                  CONTACT ME • CONTACT ME •
+                </textPath>
+              </text>
+            </svg>
+            <div className="w-12 h-12 md:w-16 md:h-16 rounded-full border border-foreground/30 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all duration-300">
+              <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6 text-foreground group-hover:text-primary-foreground transition-colors" />
+            </div>
+          </button>
+        </div>
       </div>
     </section>
   );

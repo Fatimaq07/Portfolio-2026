@@ -1,288 +1,235 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ExternalLink, Github } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowUpRight, Layers, BarChart3, Bell, Users, Shield, Zap } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  tech: string[];
-  category: 'ai' | 'frontend' | 'fullstack';
-  image?: string;
-}
-
-const projects: Record<string, Project[]> = {
-  ai: [
-    {
-      id: 'ai-1',
-      title: 'AI Voice Agent',
-      description: 'Intelligent voice assistant that handles customer calls, books appointments, and answers queries 24/7 with natural conversation flow.',
-      tech: ['Vapi', 'OpenAI', 'n8n', 'Twilio'],
-      category: 'ai',
-    },
-    {
-      id: 'ai-2',
-      title: 'Lead Automation Bot',
-      description: 'Multi-channel lead capture and qualification system that nurtures prospects through personalized AI-driven conversations.',
-      tech: ['LangChain', 'GPT-4', 'Make.com', 'HubSpot'],
-      category: 'ai',
-    },
-    {
-      id: 'ai-3',
-      title: 'AI Chatbot Platform',
-      description: 'Custom knowledge-base chatbot builder with RAG architecture, enabling businesses to deploy context-aware AI assistants.',
-      tech: ['Python', 'Pinecone', 'FastAPI', 'React'],
-      category: 'ai',
-    },
-    {
-      id: 'ai-4',
-      title: 'Smart Booking Agent',
-      description: 'Autonomous agent that manages scheduling, handles reschedules, and syncs across multiple calendar platforms.',
-      tech: ['OpenAI', 'Cal.com API', 'Node.js', 'PostgreSQL'],
-      category: 'ai',
-    },
-  ],
-  frontend: [
-    {
-      id: 'fe-1',
-      title: 'Motion Portfolio',
-      description: 'Cinematic personal portfolio with scroll-driven animations, GSAP-powered transitions, and immersive visual storytelling.',
-      tech: ['React', 'GSAP', 'Tailwind', 'Lenis'],
-      category: 'frontend',
-    },
-    {
-      id: 'fe-2',
-      title: 'SaaS Landing Page',
-      description: 'High-converting landing page with micro-interactions, animated statistics, and seamless user journey flow.',
-      tech: ['Next.js', 'Framer Motion', 'TypeScript'],
-      category: 'frontend',
-    },
-    {
-      id: 'fe-3',
-      title: 'Interactive Dashboard',
-      description: 'Data visualization dashboard with real-time updates, animated charts, and intuitive filtering systems.',
-      tech: ['React', 'D3.js', 'Tailwind', 'Recharts'],
-      category: 'frontend',
-    },
-  ],
-  fullstack: [
-    {
-      id: 'fs-1',
-      title: 'E-Commerce Platform',
-      description: 'Full-featured marketplace with payment processing, inventory management, and real-time order tracking.',
-      tech: ['MERN Stack', 'Stripe', 'Redux', 'Socket.io'],
-      category: 'fullstack',
-    },
-    {
-      id: 'fs-2',
-      title: 'Team Collaboration App',
-      description: 'Real-time workspace with file sharing, task management, and video conferencing integration.',
-      tech: ['Next.js', 'Firebase', 'WebRTC', 'Tailwind'],
-      category: 'fullstack',
-    },
-    {
-      id: 'fs-3',
-      title: 'Learning Management System',
-      description: 'Educational platform with course creation tools, progress tracking, and interactive assessments.',
-      tech: ['Node.js', 'MongoDB', 'React', 'AWS S3'],
-      category: 'fullstack',
-    },
-  ],
-};
-
-const categoryLabels = {
-  ai: '🤖 AI Agent Projects',
-  frontend: '🎨 Frontend Projects',
-  fullstack: '⚡ Full-Stack Projects',
-};
+const features = [
+  {
+    icon: BarChart3,
+    title: 'Analytics Dashboard',
+    description: 'Real-time metrics and insights with interactive charts and data visualization.',
+    tech: ['React', 'D3.js', 'WebSocket'],
+  },
+  {
+    icon: Bell,
+    title: 'Smart Notifications',
+    description: 'AI-powered notification system that learns user preferences and priorities.',
+    tech: ['Node.js', 'Redis', 'ML'],
+  },
+  {
+    icon: Users,
+    title: 'Team Collaboration',
+    description: 'Seamless real-time collaboration with presence indicators and live cursors.',
+    tech: ['Socket.io', 'CRDT', 'React'],
+  },
+  {
+    icon: Shield,
+    title: 'Advanced Security',
+    description: 'Enterprise-grade security with role-based access and audit logging.',
+    tech: ['OAuth2', 'JWT', 'AES-256'],
+  },
+  {
+    icon: Zap,
+    title: 'Workflow Automation',
+    description: 'Custom automation rules and integrations with 50+ third-party services.',
+    tech: ['n8n', 'Zapier', 'API'],
+  },
+  {
+    icon: Layers,
+    title: 'Plugin System',
+    description: 'Extensible architecture allowing custom plugins and white-label solutions.',
+    tech: ['SDK', 'TypeScript', 'CLI'],
+  },
+];
 
 export const ProjectsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const [activeCategory, setActiveCategory] = useState<'ai' | 'frontend' | 'fullstack'>('ai');
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Section header animation
-      gsap.fromTo(
-        '.projects-header',
-        { y: 60, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: 'power4.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 70%',
-            toggleActions: 'play none none reverse',
-          },
+      // Header animation
+      gsap.fromTo('.projects-header', {
+        y: 60,
+        opacity: 0
+      }, {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 70%',
+          toggleActions: 'play none none reverse',
         }
-      );
+      });
 
-      // Category tabs animation
-      gsap.fromTo(
-        '.category-tab',
-        { y: 30, opacity: 0 },
-        {
-          y: 0,
+      // Main product card
+      gsap.fromTo('.main-product', {
+        y: 80,
+        opacity: 0,
+        scale: 0.95
+      }, {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.main-product',
+          start: 'top 75%',
+          toggleActions: 'play none none reverse',
+        }
+      });
+
+      // Feature cards - alternating from left and right
+      document.querySelectorAll('.feature-card').forEach((card, i) => {
+        const direction = i % 2 === 0 ? -100 : 100;
+        
+        gsap.fromTo(card, {
+          x: direction,
+          opacity: 0,
+          rotateY: direction > 0 ? -15 : 15
+        }, {
+          x: 0,
           opacity: 1,
-          duration: 0.6,
-          stagger: 0.1,
+          rotateY: 0,
+          duration: 0.8,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: '.category-tabs',
+            trigger: card,
             start: 'top 80%',
             toggleActions: 'play none none reverse',
-          },
-        }
-      );
+          }
+        });
+      });
+
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  useEffect(() => {
-    // Reset active index when category changes
-    setActiveIndex(0);
-    
-    // Animate cards on category change
-    gsap.fromTo(
-      '.project-card',
-      { x: 100, opacity: 0 },
-      {
-        x: 0,
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: 'power3.out',
-      }
-    );
-  }, [activeCategory]);
-
-  const currentProjects = projects[activeCategory];
-
-  const handleCardClick = (index: number) => {
-    setActiveIndex(index);
-  };
-
   return (
-    <section
-      ref={sectionRef}
-      id="projects"
-      className="relative py-32 lg:py-48 bg-background overflow-hidden"
-    >
-      {/* Background accent */}
-      <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-radial from-primary/5 via-transparent to-transparent" />
+    <section ref={sectionRef} id="projects" className="relative py-32 lg:py-48 bg-background overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+      <div className="container mx-auto px-6 lg:px-12">
         {/* Header */}
-        <div className="projects-header mb-12">
+        <div className="projects-header mb-20">
           <span className="text-primary text-sm uppercase tracking-widest font-medium block mb-4">
             Featured Work
           </span>
-          <h2 className="headline-lg mb-6">
-            Projects That Define Me<span className="text-primary">.</span>
+          <h2 className="headline-lg max-w-3xl">
+            Crafting products that matter<span className="text-primary">.</span>
           </h2>
-          <p className="body-lg max-w-2xl">
-            From AI agents that automate businesses to stunning web experiences—here's a curated 
-            selection of my most impactful work.
-          </p>
         </div>
 
-        {/* Category tabs */}
-        <div className="category-tabs flex flex-wrap gap-4 mb-12">
-          {(Object.keys(categoryLabels) as Array<keyof typeof categoryLabels>).map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`category-tab px-6 py-3 rounded-full font-display font-medium transition-all duration-300 ${
-                activeCategory === cat
-                  ? 'bg-primary text-primary-foreground shadow-[0_0_30px_hsl(var(--primary)/0.4)]'
-                  : 'bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground border border-border/50'
-              }`}
-            >
-              {categoryLabels[cat]}
-            </button>
-          ))}
-        </div>
-
-        {/* Projects slider */}
-        <div ref={sliderRef} className="relative">
-          <div className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide">
-            {currentProjects.map((project, index) => (
-              <div
-                key={project.id}
-                onClick={() => handleCardClick(index)}
-                className={`project-card flex-shrink-0 w-[350px] md:w-[400px] snap-center cursor-pointer
-                           glass-card p-8 transition-all duration-500 group
-                           ${activeIndex === index 
-                             ? 'scale-100 opacity-100 border-primary/50' 
-                             : 'scale-95 opacity-60 hover:opacity-80'}`}
-              >
-                {/* Project number */}
-                <span className="text-primary/30 text-6xl font-display font-bold absolute top-4 right-6">
-                  {String(index + 1).padStart(2, '0')}
+        {/* Main Product Showcase */}
+        <motion.div 
+          className="main-product glass-card p-8 lg:p-12 mb-16"
+          whileHover={{ scale: 1.01 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                  <Layers className="w-6 h-6 text-primary" />
+                </div>
+                <span className="text-sm font-medium text-primary uppercase tracking-wider">
+                  Flagship Product
                 </span>
+              </div>
+              
+              <h3 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+                Productivity Dashboard
+              </h3>
+              
+              <p className="body-lg mb-8">
+                A comprehensive productivity suite designed for modern teams. 
+                Combines task management, real-time collaboration, and AI-powered 
+                insights into one seamless experience.
+              </p>
 
-                {/* Content */}
-                <div className="relative z-10">
-                  <h3 className="text-2xl font-display font-semibold text-foreground mb-4 group-hover:text-primary transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
-                    {project.description}
-                  </p>
+              <div className="flex flex-wrap gap-3 mb-8">
+                {['React', 'Node.js', 'PostgreSQL', 'Redis', 'OpenAI'].map((tech) => (
+                  <span 
+                    key={tech}
+                    className="px-4 py-2 bg-muted/50 rounded-full text-sm text-foreground/80 border border-border/50"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
 
-                  {/* Tech stack */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full 
-                                 border border-primary/20 group-hover:border-primary/40 transition-colors"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+              <motion.a
+                href="#"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium"
+                whileHover={{ scale: 1.05, gap: '12px' }}
+                whileTap={{ scale: 0.98 }}
+              >
+                View Case Study
+                <ArrowUpRight className="w-5 h-5" />
+              </motion.a>
+            </div>
+
+            <div className="relative aspect-video rounded-2xl bg-gradient-to-br from-muted/50 to-muted/20 border border-border/30 overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <Layers className="w-16 h-16 text-primary/30 mx-auto mb-4" />
+                  <span className="text-muted-foreground text-sm">Product Preview</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Feature Modules */}
+        <div className="space-y-6">
+          <h4 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-8">
+            Core Modules
+          </h4>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {features.map((feature) => (
+              <motion.div
+                key={feature.title}
+                className="feature-card glass-card p-6 lg:p-8 perspective-1000"
+                whileHover={{ 
+                  y: -4,
+                  boxShadow: '0 20px 40px -20px hsl(var(--primary) / 0.2)'
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <feature.icon className="w-6 h-6 text-primary" />
                   </div>
-
-                  {/* Action buttons */}
-                  <div className="flex gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <button className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors">
-                      <ExternalLink className="w-4 h-4" />
-                      View Project
-                    </button>
-                    <button className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors">
-                      <Github className="w-4 h-4" />
-                      Source
-                    </button>
+                  
+                  <div className="flex-1">
+                    <h5 className="text-lg font-semibold text-foreground mb-2">
+                      {feature.title}
+                    </h5>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      {feature.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {feature.tech.map((t) => (
+                        <span 
+                          key={t}
+                          className="px-2 py-1 bg-muted/30 rounded text-xs text-muted-foreground"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-
-                {/* Hover overlay */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-primary/10 via-transparent to-transparent 
-                               opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              </div>
-            ))}
-          </div>
-
-          {/* Slider indicators */}
-          <div className="flex justify-center gap-2 mt-6">
-            {currentProjects.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => handleCardClick(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  activeIndex === index 
-                    ? 'w-8 bg-primary' 
-                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
-                }`}
-              />
+              </motion.div>
             ))}
           </div>
         </div>
