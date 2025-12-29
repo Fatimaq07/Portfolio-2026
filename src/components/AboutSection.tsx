@@ -1,131 +1,183 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { motion } from 'framer-motion';
+import { Activity, Cpu, Zap, Code2 } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const insights = [
+  { icon: Activity, label: 'System Status', value: 'Operational' },
+  { icon: Cpu, label: 'Current Focus', value: 'AI Agents' },
+  { icon: Zap, label: 'Response Time', value: '< 24hrs' },
+  { icon: Code2, label: 'Code Quality', value: '99.9%' },
+];
+
 export const AboutSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const textContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Line by line text reveal
-      gsap.fromTo(
-        '.about-line',
-        {
-          y: 80,
-          opacity: 0,
-          clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)',
-        },
-        {
-          y: 0,
-          opacity: 1,
-          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-          duration: 1,
-          stagger: 0.15,
-          ease: 'power4.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 60%',
-            toggleActions: 'play none none reverse',
-          },
+      // Line-by-line text reveal
+      gsap.fromTo('.about-line', {
+        y: 80,
+        opacity: 0,
+        clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)'
+      }, {
+        y: 0,
+        opacity: 1,
+        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+        duration: 1,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 60%',
+          toggleActions: 'play none none reverse',
         }
-      );
+      });
 
-      // Stats animation
-      gsap.fromTo(
-        '.stat-item',
-        {
-          y: 40,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: '.stats-container',
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
-          },
+      // Insight panel fade in
+      gsap.fromTo('.insight-panel', {
+        opacity: 0,
+        scale: 0.9,
+        y: 40
+      }, {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 50%',
+          toggleActions: 'play none none reverse',
         }
-      );
+      });
+
+      // Insight items stagger
+      gsap.fromTo('.insight-item', {
+        x: 30,
+        opacity: 0
+      }, {
+        x: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.insight-panel',
+          start: 'top 60%',
+          toggleActions: 'play none none reverse',
+        }
+      });
+
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  const stats = [
-    { number: '3+', label: 'Years Experience' },
-    { number: '50+', label: 'Projects Completed' },
-    { number: '20+', label: 'AI Agents Built' },
-    { number: '100%', label: 'Client Satisfaction' },
-  ];
-
   return (
-    <section
-      ref={sectionRef}
-      id="about"
-      className="relative py-32 lg:py-48 bg-background overflow-hidden"
-    >
-      {/* Decorative element */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-radial from-primary/3 via-transparent to-transparent opacity-50" />
+    <section ref={sectionRef} id="about" className="relative py-32 lg:py-48 bg-background overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/20 to-background pointer-events-none" />
+      
+      <div className="container mx-auto px-6 lg:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+          {/* Left: About Text */}
+          <div className="lg:col-span-7 space-y-8">
+            <div className="space-y-2">
+              <div className="overflow-hidden">
+                <span className="about-line block text-primary text-sm uppercase tracking-widest font-medium">
+                  About Me
+                </span>
+              </div>
+              <div className="overflow-hidden">
+                <h2 className="about-line headline-lg">
+                  Building digital products<span className="text-primary">.</span>
+                </h2>
+              </div>
+            </div>
 
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
-        <div className="max-w-5xl">
-          {/* Section label */}
-          <div className="overflow-hidden mb-8">
-            <span className="about-line block text-primary text-sm uppercase tracking-widest font-medium">
-              About Me
-            </span>
-          </div>
+            <div className="space-y-6">
+              <div className="overflow-hidden">
+                <p className="about-line body-lg">
+                  I'm a product-focused developer who believes great software should feel invisible. 
+                  My work sits at the intersection of design precision and engineering excellence.
+                </p>
+              </div>
+              
+              <div className="overflow-hidden">
+                <p className="about-line body-md">
+                  With expertise spanning modern frontend frameworks, AI integration, and full-stack 
+                  architecture, I transform complex requirements into elegant, user-centric solutions.
+                </p>
+              </div>
 
-          {/* Main text - story-driven copy */}
-          <div ref={textContainerRef} className="mb-20">
-            <div className="overflow-hidden">
-              <p className="about-line headline-lg text-foreground mb-6">
-                I don't just write code.
-              </p>
+              <div className="overflow-hidden">
+                <p className="about-line body-md">
+                  Currently focused on building AI-powered applications that augment human capabilities,
+                  from intelligent voice agents to automated workflow systems.
+                </p>
+              </div>
             </div>
-            <div className="overflow-hidden">
-              <p className="about-line headline-lg text-foreground mb-6">
-                I architect <span className="text-gradient">digital experiences</span>
-              </p>
-            </div>
-            <div className="overflow-hidden">
-              <p className="about-line headline-lg text-foreground mb-6">
-                that push boundaries.
-              </p>
-            </div>
-            <div className="overflow-hidden mt-8">
-              <p className="about-line body-lg max-w-3xl">
-                From building AI agents that automate complex workflows to crafting pixel-perfect 
-                interfaces that captivate users—I bring a unique blend of technical depth and 
-                creative vision to every project.
-              </p>
-            </div>
-            <div className="overflow-hidden mt-4">
-              <p className="about-line body-lg max-w-3xl">
-                My mission? To transform ambitious ideas into products that don't just work—they inspire.
-              </p>
-            </div>
-          </div>
 
-          {/* Stats */}
-          <div className="stats-container grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, i) => (
-              <div key={i} className="stat-item">
-                <div className="text-4xl lg:text-5xl font-display font-bold text-primary mb-2 glow-text">
-                  {stat.number}
+            {/* Stats */}
+            <div className="overflow-hidden pt-8">
+              <div className="about-line grid grid-cols-3 gap-8">
+                <div>
+                  <span className="text-4xl lg:text-5xl font-bold text-foreground">3+</span>
+                  <p className="text-sm text-muted-foreground mt-1">Years Experience</p>
                 </div>
-                <div className="text-muted-foreground text-sm uppercase tracking-wider">
-                  {stat.label}
+                <div>
+                  <span className="text-4xl lg:text-5xl font-bold text-foreground">50+</span>
+                  <p className="text-sm text-muted-foreground mt-1">Projects Delivered</p>
+                </div>
+                <div>
+                  <span className="text-4xl lg:text-5xl font-bold text-foreground">20+</span>
+                  <p className="text-sm text-muted-foreground mt-1">Happy Clients</p>
                 </div>
               </div>
-            ))}
+            </div>
+          </div>
+
+          {/* Right: Sticky Insight Panel */}
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-32">
+              <motion.div 
+                className="insight-panel glass-card p-8 space-y-6"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
+                  <span className="text-sm font-medium text-foreground">Developer Insight</span>
+                </div>
+
+                <div className="space-y-4">
+                  {insights.map((item) => (
+                    <motion.div 
+                      key={item.label}
+                      className="insight-item flex items-center justify-between p-4 rounded-xl bg-muted/30 border border-border/30"
+                      whileHover={{ x: 4, backgroundColor: 'hsl(var(--muted) / 0.5)' }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <div className="flex items-center gap-3">
+                        <item.icon className="w-5 h-5 text-primary" />
+                        <span className="text-sm text-muted-foreground">{item.label}</span>
+                      </div>
+                      <span className="text-sm font-medium text-foreground">{item.value}</span>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <div className="pt-4 border-t border-border/30">
+                  <p className="text-xs text-muted-foreground">
+                    Available for new projects • Based in Pakistan
+                  </p>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
