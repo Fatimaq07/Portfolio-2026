@@ -120,7 +120,7 @@ export const HeroSection = () => {
               </p>
             </div>
             <div className="overflow-hidden">
-              <h1 className="hero-name md:text-8xl lg:text-[10rem] font-bold text-foreground leading-none tracking-tight font-serif text-6xl">
+              <h1 className="hero-name text-6xl md:text-8xl lg:text-[10rem] font-bold text-foreground leading-none tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
                 Fatima Qureshi<span className="text-primary">.</span>
               </h1>
             </div>
