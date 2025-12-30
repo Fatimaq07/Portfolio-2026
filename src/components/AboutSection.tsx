@@ -173,7 +173,7 @@ export const AboutSection = () => {
 
                 <div className="pt-4 border-t border-border/30">
                   <p className="text-xs text-muted-foreground">
-                    Available for new projects • Based in Pakistan
+                    Available for new projects • Based in India
                   </p>
                 </div>
               </motion.div>

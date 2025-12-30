@@ -35,32 +35,20 @@ const aiSkills: Skill[] = [
   { name: 'Zapier', icon: 'https://www.svgrepo.com/show/353589/zapier-icon.svg', level: 'Hands-on', usage: 'No-code integrations for rapid prototyping' },
   { name: 'Vercel', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg', level: 'Production-level', usage: 'Edge deployments with AI-powered analytics' },
   { name: 'AWS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg', level: 'Hands-on', usage: 'Cloud infrastructure and serverless functions' },
-  { name: 'Supabase', icon: 'https://www.vectorlogo.zone/logos/supaaborgglyph-icon.svg', level: 'Production-level', usage: 'Backend as a service with real-time features' },
+  { name: 'Supabase', icon: 'https://www.vectorlogo.zone/logos/supabase/supabase-icon.svg', level: 'Production-level', usage: 'Backend as a service with real-time features' },
 ];
 
 const SkillNode = ({ 
   skill, 
-  angle,
-  radius,
-  centerX,
-  centerY,
   hoveredSkill,
   setHoveredSkill,
   isInner
 }: { 
   skill: Skill; 
-  angle: number;
-  radius: number;
-  centerX: number;
-  centerY: number;
   hoveredSkill: string | null;
   setHoveredSkill: (name: string | null) => void;
   isInner: boolean;
 }) => {
-  const radians = (angle * Math.PI) / 180;
-  const x = centerX + Math.cos(radians) * radius;
-  const y = centerY + Math.sin(radians) * radius;
-  
   const isHovered = hoveredSkill === skill.name;
   const isOtherHovered = hoveredSkill !== null && !isHovered;
 
@@ -69,15 +57,10 @@ const SkillNode = ({
 
   return (
     <motion.div
-      className="absolute cursor-pointer"
-      style={{
-        left: x,
-        top: y,
-        transform: 'translate(-50%, -50%)',
-      }}
+      className="cursor-pointer relative"
       animate={{
-        scale: isHovered ? 1.5 : isOtherHovered ? 0.8 : 1,
-        opacity: isOtherHovered ? 0.3 : 1,
+        scale: isHovered ? 1.4 : isOtherHovered ? 0.85 : 1,
+        opacity: isOtherHovered ? 0.4 : 1,
         zIndex: isHovered ? 50 : 1,
       }}
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
@@ -85,7 +68,7 @@ const SkillNode = ({
       onMouseLeave={() => setHoveredSkill(null)}
     >
       <motion.div 
-        className={`relative flex items-center justify-center ${nodeSize} rounded-xl bg-card/90 backdrop-blur-sm border transition-all duration-300`}
+        className={`flex items-center justify-center ${nodeSize} rounded-xl bg-card/90 backdrop-blur-sm border transition-all duration-300`}
         style={{
           borderColor: isHovered ? 'hsl(var(--primary))' : 'hsl(var(--border) / 0.5)',
           boxShadow: isHovered ? '0 0 30px hsl(var(--primary) / 0.6), 0 0 60px hsl(var(--primary) / 0.3)' : 'none',
@@ -142,15 +125,14 @@ const SkillNode = ({
 
 export const SkillsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
   const [rotation, setRotation] = useState({ inner: 0, outer: 0 });
-  const [dimensions, setDimensions] = useState({ width: 800, height: 800 });
+  const [dimensions, setDimensions] = useState({ width: 700, height: 700 });
 
   // Handle responsive sizing
   useEffect(() => {
     const updateDimensions = () => {
-      const size = Math.min(window.innerWidth * 0.9, 800);
+      const size = Math.min(window.innerWidth * 0.85, 700);
       setDimensions({ width: size, height: size });
     };
     
@@ -171,8 +153,8 @@ export const SkillsSection = () => {
       lastTime = currentTime;
       
       setRotation(prev => ({
-        inner: (prev.inner + delta * 8) % 360,  // Inner circle rotates faster
-        outer: (prev.outer - delta * 5) % 360,  // Outer circle rotates opposite direction
+        inner: (prev.inner + delta * 10) % 360,
+        outer: (prev.outer - delta * 6) % 360,
       }));
       
       animationId = requestAnimationFrame(animate);
@@ -202,11 +184,9 @@ export const SkillsSection = () => {
       gsap.fromTo('.orbit-visual', {
         opacity: 0,
         scale: 0.6,
-        rotate: -30
       }, {
         opacity: 1,
         scale: 1,
-        rotate: 0,
         duration: 1.5,
         delay: 0.3,
         ease: 'power3.out',
@@ -224,11 +204,11 @@ export const SkillsSection = () => {
 
   const centerX = dimensions.width / 2;
   const centerY = dimensions.height / 2;
-  const innerRadius = Math.min(dimensions.width, dimensions.height) * 0.22;
-  const outerRadius = Math.min(dimensions.width, dimensions.height) * 0.42;
+  const innerRadius = Math.min(dimensions.width, dimensions.height) * 0.24;
+  const outerRadius = Math.min(dimensions.width, dimensions.height) * 0.44;
 
   return (
-    <section ref={sectionRef} id="skills" className="relative py-24 lg:py-32 bg-background overflow-hidden min-h-screen">
+    <section ref={sectionRef} id="skills" className="relative py-24 lg:py-32 bg-background overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
@@ -250,7 +230,6 @@ export const SkillsSection = () => {
 
       {/* Orbit Container */}
       <div 
-        ref={containerRef}
         className="orbit-visual relative mx-auto"
         style={{ width: dimensions.width, height: dimensions.height }}
       >
@@ -291,56 +270,90 @@ export const SkillsSection = () => {
           </span>
         </div>
 
-        {/* Inner orbit - AI Skills */}
-        {aiSkills.map((skill, index) => {
-          const baseAngle = (360 / aiSkills.length) * index;
-          const angle = baseAngle + rotation.inner;
-          
-          return (
-            <SkillNode
-              key={skill.name}
-              skill={skill}
-              angle={angle}
-              radius={innerRadius}
-              centerX={centerX}
-              centerY={centerY}
-              hoveredSkill={hoveredSkill}
-              setHoveredSkill={setHoveredSkill}
-              isInner={true}
-            />
-          );
-        })}
+        {/* Inner orbit - AI Skills - rendered in a circle using CSS transform */}
+        <div 
+          className="absolute"
+          style={{
+            left: centerX,
+            top: centerY,
+            width: 0,
+            height: 0,
+          }}
+        >
+          {aiSkills.map((skill, index) => {
+            const baseAngle = (360 / aiSkills.length) * index;
+            const angle = baseAngle + rotation.inner;
+            const radians = (angle * Math.PI) / 180;
+            const x = Math.cos(radians) * innerRadius;
+            const y = Math.sin(radians) * innerRadius;
+            
+            return (
+              <div
+                key={skill.name}
+                className="absolute"
+                style={{
+                  transform: `translate(${x}px, ${y}px) translate(-50%, -50%)`,
+                  transition: hoveredSkill ? 'none' : undefined,
+                }}
+              >
+                <SkillNode
+                  skill={skill}
+                  hoveredSkill={hoveredSkill}
+                  setHoveredSkill={setHoveredSkill}
+                  isInner={true}
+                />
+              </div>
+            );
+          })}
+        </div>
 
         {/* Outer orbit - Core Skills */}
-        {coreSkills.map((skill, index) => {
-          const baseAngle = (360 / coreSkills.length) * index;
-          const angle = baseAngle + rotation.outer;
-          
-          return (
-            <SkillNode
-              key={skill.name}
-              skill={skill}
-              angle={angle}
-              radius={outerRadius}
-              centerX={centerX}
-              centerY={centerY}
-              hoveredSkill={hoveredSkill}
-              setHoveredSkill={setHoveredSkill}
-              isInner={false}
-            />
-          );
-        })}
+        <div 
+          className="absolute"
+          style={{
+            left: centerX,
+            top: centerY,
+            width: 0,
+            height: 0,
+          }}
+        >
+          {coreSkills.map((skill, index) => {
+            const baseAngle = (360 / coreSkills.length) * index;
+            const angle = baseAngle + rotation.outer;
+            const radians = (angle * Math.PI) / 180;
+            const x = Math.cos(radians) * outerRadius;
+            const y = Math.sin(radians) * outerRadius;
+            
+            return (
+              <div
+                key={skill.name}
+                className="absolute"
+                style={{
+                  transform: `translate(${x}px, ${y}px) translate(-50%, -50%)`,
+                  transition: hoveredSkill ? 'none' : undefined,
+                }}
+              >
+                <SkillNode
+                  skill={skill}
+                  hoveredSkill={hoveredSkill}
+                  setHoveredSkill={setHoveredSkill}
+                  isInner={false}
+                />
+              </div>
+            );
+          })}
+        </div>
 
         {/* Category labels */}
         <div 
-          className="absolute text-xs text-primary/60 uppercase tracking-widest"
-          style={{ left: centerX, top: centerY - innerRadius - 30, transform: 'translateX(-50%)' }}
+          className="absolute text-xs text-primary/60 uppercase tracking-widest pointer-events-none"
+          style={{ left: centerX, top: centerY - innerRadius - 40, transform: 'translateX(-50%)' }}
         >
           AI & Automation
         </div>
         <div 
-          className="absolute text-xs text-muted-foreground/60 uppercase tracking-widest"
-          style={{ left: centerX, top: centerY - outerRadius - 30, transform: 'translateX(-50%)' }}
+          className="absolute text-xs text-muted-foreground/60 uppercase tracking-widest pointer-events-none"
+          style={{ left: centerX, top: centerY - outerRadius - 40, transform: 'translateX(-50%)' }}
         >
           Core Technologies
         </div>
