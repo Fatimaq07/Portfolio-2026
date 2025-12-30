@@ -1,29 +1,153 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter, ArrowUpRight } from 'lucide-react';
+import { Mail, Phone, Linkedin, Twitter, Github } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const socials = [
-  { name: 'GitHub', icon: Github, href: '#' },
-  { name: 'LinkedIn', icon: Linkedin, href: '#' },
-  { name: 'Twitter', icon: Twitter, href: '#' },
+interface SocialLink {
+  name: string;
+  icon: React.ComponentType<{ className?: string }>;
+  href: string;
+  hoverText?: string;
+  isClickable: boolean;
+}
+
+const socialLinks: SocialLink[] = [
+  { 
+    name: 'Phone', 
+    icon: Phone, 
+    href: 'tel:+919399723080',
+    hoverText: '+91 9399723080',
+    isClickable: false
+  },
+  { 
+    name: 'Email', 
+    icon: Mail, 
+    href: 'mailto:qfatima504@gmail.com',
+    hoverText: 'qfatima504@gmail.com',
+    isClickable: true
+  },
+  { 
+    name: 'LinkedIn', 
+    icon: Linkedin, 
+    href: 'https://www.linkedin.com/in/fatima-qureshi-94a798230/',
+    isClickable: true
+  },
+  { 
+    name: 'Twitter', 
+    icon: Twitter, 
+    href: 'https://x.com/resilientfoxx',
+    isClickable: true
+  },
+  { 
+    name: 'GitHub', 
+    icon: Github, 
+    href: 'https://github.com/Fatimaq07',
+    isClickable: true
+  },
 ];
 
-const contactInfo = [
-  { icon: Mail, label: 'Email', value: 'hello@fatima.dev' },
-  { icon: Phone, label: 'Phone', value: '+91 900 000 0000' },
-  { icon: MapPin, label: 'Location', value: 'India' },
-];
+const HexagonIcon = ({ 
+  social, 
+  index, 
+  isCenter = false 
+}: { 
+  social?: SocialLink; 
+  index: number;
+  isCenter?: boolean;
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  if (isCenter) {
+    return (
+      <motion.div
+        className="hexagon-icon relative flex items-center justify-center"
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        <div 
+          className="w-28 h-32 md:w-36 md:h-40 flex items-center justify-center relative z-10"
+          style={{
+            background: 'linear-gradient(145deg, hsl(220 70% 45%), hsl(220 60% 55%))',
+            clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+            boxShadow: '0 10px 40px -10px hsl(220 70% 45% / 0.4)',
+          }}
+        >
+          <span className="text-3xl md:text-4xl text-primary-foreground font-bold">@</span>
+        </div>
+      </motion.div>
+    );
+  }
+
+  if (!social) return null;
+
+  const IconComponent = social.icon;
+
+  const handleClick = () => {
+    if (social.isClickable) {
+      window.open(social.href, social.href.startsWith('mailto') ? '_self' : '_blank');
+    }
+  };
+
+  return (
+    <motion.div
+      className="hexagon-icon relative flex items-center justify-center cursor-pointer group"
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={handleClick}
+      whileHover={{ scale: 1.1, y: -5 }}
+    >
+      <div 
+        className="w-20 h-24 md:w-24 md:h-28 flex items-center justify-center relative transition-all duration-300"
+        style={{
+          background: isHovered 
+            ? 'linear-gradient(145deg, hsl(220 70% 45%), hsl(220 60% 55%))' 
+            : 'linear-gradient(145deg, hsl(197 80% 95%), hsl(197 70% 88%))',
+          clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+          boxShadow: isHovered 
+            ? '0 15px 40px -10px hsl(220 70% 45% / 0.4)' 
+            : '0 10px 30px -10px hsl(197 50% 50% / 0.2)',
+        }}
+      >
+        <IconComponent 
+          className={`w-6 h-6 md:w-8 md:h-8 transition-colors duration-300 ${
+            isHovered ? 'text-primary-foreground' : 'text-muted-foreground'
+          }`}
+        />
+        
+        {/* Connection dots */}
+        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-border/50" />
+        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-border/50" />
+      </div>
+
+      {/* Hover tooltip */}
+      {social.hoverText && isHovered && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap bg-foreground text-background px-4 py-2 rounded-lg text-sm font-medium z-20"
+        >
+          {social.hoverText}
+          <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-foreground rotate-45" />
+        </motion.div>
+      )}
+    </motion.div>
+  );
+};
 
 export const ContactSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Header animation
       gsap.fromTo('.contact-header', {
         y: 60,
         opacity: 0
@@ -39,41 +163,20 @@ export const ContactSection = () => {
         }
       });
 
-      // Contact items stagger
-      gsap.fromTo('.contact-item', {
+      gsap.fromTo('.hexagon-grid', {
         y: 40,
         opacity: 0
       }, {
         y: 0,
         opacity: 1,
-        duration: 0.6,
-        stagger: 0.1,
+        duration: 0.8,
         ease: 'power3.out',
         scrollTrigger: {
-          trigger: '.contact-grid',
+          trigger: '.hexagon-grid',
           start: 'top 75%',
           toggleActions: 'play none none reverse',
         }
       });
-
-      // CTA animation
-      gsap.fromTo('.contact-cta', {
-        y: 40,
-        opacity: 0,
-        scale: 0.95
-      }, {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.contact-cta',
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
-        }
-      });
-
     }, sectionRef);
 
     return () => ctx.revert();
@@ -81,73 +184,73 @@ export const ContactSection = () => {
 
   return (
     <section ref={sectionRef} id="contact" className="relative py-32 lg:py-48 bg-background overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-secondary/30 to-background pointer-events-none" />
+      {/* Background pattern */}
+      <div className="absolute inset-0 opacity-30">
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, hsl(var(--border)) 1px, transparent 0)`,
+            backgroundSize: '40px 40px',
+          }}
+        />
+      </div>
 
       <div className="container mx-auto px-6 lg:px-12">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="contact-header text-center mb-16">
-            <span className="text-primary text-sm uppercase tracking-widest font-medium block mb-4">
-              Get In Touch
-            </span>
-            <h2 className="headline-lg mb-6">
-              Let's work together<span className="text-primary">.</span>
-            </h2>
-            <p className="body-lg max-w-2xl mx-auto">
-              Have a project in mind? I'd love to hear about it. 
-              Let's discuss how we can bring your ideas to life.
+          <div className="contact-header text-center mb-20">
+            <motion.h2 
+              className="headline-lg mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              Let's Connect<span className="text-primary">.</span>
+            </motion.h2>
+            <p className="body-lg max-w-xl mx-auto">
+              Have a project in mind? I'd love to collaborate with you.
             </p>
           </div>
 
-          {/* Contact Grid */}
-          <div className="contact-grid grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            {contactInfo.map((item) => (
-              <motion.div
-                key={item.label}
-                className="contact-item glass-card p-6 text-center"
-                whileHover={{ y: -4, scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <item.icon className="w-6 h-6 text-primary" />
-                </div>
-                <p className="text-sm text-muted-foreground mb-1">{item.label}</p>
-                <p className="font-medium text-foreground">{item.value}</p>
-              </motion.div>
-            ))}
+          {/* Hexagon Grid */}
+          <div className="hexagon-grid flex flex-col items-center gap-4 md:gap-6">
+            {/* Top row - 2 hexagons */}
+            <div className="flex gap-4 md:gap-6">
+              <HexagonIcon social={socialLinks[0]} index={0} />
+              <HexagonIcon social={socialLinks[1]} index={1} />
+            </div>
+            
+            {/* Middle row - center icon + 2 side icons */}
+            <div className="flex items-center gap-4 md:gap-6 -mt-4">
+              <HexagonIcon social={socialLinks[2]} index={2} />
+              <HexagonIcon index={0} isCenter />
+              <HexagonIcon social={socialLinks[3]} index={3} />
+            </div>
+            
+            {/* Bottom row - 2 hexagons */}
+            <div className="flex gap-4 md:gap-6 -mt-4">
+              <HexagonIcon social={socialLinks[4]} index={4} />
+              {/* Empty hexagon for symmetry */}
+              <div 
+                className="w-20 h-24 md:w-24 md:h-28 flex items-center justify-center opacity-30"
+                style={{
+                  background: 'linear-gradient(145deg, hsl(197 80% 95%), hsl(197 70% 88%))',
+                  clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                }}
+              />
+            </div>
           </div>
 
-          {/* CTA */}
-          <motion.div 
-            className="contact-cta text-center"
-            whileHover={{ scale: 1.02 }}
+          {/* Subtitle */}
+          <motion.p
+            className="text-center text-lg md:text-xl text-muted-foreground mt-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
           >
-            <motion.a
-              href="mailto:hello@fatima.dev"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium text-lg"
-              whileHover={{ scale: 1.05, gap: '16px' }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Start a Conversation
-              <ArrowUpRight className="w-5 h-5" />
-            </motion.a>
-          </motion.div>
-
-          {/* Social Links */}
-          <div className="flex items-center justify-center gap-6 mt-16">
-            {socials.map((social) => (
-              <motion.a
-                key={social.name}
-                href={social.href}
-                className="contact-item w-12 h-12 rounded-full border border-border/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
-                whileHover={{ scale: 1.1, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <social.icon className="w-5 h-5" />
-              </motion.a>
-            ))}
-          </div>
+            Verifying connections
+          </motion.p>
         </div>
       </div>
 
