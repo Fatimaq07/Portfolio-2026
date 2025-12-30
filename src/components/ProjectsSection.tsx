@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,7 +12,6 @@ interface Project {
   description: string;
   image: string;
   url: string;
-  color: string;
 }
 
 const projects: Project[] = [
@@ -22,7 +21,6 @@ const projects: Project[] = [
     description: 'A healthcare platform focused on nutrition and wellness tracking with AI-powered recommendations.',
     image: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=600&q=80',
     url: 'https://nutrigen-healthcare.netlify.app/',
-    color: 'from-pink-400 to-rose-500',
   },
   {
     id: 2,
@@ -30,7 +28,6 @@ const projects: Project[] = [
     description: 'A comprehensive productivity dashboard with task management, analytics, and team collaboration.',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80',
     url: '#',
-    color: 'from-orange-400 to-amber-500',
   },
   {
     id: 3,
@@ -38,7 +35,6 @@ const projects: Project[] = [
     description: 'An intelligent voice assistant built with natural language processing and automation tools.',
     image: 'https://images.unsplash.com/photo-1589254065878-42c9da997008?w=600&q=80',
     url: '#',
-    color: 'from-blue-400 to-indigo-500',
   },
   {
     id: 4,
@@ -46,7 +42,6 @@ const projects: Project[] = [
     description: 'Full-stack e-commerce solution with payment integration, inventory management, and analytics.',
     image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80',
     url: '#',
-    color: 'from-emerald-400 to-teal-500',
   },
   {
     id: 5,
@@ -54,97 +49,111 @@ const projects: Project[] = [
     description: 'An AI-powered portfolio builder that creates stunning websites from simple inputs.',
     image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600&q=80',
     url: '#',
-    color: 'from-purple-400 to-violet-500',
   },
 ];
 
 const ProjectCard = ({ 
   project, 
-  index, 
-  isActive 
+  index,
 }: { 
   project: Project; 
-  index: number; 
-  isActive: boolean;
+  index: number;
 }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <motion.a
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
+    <motion.div
       className="project-card relative flex-shrink-0 cursor-pointer group"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <div className="relative">
         {/* Large number behind card */}
         <div 
-          className="absolute -left-8 md:-left-12 top-1/2 -translate-y-1/2 z-10 select-none pointer-events-none"
+          className="absolute -left-4 md:-left-8 top-1/2 -translate-y-1/2 z-10 select-none pointer-events-none"
           style={{ fontFamily: 'Playfair Display, serif' }}
         >
-          <span className="text-[120px] md:text-[180px] lg:text-[220px] font-bold text-foreground leading-none opacity-90">
+          <span className="text-[100px] md:text-[150px] lg:text-[180px] font-bold text-foreground leading-none opacity-20">
             {index + 1}
           </span>
         </div>
 
-        {/* Card container with colored background */}
-        <motion.div
-          className={`relative ml-12 md:ml-20 rounded-2xl overflow-hidden bg-gradient-to-br ${project.color} p-4 md:p-6`}
+        {/* Card container with wave effect */}
+        <motion.a
+          href={project.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative ml-10 md:ml-16 block rounded-3xl overflow-hidden bg-card shadow-lg"
           style={{
             width: '280px',
-            height: '360px',
+            height: '380px',
           }}
-          whileHover={{ 
-            scale: 1.05,
-            rotateY: -5,
-            rotateX: 5,
+          animate={{
+            y: isHovered ? -15 : [0, -8, 0],
+            rotateZ: isHovered ? 0 : [0, -1, 0, 1, 0],
+            scale: isHovered ? 1.03 : 1,
           }}
-          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+          transition={{
+            y: isHovered 
+              ? { type: 'spring', stiffness: 300, damping: 20 }
+              : { duration: 4, repeat: Infinity, ease: 'easeInOut' },
+            rotateZ: isHovered
+              ? { duration: 0.3 }
+              : { duration: 6, repeat: Infinity, ease: 'easeInOut' },
+            scale: { type: 'spring', stiffness: 300, damping: 20 },
+          }}
         >
-          {/* Inner image frame */}
-          <div className="relative h-full rounded-xl overflow-hidden bg-card/10 backdrop-blur-sm border border-white/20">
+          {/* Card background with subtle gradient */}
+          <div className="absolute inset-0 bg-gradient-to-b from-card to-secondary/50" />
+          
+          {/* Image */}
+          <div className="relative h-48 overflow-hidden">
             <motion.img
               src={project.image}
               alt={project.title}
               className="w-full h-full object-cover"
-              whileHover={{ scale: 1.1 }}
+              animate={{ scale: isHovered ? 1.1 : 1 }}
               transition={{ duration: 0.5 }}
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
+          </div>
+
+          {/* Content */}
+          <div className="relative p-6">
+            <h3 className="text-xl font-bold text-foreground mb-2">{project.title}</h3>
+            <p className="text-sm text-muted-foreground line-clamp-3 mb-4">{project.description}</p>
             
-            {/* Decorative elements on the card */}
-            <div className="absolute top-4 left-4 w-2 h-2 bg-white rounded-full opacity-60" />
-            <div className="absolute top-4 right-4 w-6 h-6 border-2 border-white/40 rounded-full" />
-            
-            {/* Hover overlay with title */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4"
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
+            {/* View Project Link */}
+            <motion.div 
+              className="flex items-center gap-2 text-primary font-medium text-sm"
+              animate={{ x: isHovered ? 5 : 0 }}
               transition={{ duration: 0.3 }}
             >
-              <h3 className="text-white font-bold text-lg mb-1">{project.title}</h3>
-              <p className="text-white/80 text-sm line-clamp-2">{project.description}</p>
+              <span>View Project</span>
+              <ExternalLink className="w-4 h-4" />
             </motion.div>
           </div>
-        </motion.div>
 
-        {/* Description below card */}
-        <div className="ml-12 md:ml-20 mt-4 max-w-[280px]">
-          <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
-            {project.description}
-          </p>
-        </div>
+          {/* Subtle shine effect on hover */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"
+            initial={{ x: '-100%' }}
+            animate={{ x: isHovered ? '100%' : '-100%' }}
+            transition={{ duration: 0.6 }}
+          />
+        </motion.a>
       </div>
-    </motion.a>
+    </motion.div>
   );
 };
 
 export const ProjectsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
@@ -158,7 +167,7 @@ export const ProjectsSection = () => {
 
   const scrollToDirection = (direction: 'left' | 'right') => {
     if (carouselRef.current) {
-      const scrollAmount = 400;
+      const scrollAmount = 350;
       const newScrollLeft = carouselRef.current.scrollLeft + (direction === 'right' ? scrollAmount : -scrollAmount);
       carouselRef.current.scrollTo({ left: newScrollLeft, behavior: 'smooth' });
     }
@@ -227,7 +236,7 @@ export const ProjectsSection = () => {
         <div className="flex items-center justify-end gap-4 mb-8">
           <motion.button
             onClick={() => scrollToDirection('left')}
-            className={`w-12 h-12 rounded-full border border-border flex items-center justify-center transition-all ${
+            className={`w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center transition-all ${
               canScrollLeft ? 'hover:bg-primary hover:border-primary hover:text-primary-foreground' : 'opacity-30 cursor-not-allowed'
             }`}
             whileHover={canScrollLeft ? { scale: 1.1 } : {}}
@@ -238,7 +247,7 @@ export const ProjectsSection = () => {
           </motion.button>
           <motion.button
             onClick={() => scrollToDirection('right')}
-            className={`w-12 h-12 rounded-full border border-border flex items-center justify-center transition-all ${
+            className={`w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center transition-all ${
               canScrollRight ? 'hover:bg-primary hover:border-primary hover:text-primary-foreground' : 'opacity-30 cursor-not-allowed'
             }`}
             whileHover={canScrollRight ? { scale: 1.1 } : {}}
@@ -252,7 +261,7 @@ export const ProjectsSection = () => {
         {/* Projects Carousel */}
         <div 
           ref={carouselRef}
-          className="flex gap-8 lg:gap-16 overflow-x-auto pb-8 scrollbar-hide"
+          className="flex gap-8 lg:gap-12 overflow-x-auto pb-8 scrollbar-hide"
           style={{ 
             scrollSnapType: 'x mandatory',
             scrollbarWidth: 'none',
@@ -264,7 +273,6 @@ export const ProjectsSection = () => {
               <ProjectCard 
                 project={project} 
                 index={index}
-                isActive={currentIndex === index}
               />
             </div>
           ))}
