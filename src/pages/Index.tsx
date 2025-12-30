@@ -3,11 +3,10 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLenis } from '@/hooks/useLenis';
 import { HeroSection } from '@/components/HeroSection';
-import { AboutSection } from '@/components/AboutSection';
-import { ScrollingBanner } from '@/components/ScrollingBanner';
 import { SkillsSection } from '@/components/SkillsSection';
 import { ProjectsSection } from '@/components/ProjectsSection';
-import { ServicesSection } from '@/components/ServicesSection';
+import { VideosSection } from '@/components/VideosSection';
+import { ExperienceSection } from '@/components/ExperienceSection';
 import { ContactSection } from '@/components/ContactSection';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -25,11 +24,10 @@ const Index = () => {
   return (
     <main className="relative bg-background overflow-x-hidden">
       <HeroSection />
-      <AboutSection />
-      <ScrollingBanner />
       <SkillsSection />
       <ProjectsSection />
-      <ServicesSection />
+      <VideosSection />
+      <ExperienceSection />
       <ContactSection />
     </main>
   );
