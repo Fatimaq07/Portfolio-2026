@@ -19,6 +19,9 @@ export default {
         display: ['Playfair Display', 'serif'],
       },
       colors: {
+        'hero-bg': 'hsl(250 30% 92%)',
+        'hero-purple': 'hsl(270 60% 65%)',
+        'hero-teal': 'hsl(170 50% 65%)',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
