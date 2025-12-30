@@ -14,8 +14,8 @@ const socials = [
 
 const contactInfo = [
   { icon: Mail, label: 'Email', value: 'hello@fatima.dev' },
-  { icon: Phone, label: 'Phone', value: '+92 300 000 0000' },
-  { icon: MapPin, label: 'Location', value: 'Pakistan' },
+  { icon: Phone, label: 'Phone', value: '+91 900 000 0000' },
+  { icon: MapPin, label: 'Location', value: 'India' },
 ];
 
 export const ContactSection = () => {
