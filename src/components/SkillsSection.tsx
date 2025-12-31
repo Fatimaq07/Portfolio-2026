@@ -207,14 +207,27 @@ export const SkillsSection = () => {
   const innerRadius = Math.min(dimensions.width, dimensions.height) * 0.24;
   const outerRadius = Math.min(dimensions.width, dimensions.height) * 0.44;
 
+  const marqueeItems = ['REACT', 'NODE.JS', 'TYPESCRIPT', 'NEXT.JS', 'MONGODB', 'TAILWIND', 'PYTHON', 'AI/ML', 'AUTOMATION', 'POSTGRESQL'];
+
   return (
     <section ref={sectionRef} id="skills" className="relative py-24 lg:py-32 bg-background overflow-hidden">
+      {/* Marquee Banner */}
+      <div className="absolute top-0 left-0 right-0 overflow-hidden bg-foreground py-4">
+        <div className="flex animate-marquee whitespace-nowrap">
+          {[...marqueeItems, ...marqueeItems].map((item, index) => (
+            <span key={index} className="mx-8 text-background text-xl md:text-2xl font-bold tracking-widest">
+              {item} <span className="text-primary mx-4">✦</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-6 lg:px-12 mb-8">
+      <div className="container mx-auto px-6 lg:px-12 mb-8 mt-16">
         <div className="skills-header text-center">
           <span className="text-primary text-sm uppercase tracking-widest font-medium block mb-4">
             Technical Expertise
