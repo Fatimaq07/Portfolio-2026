@@ -1,300 +1,213 @@
-import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
+import React, { useState } from 'react';
+import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 
 interface Project {
   id: number;
   title: string;
-  description: string;
+  category: string;
+  year: string;
   image: string;
+  description: string;
   url: string;
 }
 
 const projects: Project[] = [
   {
     id: 1,
-    title: 'Nutrigen Healthcare',
-    description: 'A healthcare platform focused on nutrition and wellness tracking with AI-powered recommendations.',
-    image: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=600&q=80',
-    url: 'https://nutrigen-healthcare.netlify.app/',
+    title: "NUTRIGEN AI",
+    category: "Healthcare",
+    year: "2024",
+    description: "AI-powered personalized nutrition planning.",
+    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
+    url: "https://nutrigen-healthcare.netlify.app/",
   },
   {
     id: 2,
-    title: 'Productivity Dashboard',
-    description: 'A comprehensive productivity dashboard with task management, analytics, and team collaboration.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80',
-    url: '#',
+    title: "FLOWS LAB",
+    category: "Productivity",
+    year: "2024",
+    description: "Workflow automation dashboard for teams.",
+    image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80",
+    url: "#",
   },
   {
     id: 3,
-    title: 'AI Voice Agent',
-    description: 'An intelligent voice assistant built with natural language processing and automation tools.',
-    image: 'https://images.unsplash.com/photo-1589254065878-42c9da997008?w=600&q=80',
-    url: '#',
+    title: "VOCALIZE",
+    category: "Automation",
+    year: "2023",
+    description: "Voice-activated customer support agent.",
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
+    url: "#",
   },
   {
     id: 4,
-    title: 'E-Commerce Platform',
-    description: 'Full-stack e-commerce solution with payment integration, inventory management, and analytics.',
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80',
-    url: '#',
+    title: "LUXE MARKET",
+    category: "E-Commerce",
+    year: "2023",
+    description: "High-fashion retail platform with AR try-on.",
+    image: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=80",
+    url: "#",
   },
   {
     id: 5,
-    title: 'Portfolio Generator',
-    description: 'An AI-powered portfolio builder that creates stunning websites from simple inputs.',
-    image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600&q=80',
-    url: '#',
+    title: "HELIOS",
+    category: "Architecture",
+    year: "2022",
+    description: "Sustainability tracking for modern buildings.",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
+    url: "#",
   },
 ];
 
-const ProjectCard = ({ 
-  project, 
-  index,
-}: { 
-  project: Project; 
-  index: number;
-}) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <motion.div
-      className="project-card relative flex-shrink-0 cursor-pointer group"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className="relative">
-        {/* Large number behind card */}
-        <div 
-          className="absolute -left-4 md:-left-8 top-1/2 -translate-y-1/2 z-10 select-none pointer-events-none"
-          style={{ fontFamily: 'Playfair Display, serif' }}
-        >
-          <span className="text-[100px] md:text-[150px] lg:text-[180px] font-bold text-foreground leading-none opacity-20">
-            {index + 1}
-          </span>
-        </div>
-
-        {/* Card container with wave effect */}
-        <motion.a
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="relative ml-10 md:ml-16 block rounded-3xl overflow-hidden bg-card shadow-lg"
-          style={{
-            width: '280px',
-            height: '380px',
-          }}
-          animate={{
-            y: isHovered ? -15 : [0, -8, 0],
-            rotateZ: isHovered ? 0 : [0, -1, 0, 1, 0],
-            scale: isHovered ? 1.03 : 1,
-          }}
-          transition={{
-            y: isHovered 
-              ? { type: 'spring', stiffness: 300, damping: 20 }
-              : { duration: 4, repeat: Infinity, ease: 'easeInOut' },
-            rotateZ: isHovered
-              ? { duration: 0.3 }
-              : { duration: 6, repeat: Infinity, ease: 'easeInOut' },
-            scale: { type: 'spring', stiffness: 300, damping: 20 },
-          }}
-        >
-          {/* Card background with subtle gradient */}
-          <div className="absolute inset-0 bg-gradient-to-b from-card to-secondary/50" />
-          
-          {/* Image */}
-          <div className="relative h-48 overflow-hidden">
-            <motion.img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-full object-cover"
-              animate={{ scale: isHovered ? 1.1 : 1 }}
-              transition={{ duration: 0.5 }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
-          </div>
-
-          {/* Content */}
-          <div className="relative p-6">
-            <h3 className="text-xl font-bold text-foreground mb-2">{project.title}</h3>
-            <p className="text-sm text-muted-foreground line-clamp-3 mb-4">{project.description}</p>
-            
-            {/* View Project Link */}
-            <motion.div 
-              className="flex items-center gap-2 text-primary font-medium text-sm"
-              animate={{ x: isHovered ? 5 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <span>View Project</span>
-              <ExternalLink className="w-4 h-4" />
-            </motion.div>
-          </div>
-
-          {/* Subtle shine effect on hover */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"
-            initial={{ x: '-100%' }}
-            animate={{ x: isHovered ? '100%' : '-100%' }}
-            transition={{ duration: 0.6 }}
-          />
-        </motion.a>
-      </div>
-    </motion.div>
-  );
-};
-
 export const ProjectsSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [activeProject, setActiveProject] = useState<number | null>(null);
+  
+  // Mouse position tracking
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-  const checkScrollability = () => {
-    if (carouselRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-    }
+  // Smooth spring physics for the floating image
+  const springConfig = { damping: 20, stiffness: 150, mass: 0.5 };
+  const x = useSpring(mouseX, springConfig);
+  const y = useSpring(mouseY, springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e;
+    mouseX.set(clientX);
+    mouseY.set(clientY);
   };
 
-  const scrollToDirection = (direction: 'left' | 'right') => {
-    if (carouselRef.current) {
-      const scrollAmount = 350;
-      const newScrollLeft = carouselRef.current.scrollLeft + (direction === 'right' ? scrollAmount : -scrollAmount);
-      carouselRef.current.scrollTo({ left: newScrollLeft, behavior: 'smooth' });
+  const handleProjectClick = (url: string) => {
+    if (url && url !== '#') {
+      window.open(url, '_blank', 'noopener,noreferrer');
     }
   };
-
-  useEffect(() => {
-    const carousel = carouselRef.current;
-    if (carousel) {
-      carousel.addEventListener('scroll', checkScrollability);
-      checkScrollability();
-      return () => carousel.removeEventListener('scroll', checkScrollability);
-    }
-  }, []);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.projects-header', {
-        y: 60,
-        opacity: 0
-      }, {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 70%',
-          toggleActions: 'play none none reverse',
-        }
-      });
-
-      gsap.fromTo('.projects-title-large', {
-        y: 100,
-        opacity: 0
-      }, {
-        y: 0,
-        opacity: 1,
-        duration: 1.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.projects-title-large',
-          start: 'top 90%',
-          toggleActions: 'play none none reverse',
-        }
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section 
-      ref={sectionRef} 
-      id="projects" 
-      className="relative py-24 lg:py-32 overflow-hidden bg-background"
+      className="relative bg-[#030014] py-32 px-6 overflow-hidden cursor-none min-h-screen" 
+      onMouseMove={handleMouseMove}
     >
-      <div className="container mx-auto px-6 lg:px-12">
+      {/* --- PREMIUM AURORA GRADIENT BACKGROUND --- */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Deep Purple Blob (Top Left) */}
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-purple-900/20 blur-[120px]" />
+        {/* Cyan Blob (Bottom Right) */}
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-blue-900/20 blur-[120px]" />
+        {/* Subtle Center Glow */}
+        <div className="absolute top-[40%] left-[40%] w-[30%] h-[30%] rounded-full bg-indigo-500/10 blur-[100px]" />
+        
+        {/* Grain Texture for that 'Film' look */}
+        <div className="absolute inset-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
+      </div>
+
+      <div className="container mx-auto max-w-6xl relative z-10">
+        
         {/* Header */}
-        <div className="projects-header mb-8 lg:mb-12">
-          <span className="text-primary text-sm uppercase tracking-widest font-medium block mb-4">
-            Featured Work
-          </span>
+        <div className="flex items-end justify-between mb-24 border-b border-white/10 pb-8">
+          <div>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 text-xs font-mono uppercase tracking-[0.2em] font-medium block mb-3">
+              Selected Works
+            </span>
+            {/* Gradient Text Title */}
+            <h2 className="text-7xl md:text-9xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40">
+              WORK<span className="text-blue-500">.</span>
+            </h2>
+          </div>
+          <div className="hidden md:flex flex-col items-end gap-1">
+            <span className="text-white/40 font-mono text-sm">Case Studies</span>
+            <span className="text-white text-lg font-medium">{projects.length} Projects</span>
+          </div>
         </div>
 
-        {/* Carousel Navigation */}
-        <div className="flex items-center justify-end gap-4 mb-8">
-          <motion.button
-            onClick={() => scrollToDirection('left')}
-            className={`w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center transition-all ${
-              canScrollLeft ? 'hover:bg-primary hover:border-primary hover:text-primary-foreground' : 'opacity-30 cursor-not-allowed'
-            }`}
-            whileHover={canScrollLeft ? { scale: 1.1 } : {}}
-            whileTap={canScrollLeft ? { scale: 0.95 } : {}}
-            disabled={!canScrollLeft}
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </motion.button>
-          <motion.button
-            onClick={() => scrollToDirection('right')}
-            className={`w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center transition-all ${
-              canScrollRight ? 'hover:bg-primary hover:border-primary hover:text-primary-foreground' : 'opacity-30 cursor-not-allowed'
-            }`}
-            whileHover={canScrollRight ? { scale: 1.1 } : {}}
-            whileTap={canScrollRight ? { scale: 0.95 } : {}}
-            disabled={!canScrollRight}
-          >
-            <ChevronRight className="w-5 h-5" />
-          </motion.button>
-        </div>
-
-        {/* Projects Carousel */}
-        <div 
-          ref={carouselRef}
-          className="flex gap-8 lg:gap-12 overflow-x-auto pb-8 scrollbar-hide"
-          style={{ 
-            scrollSnapType: 'x mandatory',
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
-        >
-          {projects.map((project, index) => (
-            <div key={project.id} style={{ scrollSnapAlign: 'start' }}>
-              <ProjectCard 
-                project={project} 
-                index={index}
+        {/* Project List */}
+        <div className="flex flex-col">
+          {projects.map((project) => (
+            <div
+              key={project.id}
+              className="group relative flex items-center justify-between border-b border-white/5 py-12 px-4 transition-all duration-500 cursor-pointer"
+              onMouseEnter={() => setActiveProject(project.id)}
+              onMouseLeave={() => setActiveProject(null)}
+              onClick={() => handleProjectClick(project.url)}
+            >
+              {/* --- HOLOGRAPHIC HOVER GRADIENT --- */}
+              <div 
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{
+                  background: 'linear-gradient(90deg, transparent 0%, rgba(59,130,246,0.05) 45%, rgba(147,51,234,0.05) 55%, transparent 100%)'
+                }}
               />
+              
+              {/* Left Side: ID & Title */}
+              <div className="flex items-baseline gap-12 relative z-10">
+                <span className="text-lg font-mono text-white/20 group-hover:text-blue-400 transition-colors duration-300">
+                  (0{project.id})
+                </span>
+                <div>
+                  <h3 className="text-4xl md:text-7xl font-semibold text-slate-300 group-hover:text-white group-hover:tracking-wide transition-all duration-500">
+                    {project.title}
+                  </h3>
+                  {/* Description reveals on hover */}
+                  <p className="h-0 overflow-hidden group-hover:h-auto group-hover:mt-2 text-blue-300/80 text-sm font-mono tracking-wide transition-all duration-500 delay-75 opacity-0 group-hover:opacity-100">
+                    {project.description}
+                  </p>
+                </div>
+              </div>
+              
+              {/* Right Side: Meta Data */}
+              <div className="flex flex-col items-end gap-2 relative z-10">
+                <span className="text-xs font-bold uppercase tracking-widest text-white/40 group-hover:text-blue-400 transition-colors duration-300">
+                  {project.category}
+                </span>
+                <span className="text-sm font-mono text-white/20 group-hover:text-white transition-colors duration-300">
+                  {project.year}
+                </span>
+              </div>
             </div>
           ))}
         </div>
-
-        {/* Large "PROJECTS" title at bottom */}
-        <div className="projects-title-large mt-16 lg:mt-24 overflow-hidden">
-          <h2 
-            className="text-[60px] md:text-[100px] lg:text-[150px] xl:text-[200px] font-bold tracking-tighter text-foreground/10 leading-none select-none"
-            style={{ fontFamily: 'Playfair Display, serif' }}
-          >
-            PROJECTS
-          </h2>
-        </div>
       </div>
 
-      {/* Hide scrollbar */}
-      <style>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
+      {/* FLOATING IMAGE PREVIEW */}
+      <motion.div
+        style={{ x, y }}
+        className="pointer-events-none fixed top-0 left-0 z-50 hidden md:block"
+      >
+        <AnimatePresence mode="wait">
+          {activeProject && (
+            <motion.div
+              key={activeProject}
+              initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              exit={{ opacity: 0, scale: 0.8, rotate: 10 }}
+              transition={{ type: "spring", stiffness: 150, damping: 15 }}
+              className="relative -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg w-[400px] h-[280px] border border-white/20 shadow-[0_0_50px_rgba(59,130,246,0.3)]"
+            >
+              {/* Image */}
+              <img
+                src={projects.find((p) => p.id === activeProject)?.image}
+                alt="Project Preview"
+                className="h-full w-full object-cover"
+              />
+              
+              {/* Glass Overlay Tag */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
+                <div className="flex items-center gap-2">
+                  <span className="text-white font-bold text-lg tracking-tight">View Case Study</span>
+                  <ArrowUpRight className="text-blue-400 w-5 h-5" />
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
+      {/* Custom Cursor */}
+      <motion.div 
+        className="fixed top-0 left-0 w-3 h-3 bg-blue-500 rounded-full pointer-events-none z-50 hidden md:block mix-blend-difference"
+        style={{ x, y }}
+      />
     </section>
   );
 };
