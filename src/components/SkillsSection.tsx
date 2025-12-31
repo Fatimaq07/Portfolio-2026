@@ -210,7 +210,7 @@ export const SkillsSection = () => {
   const marqueeItems = ['REACT', 'NODE.JS', 'TYPESCRIPT', 'NEXT.JS', 'MONGODB', 'TAILWIND', 'PYTHON', 'AI/ML', 'AUTOMATION', 'POSTGRESQL'];
 
   return (
-    <section ref={sectionRef} id="skills" className="relative py-24 lg:py-32 bg-background overflow-hidden">
+    <section ref={sectionRef} id="skills" className="relative min-h-screen py-24 lg:py-32 overflow-hidden" style={{ background: 'hsl(197 93% 84%)' }}>
       {/* Marquee Banner */}
       <div className="absolute top-0 left-0 right-0 overflow-hidden bg-foreground py-4">
         <div className="flex animate-marquee whitespace-nowrap">
