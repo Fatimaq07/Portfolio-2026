@@ -39,8 +39,17 @@ export const HeroSection = () => {
   };
 
   return (
-    <section ref={containerRef} id="hero" className="min-h-screen bg-hero-bg py-8 lg:py-12 px-4 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <section ref={containerRef} id="hero" className="min-h-screen py-8 lg:py-12 px-4 lg:px-8 relative overflow-hidden"
+      style={{ 
+        background: 'linear-gradient(135deg, hsl(197 93% 84%) 0%, hsl(210 80% 90%) 30%, hsl(240 70% 92%) 60%, hsl(280 60% 90%) 100%)'
+      }}
+    >
+      {/* Decorative gradient orbs */}
+      <div className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-br from-purple-300/40 to-pink-300/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-40 left-10 w-80 h-80 bg-gradient-to-tr from-blue-300/30 to-cyan-300/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-violet-200/20 to-fuchsia-200/20 rounded-full blur-3xl pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Bento Grid */}
         <div className="grid grid-cols-12 grid-rows-[auto_auto_auto] gap-4 lg:gap-5">
@@ -90,12 +99,16 @@ export const HeroSection = () => {
                   Qureshi
                 </h1>
                 
+                {/* Role */}
+                <p className="text-lg text-primary font-medium mt-2">Full Stack Developer</p>
+                <p className="text-muted-foreground text-sm mt-1">MERN | AI Automation | UI/UX</p>
+                
                 {/* Email */}
                 <div className="flex items-center gap-2 mt-4 justify-center lg:justify-start">
-                  <div className="w-6 h-6 rounded bg-gray-100 flex items-center justify-center">
-                    <Mail className="w-3 h-3 text-gray-500" />
+                  <div className="w-6 h-6 rounded bg-primary/10 flex items-center justify-center">
+                    <Mail className="w-3 h-3 text-primary" />
                   </div>
-                  <span className="text-sm text-gray-500">fatimaqureshi@email.com</span>
+                  <span className="text-sm text-muted-foreground">qfatima504@gmail.com</span>
                 </div>
               </div>
 
