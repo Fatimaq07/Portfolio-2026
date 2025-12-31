@@ -94,7 +94,7 @@ export const ExperienceSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="experience" className="relative py-32 lg:py-48 bg-secondary/30 overflow-hidden">
+    <section ref={sectionRef} id="experience" className="relative min-h-screen py-32 lg:py-48 overflow-hidden" style={{ background: 'hsl(197 93% 84%)' }}>
       <div className="container mx-auto px-6 lg:px-12">
         <div className="experience-header mb-20 text-center">
           <span className="text-primary text-sm uppercase tracking-widest font-medium block mb-4">
