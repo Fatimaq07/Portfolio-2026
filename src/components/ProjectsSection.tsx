@@ -86,81 +86,64 @@ export const ProjectsSection = () => {
 
   return (
     <section 
-      className="relative bg-[#030014] py-32 px-6 overflow-hidden cursor-none min-h-screen" 
+      className="relative h-screen flex flex-col justify-center px-6 overflow-hidden cursor-none bg-background" 
       onMouseMove={handleMouseMove}
     >
-      {/* --- PREMIUM AURORA GRADIENT BACKGROUND --- */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Deep Purple Blob (Top Left) */}
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-purple-900/20 blur-[120px]" />
-        {/* Cyan Blob (Bottom Right) */}
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-blue-900/20 blur-[120px]" />
-        {/* Subtle Center Glow */}
-        <div className="absolute top-[40%] left-[40%] w-[30%] h-[30%] rounded-full bg-indigo-500/10 blur-[100px]" />
-        
-        {/* Grain Texture for that 'Film' look */}
-        <div className="absolute inset-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
+      {/* Background effects matching theme */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-accent/15 rounded-full blur-2xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-primary/15 rounded-full blur-2xl animate-float" style={{ animationDelay: '1s' }} />
       </div>
 
-      <div className="container mx-auto max-w-6xl relative z-10">
+      <div className="container mx-auto max-w-5xl relative z-10">
         
-        {/* Header */}
-        <div className="flex items-end justify-between mb-24 border-b border-white/10 pb-8">
+        {/* Compact Header */}
+        <div className="flex items-end justify-between mb-6 border-b border-border/30 pb-4">
           <div>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 text-xs font-mono uppercase tracking-[0.2em] font-medium block mb-3">
+            <span className="text-primary text-xs uppercase tracking-[0.2em] font-medium block mb-2">
               Selected Works
             </span>
-            {/* Gradient Text Title */}
-            <h2 className="text-7xl md:text-9xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40">
-              WORK<span className="text-blue-500">.</span>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-foreground font-serif">
+              WORK<span className="text-primary">.</span>
             </h2>
           </div>
           <div className="hidden md:flex flex-col items-end gap-1">
-            <span className="text-white/40 font-mono text-sm">Case Studies</span>
-            <span className="text-white text-lg font-medium">{projects.length} Projects</span>
+            <span className="text-muted-foreground text-sm">{projects.length} Projects</span>
           </div>
         </div>
 
-        {/* Project List */}
+        {/* Compact Project List */}
         <div className="flex flex-col">
           {projects.map((project) => (
             <div
               key={project.id}
-              className="group relative flex items-center justify-between border-b border-white/5 py-12 px-4 transition-all duration-500 cursor-pointer"
+              className="group relative flex items-center justify-between border-b border-border/20 py-4 px-2 transition-all duration-500 cursor-pointer hover:bg-primary/5 rounded-lg"
               onMouseEnter={() => setActiveProject(project.id)}
               onMouseLeave={() => setActiveProject(null)}
               onClick={() => handleProjectClick(project.url)}
             >
-              {/* --- HOLOGRAPHIC HOVER GRADIENT --- */}
-              <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{
-                  background: 'linear-gradient(90deg, transparent 0%, rgba(59,130,246,0.05) 45%, rgba(147,51,234,0.05) 55%, transparent 100%)'
-                }}
-              />
-              
               {/* Left Side: ID & Title */}
-              <div className="flex items-baseline gap-12 relative z-10">
-                <span className="text-lg font-mono text-white/20 group-hover:text-blue-400 transition-colors duration-300">
-                  (0{project.id})
+              <div className="flex items-baseline gap-6 md:gap-10 relative z-10">
+                <span className="text-sm font-mono text-muted-foreground group-hover:text-primary transition-colors duration-300">
+                  0{project.id}
                 </span>
                 <div>
-                  <h3 className="text-4xl md:text-7xl font-semibold text-slate-300 group-hover:text-white group-hover:tracking-wide transition-all duration-500">
+                  <h3 className="text-xl md:text-3xl font-semibold text-foreground group-hover:text-primary transition-all duration-500 font-serif">
                     {project.title}
                   </h3>
-                  {/* Description reveals on hover */}
-                  <p className="h-0 overflow-hidden group-hover:h-auto group-hover:mt-2 text-blue-300/80 text-sm font-mono tracking-wide transition-all duration-500 delay-75 opacity-0 group-hover:opacity-100">
+                  <p className="text-xs text-muted-foreground mt-0.5">
                     {project.description}
                   </p>
                 </div>
               </div>
               
               {/* Right Side: Meta Data */}
-              <div className="flex flex-col items-end gap-2 relative z-10">
-                <span className="text-xs font-bold uppercase tracking-widest text-white/40 group-hover:text-blue-400 transition-colors duration-300">
+              <div className="flex flex-col items-end gap-1 relative z-10">
+                <span className="text-xs font-medium uppercase tracking-widest text-primary">
                   {project.category}
                 </span>
-                <span className="text-sm font-mono text-white/20 group-hover:text-white transition-colors duration-300">
+                <span className="text-xs font-mono text-muted-foreground">
                   {project.year}
                 </span>
               </div>
@@ -182,20 +165,17 @@ export const ProjectsSection = () => {
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               exit={{ opacity: 0, scale: 0.8, rotate: 10 }}
               transition={{ type: "spring", stiffness: 150, damping: 15 }}
-              className="relative -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg w-[400px] h-[280px] border border-white/20 shadow-[0_0_50px_rgba(59,130,246,0.3)]"
+              className="relative -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg w-[300px] h-[200px] border border-primary/30 shadow-lg"
             >
-              {/* Image */}
               <img
                 src={projects.find((p) => p.id === activeProject)?.image}
                 alt="Project Preview"
                 className="h-full w-full object-cover"
               />
-              
-              {/* Glass Overlay Tag */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
+              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent flex flex-col justify-end p-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-white font-bold text-lg tracking-tight">View Case Study</span>
-                  <ArrowUpRight className="text-blue-400 w-5 h-5" />
+                  <span className="text-foreground font-bold text-sm tracking-tight">View Project</span>
+                  <ArrowUpRight className="text-primary w-4 h-4" />
                 </div>
               </div>
             </motion.div>
@@ -205,7 +185,7 @@ export const ProjectsSection = () => {
 
       {/* Custom Cursor */}
       <motion.div 
-        className="fixed top-0 left-0 w-3 h-3 bg-blue-500 rounded-full pointer-events-none z-50 hidden md:block mix-blend-difference"
+        className="fixed top-0 left-0 w-3 h-3 bg-primary rounded-full pointer-events-none z-50 hidden md:block"
         style={{ x, y }}
       />
     </section>

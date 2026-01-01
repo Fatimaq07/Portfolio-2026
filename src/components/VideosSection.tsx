@@ -92,7 +92,7 @@ const VideoCard = ({
     <motion.div
       layout
       onClick={onClick}
-      className={`relative h-[500px] rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group ${
+      className={`relative h-[320px] md:h-[380px] rounded-2xl overflow-hidden cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group ${
         isActive ? 'flex-[3]' : 'flex-[1] hover:flex-[1.2]'
       }`}
     >
@@ -165,10 +165,10 @@ const VideoCard = ({
             <div className="relative">
               <motion.h3 
                 layout="position"
-                className={`font-bold mb-2 leading-tight transition-all duration-500 ${
+                className={`font-bold mb-1 leading-tight transition-all duration-500 ${
                   isActive 
-                    ? 'text-4xl text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-blue-200' 
-                    : 'text-xl text-white/80 rotate-0 md:-rotate-90 md:origin-bottom-left md:translate-x-8 md:-translate-y-8 whitespace-nowrap'
+                    ? 'text-2xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-blue-200' 
+                    : 'text-lg text-white/80 rotate-0 md:-rotate-90 md:origin-bottom-left md:translate-x-6 md:-translate-y-6 whitespace-nowrap'
                 }`}
               >
                 {video.title}
@@ -180,19 +180,19 @@ const VideoCard = ({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
                 >
-                  <p className="text-slate-300 text-sm max-w-md mb-6 line-clamp-2 leading-relaxed">
+                  <p className="text-slate-300 text-xs max-w-md mb-3 line-clamp-2 leading-relaxed">
                     {video.description}
                   </p>
                   
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3">
                     <motion.button 
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-shadow"
+                      className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-4 py-2 rounded-full text-xs font-bold hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-shadow"
                     >
-                      <Play size={14} fill="currentColor" /> Watch Demo
+                      <Play size={12} fill="currentColor" /> Watch
                     </motion.button>
-                    <span className="text-slate-500 text-xs font-mono bg-black/30 px-2 py-1 rounded border border-white/5">
+                    <span className="text-slate-500 text-xs font-mono">
                       {video.duration}
                     </span>
                   </div>
@@ -224,34 +224,34 @@ export const VideosSection = () => {
   const [activeId, setActiveId] = useState<number>(1);
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-b from-[#0f172a] to-[#020617] py-32 px-6 overflow-hidden">
+    <section className="relative h-screen flex flex-col justify-center px-6 overflow-hidden bg-background">
       
+      {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-slate-800/20 rounded-full blur-[120px] mix-blend-screen" />
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] brightness-100 contrast-150 mix-blend-overlay" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-accent/15 rounded-full blur-2xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-primary/15 rounded-full blur-2xl animate-float" style={{ animationDelay: '1s' }} />
       </div>
 
-      <div className="container mx-auto max-w-7xl relative z-10">
+      <div className="container mx-auto max-w-6xl relative z-10">
         
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 border-b border-slate-800/60 pb-12">
+        {/* Compact Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4 border-b border-border/30 pb-4">
           <div>
-            <span className="text-cyan-400 text-xs font-mono uppercase tracking-[0.2em] font-medium block mb-4">
+            <span className="text-primary text-xs uppercase tracking-[0.2em] font-medium block mb-2">
               Live Demonstrations
             </span>
-            <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tighter mb-4">
-              Intelligent <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Agents</span>.
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tighter font-serif">
+              Intelligent <span className="text-primary">Agents</span>.
             </h2>
-            <p className="text-slate-400 max-w-lg text-lg">
-              See my AI Voice Assistants and Autonomous Workflow Engines in action. 
-              <span className="text-slate-500 block mt-1 text-sm">Click a card to interact.</span>
+            <p className="text-muted-foreground text-sm mt-1">
+              Click a card to interact.
             </p>
           </div>
-          <button className="hidden md:flex items-center gap-2 text-white border-b border-white/30 pb-1 hover:text-cyan-400 hover:border-cyan-400 transition-colors uppercase text-xs tracking-widest font-medium">
-            View Agent Archives <ArrowUpRight size={14} />
-          </button>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-4 h-auto md:h-[600px]">
+        {/* Compact Video Cards */}
+        <div className="flex flex-col md:flex-row gap-3 h-auto md:h-[380px]">
           {videos.map((video) => (
             <VideoCard
               key={video.id}

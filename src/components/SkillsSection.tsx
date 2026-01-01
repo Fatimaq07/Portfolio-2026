@@ -214,7 +214,7 @@ export const SkillsSection = () => {
   const currentRightSkill = rightSkills[activeIndex.right];
 
   return (
-    <section ref={sectionRef} id="skills" className="relative py-16 lg:py-20 overflow-hidden" style={{ background: 'hsl(197 93% 84%)' }}>
+    <section ref={sectionRef} id="skills" className="relative h-screen flex flex-col justify-center overflow-hidden bg-background">
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
