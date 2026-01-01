@@ -133,98 +133,71 @@ const Index = () => {
         </motion.div>
       </AnimatePresence>
 
-      {/* Circular Navigation on Right Side */}
-      <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center gap-4">
-        {sections.map((section, index) => (
-          <button
-            key={section.id}
-            onClick={() => goToSection(index)}
-            className="group relative flex items-center justify-center"
-          >
-            {/* Outer ring animation for active */}
-            {currentSection === index && (
-              <motion.div
-                layoutId="activeRing"
-                className="absolute inset-0 w-10 h-10 rounded-full border-2 border-primary"
-                style={{ margin: '-8px' }}
-                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              />
-            )}
-            
-            {/* Progress circle animation */}
-            {currentSection === index && (
-              <svg className="absolute w-10 h-10 -rotate-90" style={{ margin: '-8px' }}>
-                <motion.circle
-                  cx="20"
-                  cy="20"
-                  r="18"
-                  fill="none"
-                  stroke="hsl(210 100% 50%)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 3, ease: 'linear', repeat: Infinity }}
-                  style={{ 
-                    strokeDasharray: '113',
-                    strokeDashoffset: '0'
-                  }}
-                />
-              </svg>
-            )}
-            
-            {/* Center dot */}
+      {/* Bottom Navigation with Swipe Arrow */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-6">
+        {/* Section Counter */}
+        <div className="flex items-center gap-3">
+          <span className="text-2xl font-bold text-foreground font-serif">{String(currentSection + 1).padStart(2, '0')}</span>
+          <div className="w-16 h-[2px] bg-foreground/20">
             <motion.div 
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                currentSection === index 
-                  ? 'bg-primary scale-100' 
-                  : 'bg-foreground/30 hover:bg-primary/60 scale-75 hover:scale-100'
-              }`}
-              whileHover={{ scale: 1.2 }}
+              className="h-full bg-primary"
+              initial={{ width: 0 }}
+              animate={{ width: `${((currentSection + 1) / sections.length) * 100}%` }}
+              transition={{ duration: 0.5 }}
             />
-            
-            {/* Label tooltip */}
-            <span className={`absolute right-8 text-xs font-medium uppercase tracking-wider whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-              currentSection === index ? 'text-primary' : 'text-foreground/60'
-            }`}>
-              {section.label}
-            </span>
+          </div>
+          <span className="text-sm text-foreground/40">{String(sections.length).padStart(2, '0')}</span>
+        </div>
+
+        {/* Swipe Text with Arrow */}
+        {currentSection < sections.length - 1 && (
+          <button
+            onClick={nextSection}
+            className="flex items-center gap-2 text-foreground/70 hover:text-primary transition-colors group"
+          >
+            <span className="text-sm font-medium">Swipe</span>
+            <motion.span
+              animate={{ x: [0, 6, 0] }}
+              transition={{ repeat: Infinity, duration: 1.2 }}
+              className="text-primary text-xl group-hover:text-primary"
+            >
+              →
+            </motion.span>
           </button>
+        )}
+
+        {/* Back Arrow on last section */}
+        {currentSection === sections.length - 1 && (
+          <button
+            onClick={prevSection}
+            className="flex items-center gap-2 text-foreground/70 hover:text-primary transition-colors group"
+          >
+            <motion.span
+              animate={{ x: [0, -6, 0] }}
+              transition={{ repeat: Infinity, duration: 1.2 }}
+              className="text-primary text-xl"
+            >
+              ←
+            </motion.span>
+            <span className="text-sm font-medium">Back</span>
+          </button>
+        )}
+      </div>
+
+      {/* Section dots indicator (minimal) */}
+      <div className="fixed bottom-8 right-8 z-50 flex items-center gap-2">
+        {sections.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSection(index)}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              currentSection === index 
+                ? 'bg-primary w-6' 
+                : 'bg-foreground/30 hover:bg-primary/60'
+            }`}
+          />
         ))}
       </div>
-
-      {/* Section Counter */}
-      <div className="fixed bottom-8 left-8 z-50 flex items-center gap-3">
-        <span className="text-2xl font-bold text-foreground">{String(currentSection + 1).padStart(2, '0')}</span>
-        <div className="w-12 h-[2px] bg-foreground/20">
-          <motion.div 
-            className="h-full bg-primary"
-            initial={{ width: 0 }}
-            animate={{ width: `${((currentSection + 1) / sections.length) * 100}%` }}
-            transition={{ duration: 0.5 }}
-          />
-        </div>
-        <span className="text-sm text-foreground/40">{String(sections.length).padStart(2, '0')}</span>
-      </div>
-
-      {/* Swipe hint on first section */}
-      {currentSection === 0 && (
-        <motion.div
-          className="fixed bottom-8 right-8 z-40 text-foreground/60 text-sm flex items-center gap-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-        >
-          <span>Scroll or swipe to navigate</span>
-          <motion.div
-            animate={{ x: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-            className="text-primary"
-          >
-            →
-          </motion.div>
-        </motion.div>
-      )}
     </div>
   );
 };
