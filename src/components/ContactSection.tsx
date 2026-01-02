@@ -72,12 +72,12 @@ const HexagonIcon = ({
         <div 
           className="w-28 h-32 md:w-36 md:h-40 flex items-center justify-center relative z-10"
           style={{
-            background: 'linear-gradient(145deg, hsl(220 70% 45%), hsl(220 60% 55%))',
+            background: 'linear-gradient(145deg, rgb(6 182 212), rgb(59 130 246))',
             clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-            boxShadow: '0 10px 40px -10px hsl(220 70% 45% / 0.4)',
+            boxShadow: '0 10px 40px -10px rgba(6, 182, 212, 0.4)',
           }}
         >
-          <span className="text-3xl md:text-4xl text-primary-foreground font-bold">@</span>
+          <span className="text-3xl md:text-4xl text-white font-bold">@</span>
         </div>
       </motion.div>
     );
@@ -109,23 +109,23 @@ const HexagonIcon = ({
         className="w-20 h-24 md:w-24 md:h-28 flex items-center justify-center relative transition-all duration-300"
         style={{
           background: isHovered 
-            ? 'linear-gradient(145deg, hsl(220 70% 45%), hsl(220 60% 55%))' 
-            : 'linear-gradient(145deg, hsl(197 80% 95%), hsl(197 70% 88%))',
+            ? 'linear-gradient(145deg, rgb(6 182 212), rgb(59 130 246))' 
+            : 'linear-gradient(145deg, rgb(51 65 85), rgb(30 41 59))',
           clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
           boxShadow: isHovered 
-            ? '0 15px 40px -10px hsl(220 70% 45% / 0.4)' 
-            : '0 10px 30px -10px hsl(197 50% 50% / 0.2)',
+            ? '0 15px 40px -10px rgba(6, 182, 212, 0.4)' 
+            : '0 10px 30px -10px rgba(0, 0, 0, 0.3)',
         }}
       >
         <IconComponent 
           className={`w-6 h-6 md:w-8 md:h-8 transition-colors duration-300 ${
-            isHovered ? 'text-primary-foreground' : 'text-muted-foreground'
+            isHovered ? 'text-white' : 'text-slate-400'
           }`}
         />
         
         {/* Connection dots */}
-        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-border/50" />
-        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-border/50" />
+        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-slate-600/50" />
+        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-slate-600/50" />
       </div>
 
       {/* Hover tooltip */}
@@ -133,10 +133,10 @@ const HexagonIcon = ({
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap bg-foreground text-background px-4 py-2 rounded-lg text-sm font-medium z-20"
+          className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white text-slate-900 px-4 py-2 rounded-lg text-sm font-medium z-20"
         >
           {social.hoverText}
-          <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-foreground rotate-45" />
+          <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-white rotate-45" />
         </motion.div>
       )}
     </motion.div>
@@ -183,16 +183,27 @@ export const ContactSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="contact" className="relative min-h-screen py-32 lg:py-48 overflow-hidden" style={{ background: 'hsl(197 93% 84%)' }}>
+    <section ref={sectionRef} id="contact" className="relative min-h-screen py-32 lg:py-48 overflow-hidden"
+      style={{ 
+        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0f172a 60%, #020617 100%)'
+      }}
+    >
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-30">
         <div 
           className="absolute inset-0"
           style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, hsl(var(--border)) 1px, transparent 0)`,
+            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(100, 116, 139, 0.3) 1px, transparent 0)`,
             backgroundSize: '40px 40px',
           }}
         />
+      </div>
+
+      {/* Background effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-2xl" />
       </div>
 
       <div className="container mx-auto px-6 lg:px-12">
@@ -200,14 +211,14 @@ export const ContactSection = () => {
           {/* Header */}
           <div className="contact-header text-center mb-20">
             <motion.h2 
-              className="headline-lg mb-4"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight font-serif mb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              Let's Connect<span className="text-primary">.</span>
+              Let's Connect<span className="text-cyan-400">.</span>
             </motion.h2>
-            <p className="body-lg max-w-xl mx-auto">
+            <p className="text-lg text-slate-400 max-w-xl mx-auto">
               Have a project in mind? I'd love to collaborate with you.
             </p>
           </div>
@@ -234,7 +245,7 @@ export const ContactSection = () => {
               <div 
                 className="w-20 h-24 md:w-24 md:h-28 flex items-center justify-center opacity-30"
                 style={{
-                  background: 'linear-gradient(145deg, hsl(197 80% 95%), hsl(197 70% 88%))',
+                  background: 'linear-gradient(145deg, rgb(51 65 85), rgb(30 41 59))',
                   clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
                 }}
               />
@@ -243,7 +254,7 @@ export const ContactSection = () => {
 
           {/* Subtitle */}
           <motion.p
-            className="text-center text-lg md:text-xl text-muted-foreground mt-16"
+            className="text-center text-lg md:text-xl text-slate-500 mt-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -255,7 +266,7 @@ export const ContactSection = () => {
       </div>
 
       {/* Marquee Footer */}
-      <div className="mt-32 overflow-hidden border-t border-border/30 pt-8">
+      <div className="mt-32 overflow-hidden border-t border-slate-700/30 pt-8">
         <motion.div
           className="flex whitespace-nowrap"
           animate={{ x: ['0%', '-50%'] }}
@@ -266,7 +277,7 @@ export const ContactSection = () => {
           }}
         >
           {[...Array(4)].map((_, i) => (
-            <span key={i} className="text-6xl lg:text-8xl font-bold text-foreground/5 mx-8">
+            <span key={i} className="text-6xl lg:text-8xl font-bold text-slate-800/30 mx-8">
               Available for Projects • Let's Collaborate • 
             </span>
           ))}

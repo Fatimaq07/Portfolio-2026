@@ -54,17 +54,17 @@ const SkillNode = ({
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
     >
       <motion.div 
-        className={`flex items-center justify-center ${nodeSize} rounded-xl bg-card/90 backdrop-blur-sm border transition-all duration-300`}
+        className={`flex items-center justify-center ${nodeSize} rounded-xl bg-slate-800/90 backdrop-blur-sm border transition-all duration-300`}
         style={{
-          borderColor: isHighlighted ? 'hsl(var(--primary))' : 'hsl(var(--border) / 0.5)',
-          boxShadow: isHighlighted ? '0 0 25px hsl(var(--primary) / 0.6), 0 0 50px hsl(var(--primary) / 0.3)' : 'none',
+          borderColor: isHighlighted ? 'rgb(6 182 212)' : 'rgba(148, 163, 184, 0.3)',
+          boxShadow: isHighlighted ? '0 0 25px rgba(6, 182, 212, 0.6), 0 0 50px rgba(6, 182, 212, 0.3)' : 'none',
         }}
       >
         <img 
           src={skill.icon} 
           alt={skill.name}
           className={`${iconSize} object-contain`}
-          style={{ filter: skill.name === 'Next.js' || skill.name === 'Vercel' ? 'invert(0.3)' : 'none' }}
+          style={{ filter: skill.name === 'Next.js' || skill.name === 'Vercel' ? 'invert(1)' : 'none' }}
         />
       </motion.div>
     </motion.div>
@@ -81,30 +81,30 @@ const SkillCard = ({ skill, side }: { skill: Skill | null; side: 'left' | 'right
           animate={{ opacity: 1, x: 0, scale: 1 }}
           exit={{ opacity: 0, x: side === 'left' ? -20 : 20, scale: 0.9 }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="w-56 p-4 rounded-2xl bg-card/80 backdrop-blur-md border border-primary/30 shadow-xl"
-          style={{ boxShadow: '0 0 30px hsl(var(--primary) / 0.2)' }}
+          className="w-56 p-4 rounded-2xl bg-slate-800/80 backdrop-blur-md border border-cyan-500/30 shadow-xl"
+          style={{ boxShadow: '0 0 30px rgba(6, 182, 212, 0.2)' }}
         >
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
               <img 
                 src={skill.icon} 
                 alt={skill.name}
                 className="w-6 h-6 object-contain"
-                style={{ filter: skill.name === 'Next.js' || skill.name === 'Vercel' ? 'invert(0.3)' : 'none' }}
+                style={{ filter: skill.name === 'Next.js' || skill.name === 'Vercel' ? 'invert(1)' : 'none' }}
               />
             </div>
             <div>
-              <h4 className="font-semibold text-foreground text-sm">{skill.name}</h4>
+              <h4 className="font-semibold text-white text-sm">{skill.name}</h4>
               <span className={`text-xs ${
                 skill.level === 'Production-level' 
-                  ? 'text-primary' 
-                  : 'text-muted-foreground'
+                  ? 'text-cyan-400' 
+                  : 'text-slate-400'
               }`}>
                 {skill.level}
               </span>
             </div>
           </div>
-          <p className="text-xs text-muted-foreground leading-relaxed">
+          <p className="text-xs text-slate-400 leading-relaxed">
             {skill.usage}
           </p>
         </motion.div>
@@ -214,21 +214,25 @@ export const SkillsSection = () => {
   const currentRightSkill = rightSkills[activeIndex.right];
 
   return (
-    <section ref={sectionRef} id="skills" className="relative h-screen flex flex-col justify-center overflow-hidden bg-background">
+    <section ref={sectionRef} id="skills" className="relative h-screen flex flex-col justify-center overflow-hidden"
+      style={{ 
+        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0f172a 60%, #020617 100%)'
+      }}
+    >
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-accent/10 rounded-full blur-2xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-primary/10 rounded-full blur-2xl animate-float" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-2xl animate-float" style={{ animationDelay: '1s' }} />
       </div>
 
       <div className="container mx-auto px-6 lg:px-12 mb-6">
         <div className="skills-header text-center">
-          <span className="text-primary text-sm uppercase tracking-widest font-medium block mb-3">
+          <span className="text-cyan-400 text-sm uppercase tracking-widest font-medium block mb-3">
             Technical Expertise
           </span>
-          <h2 className="headline-md mb-2">
-            Skills & Technologies<span className="text-primary">.</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight font-serif mb-2">
+            Skills & Technologies<span className="text-cyan-400">.</span>
           </h2>
         </div>
       </div>
@@ -247,7 +251,7 @@ export const SkillsSection = () => {
         >
           {/* Orbit rings */}
           <div 
-            className="absolute rounded-full border border-primary/20"
+            className="absolute rounded-full border border-cyan-500/20"
             style={{
               left: centerX - innerRadius,
               top: centerY - innerRadius,
@@ -256,7 +260,7 @@ export const SkillsSection = () => {
             }}
           />
           <div 
-            className="absolute rounded-full border border-border/30"
+            className="absolute rounded-full border border-slate-600/30"
             style={{
               left: centerX - outerRadius,
               top: centerY - outerRadius,
@@ -274,10 +278,10 @@ export const SkillsSection = () => {
               transform: 'translate(-50%, -50%)',
             }}
           >
-            <h3 className="text-lg md:text-xl font-bold text-foreground tracking-tight font-serif">
+            <h3 className="text-lg md:text-xl font-bold text-white tracking-tight font-serif">
               FULL STACK
             </h3>
-            <span className="text-xs text-muted-foreground uppercase tracking-widest">
+            <span className="text-xs text-slate-400 uppercase tracking-widest">
               Developer
             </span>
           </div>

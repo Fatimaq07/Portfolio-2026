@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Volume2, VolumeX, ArrowUpRight, Bot, Mic, Cpu } from 'lucide-react';
+import { Play, Volume2, VolumeX, Bot, Mic, Cpu } from 'lucide-react';
 
 interface VideoItem {
   id: number;
@@ -97,7 +97,7 @@ const VideoCard = ({
       }`}
     >
       <div className={`absolute inset-0 p-[1px] rounded-3xl bg-gradient-to-br from-transparent via-white/10 to-transparent transition-all duration-500 ${
-        isActive ? 'from-blue-500 via-cyan-400 to-purple-600' : 'group-hover:from-white/20 group-hover:to-white/5'
+        isActive ? 'from-cyan-500 via-blue-400 to-purple-600' : 'group-hover:from-white/20 group-hover:to-white/5'
       }`}>
         <div className="absolute inset-0 bg-slate-950 rounded-[23px] overflow-hidden">
           
@@ -143,7 +143,7 @@ const VideoCard = ({
                 layout="position"
                 className={`backdrop-blur-xl border px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 shadow-lg ${
                   isActive 
-                    ? 'bg-blue-500/20 border-blue-400/30 text-blue-200' 
+                    ? 'bg-cyan-500/20 border-cyan-400/30 text-cyan-200' 
                     : 'bg-white/5 border-white/10 text-slate-400 group-hover:text-white group-hover:bg-white/10 transition-colors'
                 }`}
               >
@@ -167,7 +167,7 @@ const VideoCard = ({
                 layout="position"
                 className={`font-bold mb-1 leading-tight transition-all duration-500 ${
                   isActive 
-                    ? 'text-2xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-blue-200' 
+                    ? 'text-2xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-cyan-200' 
                     : 'text-lg text-white/80 rotate-0 md:-rotate-90 md:origin-bottom-left md:translate-x-6 md:-translate-y-6 whitespace-nowrap'
                 }`}
               >
@@ -188,7 +188,7 @@ const VideoCard = ({
                     <motion.button 
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-4 py-2 rounded-full text-xs font-bold hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-shadow"
+                      className="flex items-center gap-2 bg-gradient-to-r from-cyan-600 to-blue-500 text-white px-4 py-2 rounded-full text-xs font-bold hover:shadow-[0_0_20px_rgba(6,182,212,0.5)] transition-shadow"
                     >
                       <Play size={12} fill="currentColor" /> Watch
                     </motion.button>
@@ -203,7 +203,7 @@ const VideoCard = ({
             {isActive && (
               <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10">
                 <motion.div 
-                  className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.8)]"
+                  className="h-full bg-gradient-to-r from-cyan-500 to-blue-400 shadow-[0_0_10px_rgba(6,182,212,0.8)]"
                   style={{ width: `${progress}%` }}
                   transition={{ type: 'tween', ease: 'linear' }}
                 />
@@ -214,7 +214,7 @@ const VideoCard = ({
       </div>
 
       {isActive && (
-        <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-cyan-500/20 z-[-1] blur-2xl opacity-50" />
+        <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-blue-500/20 z-[-1] blur-2xl opacity-50" />
       )}
     </motion.div>
   );
@@ -224,27 +224,31 @@ export const VideosSection = () => {
   const [activeId, setActiveId] = useState<number>(1);
 
   return (
-    <section className="relative h-screen flex flex-col justify-center px-6 overflow-hidden bg-background">
+    <section className="relative h-screen flex flex-col justify-center px-6 overflow-hidden"
+      style={{ 
+        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0f172a 60%, #020617 100%)'
+      }}
+    >
       
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-accent/15 rounded-full blur-2xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-primary/15 rounded-full blur-2xl animate-float" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500/15 rounded-full blur-2xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-purple-500/15 rounded-full blur-2xl animate-float" style={{ animationDelay: '1s' }} />
       </div>
 
       <div className="container mx-auto max-w-6xl relative z-10">
         
         {/* Compact Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4 border-b border-border/30 pb-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4 border-b border-slate-700/30 pb-4">
           <div>
-            <span className="text-primary text-xs uppercase tracking-[0.2em] font-medium block mb-2">
+            <span className="text-cyan-400 text-xs uppercase tracking-[0.2em] font-medium block mb-2">
               Live Demonstrations
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tighter font-serif">
-              Intelligent <span className="text-primary">Agents</span>.
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tighter font-serif">
+              Intelligent <span className="text-cyan-400">Agents</span>.
             </h2>
-            <p className="text-muted-foreground text-sm mt-1">
+            <p className="text-slate-400 text-sm mt-1">
               Click a card to interact.
             </p>
           </div>
