@@ -1,10 +1,6 @@
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion } from 'framer-motion';
-import { Briefcase, GraduationCap, Award, Code } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Briefcase, GraduationCap, Award, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const experiences = [
   {
@@ -42,184 +38,257 @@ const experiences = [
 ];
 
 export const ExperienceSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const horizontalRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
+  // Auto-cycle through experiences
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Header animation
-      gsap.fromTo('.experience-header', {
-        y: 60,
-        opacity: 0
-      }, {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 70%',
-          toggleActions: 'play none none reverse',
-        }
-      });
-
-      // Horizontal scroll effect
-      if (horizontalRef.current && containerRef.current) {
-        const cards = horizontalRef.current.querySelectorAll('.experience-card');
-        const totalWidth = horizontalRef.current.scrollWidth - window.innerWidth + 200;
-
-        gsap.to(horizontalRef.current, {
-          x: -totalWidth,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top top',
-            end: `+=${totalWidth}`,
-            scrub: 1,
-            pin: true,
-            anticipatePin: 1,
-          }
-        });
-
-        // Animate cards as they come into view
-        cards.forEach((card, i) => {
-          gsap.fromTo(card, {
-            opacity: 0.5,
-            scale: 0.9,
-          }, {
-            opacity: 1,
-            scale: 1,
-            scrollTrigger: {
-              trigger: card,
-              containerAnimation: gsap.to(horizontalRef.current, { x: -totalWidth }),
-              start: 'left 80%',
-              end: 'left 30%',
-              scrub: true,
-            }
-          });
-        });
-      }
-
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+    if (!isAutoPlaying) return;
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % experiences.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isAutoPlaying]);
 
   const getIcon = (type: string) => {
     switch (type) {
       case 'work':
-        return <Briefcase className="w-6 h-6" />;
+        return <Briefcase className="w-5 h-5" />;
       case 'education':
-        return <GraduationCap className="w-6 h-6" />;
+        return <GraduationCap className="w-5 h-5" />;
       case 'achievement':
-        return <Award className="w-6 h-6" />;
+        return <Award className="w-5 h-5" />;
       default:
-        return <Code className="w-6 h-6" />;
+        return <Briefcase className="w-5 h-5" />;
     }
   };
 
+  const currentExp = experiences[activeIndex];
+
+  const goToNext = () => {
+    setIsAutoPlaying(false);
+    setActiveIndex((prev) => (prev + 1) % experiences.length);
+  };
+
+  const goToPrev = () => {
+    setIsAutoPlaying(false);
+    setActiveIndex((prev) => (prev - 1 + experiences.length) % experiences.length);
+  };
+
   return (
-    <section ref={sectionRef} id="experience" className="relative overflow-hidden"
+    <section 
+      id="experience" 
+      className="h-screen w-full flex items-center justify-center relative overflow-hidden"
       style={{ 
         background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0f172a 60%, #020617 100%)'
       }}
     >
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-cyan-500/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-2xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-cyan-500/5 rounded-full blur-3xl" />
+        <motion.div 
+          className="absolute top-1/4 left-1/4 w-24 h-24 bg-cyan-500/10 rounded-full blur-2xl"
+          animate={{ 
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3]
+          }}
+          transition={{ duration: 4, repeat: Infinity }}
+        />
+        <motion.div 
+          className="absolute bottom-1/4 right-1/4 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl"
+          animate={{ 
+            scale: [1.2, 1, 1.2],
+            opacity: [0.5, 0.3, 0.5]
+          }}
+          transition={{ duration: 5, repeat: Infinity }}
+        />
       </div>
 
-      {/* Sticky horizontal scroll container */}
-      <div ref={containerRef} className="min-h-screen">
-        <div className="h-screen flex flex-col justify-center overflow-hidden">
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           
-          {/* Header */}
-          <div className="experience-header px-8 lg:px-16 mb-12">
-            <span className="text-cyan-400 text-sm uppercase tracking-widest font-medium block mb-3">
-              Journey
-            </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight font-serif">
-              Experience & Education<span className="text-cyan-400">.</span>
-            </h2>
-            <p className="text-slate-400 mt-3 text-lg">
-              Scroll down to explore my journey →
-            </p>
+          {/* Left Side - Timeline Navigation */}
+          <div className="space-y-4">
+            <motion.span 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-cyan-400 text-xs uppercase tracking-widest font-medium block"
+            >
+              My Journey
+            </motion.span>
+            
+            <motion.h2 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight font-serif"
+            >
+              Experience<span className="text-cyan-400">.</span>
+            </motion.h2>
+
+            {/* Timeline Items */}
+            <div className="mt-6 space-y-2">
+              {experiences.map((exp, index) => (
+                <motion.button
+                  key={exp.title}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 + index * 0.1 }}
+                  onClick={() => {
+                    setIsAutoPlaying(false);
+                    setActiveIndex(index);
+                  }}
+                  className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-300 text-left group ${
+                    activeIndex === index 
+                      ? 'bg-cyan-500/20 border border-cyan-500/30' 
+                      : 'hover:bg-slate-800/50 border border-transparent'
+                  }`}
+                >
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${
+                    activeIndex === index 
+                      ? 'bg-cyan-500 text-slate-900' 
+                      : 'bg-slate-800 text-slate-400 group-hover:text-cyan-400'
+                  }`}>
+                    {getIcon(exp.type)}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className={`text-sm font-medium truncate transition-colors ${
+                      activeIndex === index ? 'text-white' : 'text-slate-400 group-hover:text-white'
+                    }`}>
+                      {exp.title}
+                    </p>
+                    <p className="text-xs text-slate-500">{exp.period}</p>
+                  </div>
+                  {activeIndex === index && (
+                    <motion.div 
+                      layoutId="activeIndicator"
+                      className="w-1 h-8 bg-cyan-400 rounded-full"
+                    />
+                  )}
+                </motion.button>
+              ))}
+            </div>
           </div>
 
-          {/* Horizontal scrolling cards */}
-          <div ref={horizontalRef} className="flex gap-8 px-8 lg:px-16">
-            {experiences.map((exp, i) => (
+          {/* Right Side - Active Experience Details */}
+          <div className="relative">
+            <AnimatePresence mode="wait">
               <motion.div
-                key={exp.title}
-                className="experience-card flex-shrink-0 w-[400px] md:w-[500px] p-8 rounded-3xl bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 relative overflow-hidden group"
-                whileHover={{ scale: 1.02, y: -5 }}
-                transition={{ duration: 0.3 }}
+                key={activeIndex}
+                initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -40, scale: 0.95 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="relative p-6 lg:p-8 rounded-2xl bg-slate-800/30 backdrop-blur-xl border border-slate-700/50"
               >
-                {/* Gradient border effect on hover */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-cyan-500/20 via-transparent to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
                 {/* Number indicator */}
-                <div className="absolute top-6 right-6 text-6xl font-bold text-slate-700/30 font-mono">
-                  0{i + 1}
-                </div>
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-2xl font-bold text-white font-mono shadow-lg shadow-cyan-500/30"
+                >
+                  0{activeIndex + 1}
+                </motion.div>
 
-                {/* Content */}
-                <div className="relative z-10">
-                  {/* Icon and type */}
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center text-cyan-400 border border-cyan-500/30">
-                      {getIcon(exp.type)}
-                    </div>
-                    <div>
-                      <span className="text-xs font-bold uppercase tracking-widest text-cyan-400">
-                        {exp.type}
-                      </span>
-                      <p className="text-slate-400 text-sm">{exp.period}</p>
-                    </div>
-                  </div>
+                {/* Type badge */}
+                <motion.span 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-400 text-xs uppercase tracking-widest font-bold rounded-full mb-4"
+                >
+                  {currentExp.type}
+                </motion.span>
 
-                  {/* Title & Company */}
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 font-serif">
-                    {exp.title}
-                  </h3>
-                  <p className="text-cyan-400 font-medium text-lg mb-4">{exp.company}</p>
-                  
-                  {/* Description */}
-                  <p className="text-slate-400 leading-relaxed mb-6">
-                    {exp.description}
-                  </p>
+                {/* Title with text reveal */}
+                <motion.h3 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 }}
+                  className="text-2xl md:text-3xl font-bold text-white mb-1 font-serif"
+                >
+                  {currentExp.title}
+                </motion.h3>
 
-                  {/* Highlights */}
-                  <div className="flex flex-wrap gap-2">
-                    {exp.highlights.map((h) => (
-                      <span 
-                        key={h}
-                        className="px-4 py-2 bg-slate-700/50 rounded-full text-sm text-slate-300 border border-slate-600/50"
-                      >
-                        {h}
-                      </span>
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-cyan-400 font-medium mb-1"
+                >
+                  {currentExp.company}
+                </motion.p>
+
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.25 }}
+                  className="text-slate-500 text-sm mb-4"
+                >
+                  {currentExp.period}
+                </motion.p>
+
+                <motion.p 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-slate-400 leading-relaxed mb-5 text-sm lg:text-base"
+                >
+                  {currentExp.description}
+                </motion.p>
+
+                {/* Highlights */}
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.35 }}
+                  className="flex flex-wrap gap-2"
+                >
+                  {currentExp.highlights.map((h, i) => (
+                    <motion.span 
+                      key={h}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.4 + i * 0.05 }}
+                      className="px-3 py-1.5 bg-slate-700/50 rounded-full text-xs text-slate-300 border border-slate-600/50"
+                    >
+                      {h}
+                    </motion.span>
+                  ))}
+                </motion.div>
+
+                {/* Navigation arrows */}
+                <div className="flex items-center gap-2 mt-6 pt-4 border-t border-slate-700/50">
+                  <button
+                    onClick={goToPrev}
+                    className="w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center text-slate-400 hover:text-white hover:bg-cyan-500/20 transition-all"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <div className="flex-1 flex justify-center gap-1.5">
+                    {experiences.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => {
+                          setIsAutoPlaying(false);
+                          setActiveIndex(i);
+                        }}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          activeIndex === i ? 'bg-cyan-400 w-6' : 'bg-slate-600 hover:bg-slate-500'
+                        }`}
+                      />
                     ))}
                   </div>
+                  <button
+                    onClick={goToNext}
+                    className="w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center text-slate-400 hover:text-white hover:bg-cyan-500/20 transition-all"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
                 </div>
-
-                {/* Decorative line */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 opacity-50" />
               </motion.div>
-            ))}
-
-            {/* End spacer for scroll */}
-            <div className="flex-shrink-0 w-[100px]" />
-          </div>
-
-          {/* Scroll indicator */}
-          <div className="px-8 lg:px-16 mt-12">
-            <div className="flex items-center gap-4 text-slate-500">
-              <div className="w-16 h-px bg-gradient-to-r from-cyan-500 to-transparent" />
-              <span className="text-sm uppercase tracking-widest">Scroll to explore</span>
-            </div>
+            </AnimatePresence>
           </div>
         </div>
       </div>

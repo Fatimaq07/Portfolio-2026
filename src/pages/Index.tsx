@@ -133,67 +133,50 @@ const Index = () => {
         </motion.div>
       </AnimatePresence>
 
-      {/* Bottom Navigation with Swipe Arrow */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-6">
-        {/* Section Counter */}
-        <div className="flex items-center gap-3">
-          <span className="text-2xl font-bold text-foreground font-serif">{String(currentSection + 1).padStart(2, '0')}</span>
-          <div className="w-16 h-[2px] bg-foreground/20">
-            <motion.div 
-              className="h-full bg-primary"
-              initial={{ width: 0 }}
-              animate={{ width: `${((currentSection + 1) / sections.length) * 100}%` }}
-              transition={{ duration: 0.5 }}
-            />
-          </div>
-          <span className="text-sm text-foreground/40">{String(sections.length).padStart(2, '0')}</span>
-        </div>
-
-        {/* Swipe Text with Arrow */}
-        {currentSection < sections.length - 1 && (
-          <button
-            onClick={nextSection}
-            className="flex items-center gap-2 text-foreground/70 hover:text-primary transition-colors group"
+      {/* Left Back Arrow */}
+      {currentSection > 0 && (
+        <button
+          onClick={prevSection}
+          className="fixed left-8 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 text-white/70 hover:text-cyan-400 transition-colors group"
+        >
+          <motion.span
+            animate={{ x: [0, -6, 0] }}
+            transition={{ repeat: Infinity, duration: 1.2 }}
+            className="text-cyan-400 text-3xl"
           >
-            <span className="text-sm font-medium">Swipe</span>
-            <motion.span
-              animate={{ x: [0, 6, 0] }}
-              transition={{ repeat: Infinity, duration: 1.2 }}
-              className="text-primary text-xl group-hover:text-primary"
-            >
-              →
-            </motion.span>
-          </button>
-        )}
+            ←
+          </motion.span>
+          <span className="text-sm font-medium uppercase tracking-wider">Back</span>
+        </button>
+      )}
 
-        {/* Back Arrow on last section */}
-        {currentSection === sections.length - 1 && (
-          <button
-            onClick={prevSection}
-            className="flex items-center gap-2 text-foreground/70 hover:text-primary transition-colors group"
+      {/* Right Swipe Arrow */}
+      {currentSection < sections.length - 1 && (
+        <button
+          onClick={nextSection}
+          className="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 text-white/70 hover:text-cyan-400 transition-colors group"
+        >
+          <span className="text-sm font-medium uppercase tracking-wider">Swipe</span>
+          <motion.span
+            animate={{ x: [0, 6, 0] }}
+            transition={{ repeat: Infinity, duration: 1.2 }}
+            className="text-cyan-400 text-3xl"
           >
-            <motion.span
-              animate={{ x: [0, -6, 0] }}
-              transition={{ repeat: Infinity, duration: 1.2 }}
-              className="text-primary text-xl"
-            >
-              ←
-            </motion.span>
-            <span className="text-sm font-medium">Back</span>
-          </button>
-        )}
-      </div>
+            →
+          </motion.span>
+        </button>
+      )}
 
-      {/* Section dots indicator (minimal) */}
-      <div className="fixed bottom-8 right-8 z-50 flex items-center gap-2">
+      {/* Bottom Section dots indicator */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3">
         {sections.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSection(index)}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               currentSection === index 
-                ? 'bg-primary w-6' 
-                : 'bg-foreground/30 hover:bg-primary/60'
+                ? 'bg-cyan-400 w-8' 
+                : 'bg-white/30 hover:bg-cyan-400/60'
             }`}
           />
         ))}
