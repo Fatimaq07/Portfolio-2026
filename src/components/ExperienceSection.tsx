@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
-import { Briefcase, GraduationCap } from 'lucide-react';
+import { Briefcase, GraduationCap, Award, Code } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,12 +29,22 @@ const experiences = [
     company: 'University',
     period: '2020 - 2024',
     description: 'Specialized in software engineering with focus on web technologies.',
-    highlights: ['Dean\'s List', 'Research', 'Projects'],
+    highlights: ["Dean's List", 'Research', 'Projects'],
+  },
+  {
+    type: 'achievement',
+    title: 'AI Certification',
+    company: 'OpenAI',
+    period: '2024',
+    description: 'Completed advanced AI and machine learning specialization.',
+    highlights: ['GPT-4', 'Fine-tuning', 'Embeddings'],
   },
 ];
 
 export const ExperienceSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const horizontalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -54,110 +64,162 @@ export const ExperienceSection = () => {
         }
       });
 
-      // Timeline line growing
-      gsap.fromTo('.timeline-line', {
-        scaleY: 0,
-        transformOrigin: 'top'
-      }, {
-        scaleY: 1,
-        duration: 1.5,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.timeline-container',
-          start: 'top 70%',
-          toggleActions: 'play none none reverse',
-        }
-      });
+      // Horizontal scroll effect
+      if (horizontalRef.current && containerRef.current) {
+        const cards = horizontalRef.current.querySelectorAll('.experience-card');
+        const totalWidth = horizontalRef.current.scrollWidth - window.innerWidth + 200;
 
-      // Experience cards
-      document.querySelectorAll('.experience-card').forEach((card, i) => {
-        gsap.fromTo(card, {
-          x: i % 2 === 0 ? -60 : 60,
-          opacity: 0
-        }, {
-          x: 0,
-          opacity: 1,
-          duration: 0.8,
-          delay: i * 0.2,
-          ease: 'power3.out',
+        gsap.to(horizontalRef.current, {
+          x: -totalWidth,
+          ease: 'none',
           scrollTrigger: {
-            trigger: card,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
+            trigger: containerRef.current,
+            start: 'top top',
+            end: `+=${totalWidth}`,
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
           }
         });
-      });
+
+        // Animate cards as they come into view
+        cards.forEach((card, i) => {
+          gsap.fromTo(card, {
+            opacity: 0.5,
+            scale: 0.9,
+          }, {
+            opacity: 1,
+            scale: 1,
+            scrollTrigger: {
+              trigger: card,
+              containerAnimation: gsap.to(horizontalRef.current, { x: -totalWidth }),
+              start: 'left 80%',
+              end: 'left 30%',
+              scrub: true,
+            }
+          });
+        });
+      }
 
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
+  const getIcon = (type: string) => {
+    switch (type) {
+      case 'work':
+        return <Briefcase className="w-6 h-6" />;
+      case 'education':
+        return <GraduationCap className="w-6 h-6" />;
+      case 'achievement':
+        return <Award className="w-6 h-6" />;
+      default:
+        return <Code className="w-6 h-6" />;
+    }
+  };
+
   return (
-    <section ref={sectionRef} id="experience" className="relative min-h-screen py-32 lg:py-48 overflow-hidden" style={{ background: 'hsl(197 93% 84%)' }}>
-      <div className="container mx-auto px-6 lg:px-12">
-        <div className="experience-header mb-20 text-center">
-          <span className="text-primary text-sm uppercase tracking-widest font-medium block mb-4">
-            Journey
-          </span>
-          <h2 className="headline-lg">
-            Experience & Education<span className="text-primary">.</span>
-          </h2>
-        </div>
+    <section ref={sectionRef} id="experience" className="relative overflow-hidden"
+      style={{ 
+        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0f172a 60%, #020617 100%)'
+      }}
+    >
+      {/* Background effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-cyan-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-2xl" />
+      </div>
 
-        {/* Timeline */}
-        <div className="timeline-container relative max-w-3xl mx-auto">
-          {/* Timeline line */}
-          <div className="timeline-line absolute left-4 lg:left-1/2 top-0 bottom-0 w-px bg-border/50 lg:-translate-x-1/2" />
+      {/* Sticky horizontal scroll container */}
+      <div ref={containerRef} className="min-h-screen">
+        <div className="h-screen flex flex-col justify-center overflow-hidden">
+          
+          {/* Header */}
+          <div className="experience-header px-8 lg:px-16 mb-12">
+            <span className="text-cyan-400 text-sm uppercase tracking-widest font-medium block mb-3">
+              Journey
+            </span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight font-serif">
+              Experience & Education<span className="text-cyan-400">.</span>
+            </h2>
+            <p className="text-slate-400 mt-3 text-lg">
+              Scroll down to explore my journey →
+            </p>
+          </div>
 
-          <div className="space-y-12">
+          {/* Horizontal scrolling cards */}
+          <div ref={horizontalRef} className="flex gap-8 px-8 lg:px-16">
             {experiences.map((exp, i) => (
               <motion.div
                 key={exp.title}
-                className={`experience-card relative flex items-start gap-8 ${
-                  i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-                }`}
-                whileHover={{ scale: 1.02 }}
+                className="experience-card flex-shrink-0 w-[400px] md:w-[500px] p-8 rounded-3xl bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 relative overflow-hidden group"
+                whileHover={{ scale: 1.02, y: -5 }}
                 transition={{ duration: 0.3 }}
               >
-                {/* Timeline dot */}
-                <div className="absolute left-4 lg:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-background lg:-translate-x-1/2 z-10" />
+                {/* Gradient border effect on hover */}
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-cyan-500/20 via-transparent to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Number indicator */}
+                <div className="absolute top-6 right-6 text-6xl font-bold text-slate-700/30 font-mono">
+                  0{i + 1}
+                </div>
 
-                {/* Card */}
-                <div className={`flex-1 ml-12 lg:ml-0 ${i % 2 === 0 ? 'lg:pr-16 lg:text-right' : 'lg:pl-16'}`}>
-                  <div className="glass-card p-6 lg:p-8">
-                    <div className={`flex items-center gap-3 mb-4 ${i % 2 === 0 ? 'lg:justify-end' : ''}`}>
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                        {exp.type === 'work' ? (
-                          <Briefcase className="w-5 h-5 text-primary" />
-                        ) : (
-                          <GraduationCap className="w-5 h-5 text-primary" />
-                        )}
-                      </div>
-                      <span className="text-sm text-muted-foreground">{exp.period}</span>
+                {/* Content */}
+                <div className="relative z-10">
+                  {/* Icon and type */}
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center text-cyan-400 border border-cyan-500/30">
+                      {getIcon(exp.type)}
                     </div>
-
-                    <h3 className="text-xl font-bold text-foreground mb-1">{exp.title}</h3>
-                    <p className="text-primary font-medium mb-3">{exp.company}</p>
-                    <p className="text-sm text-muted-foreground mb-4">{exp.description}</p>
-
-                    <div className={`flex flex-wrap gap-2 ${i % 2 === 0 ? 'lg:justify-end' : ''}`}>
-                      {exp.highlights.map((h) => (
-                        <span 
-                          key={h}
-                          className="px-3 py-1 bg-muted/30 rounded-full text-xs text-muted-foreground"
-                        >
-                          {h}
-                        </span>
-                      ))}
+                    <div>
+                      <span className="text-xs font-bold uppercase tracking-widest text-cyan-400">
+                        {exp.type}
+                      </span>
+                      <p className="text-slate-400 text-sm">{exp.period}</p>
                     </div>
+                  </div>
+
+                  {/* Title & Company */}
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 font-serif">
+                    {exp.title}
+                  </h3>
+                  <p className="text-cyan-400 font-medium text-lg mb-4">{exp.company}</p>
+                  
+                  {/* Description */}
+                  <p className="text-slate-400 leading-relaxed mb-6">
+                    {exp.description}
+                  </p>
+
+                  {/* Highlights */}
+                  <div className="flex flex-wrap gap-2">
+                    {exp.highlights.map((h) => (
+                      <span 
+                        key={h}
+                        className="px-4 py-2 bg-slate-700/50 rounded-full text-sm text-slate-300 border border-slate-600/50"
+                      >
+                        {h}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
-                {/* Spacer for alternating layout */}
-                <div className="hidden lg:block flex-1" />
+                {/* Decorative line */}
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 opacity-50" />
               </motion.div>
             ))}
+
+            {/* End spacer for scroll */}
+            <div className="flex-shrink-0 w-[100px]" />
+          </div>
+
+          {/* Scroll indicator */}
+          <div className="px-8 lg:px-16 mt-12">
+            <div className="flex items-center gap-4 text-slate-500">
+              <div className="w-16 h-px bg-gradient-to-r from-cyan-500 to-transparent" />
+              <span className="text-sm uppercase tracking-widest">Scroll to explore</span>
+            </div>
           </div>
         </div>
       </div>
