@@ -89,7 +89,7 @@ export const ProjectsSection = () => {
       className="relative h-screen flex flex-col justify-center px-6 overflow-hidden cursor-none" 
       onMouseMove={handleMouseMove}
       style={{ 
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0f172a 60%, #020617 100%)'
+        background: '#ffffff'
       }}
     >
       {/* Background effects */}
@@ -102,17 +102,17 @@ export const ProjectsSection = () => {
       <div className="container mx-auto max-w-5xl relative z-10">
         
         {/* Compact Header */}
-        <div className="flex items-end justify-between mb-6 border-b border-slate-700/30 pb-4">
+        <div className="flex items-end justify-between mb-6 border-b border-slate-200 pb-4">
           <div>
-            <span className="text-cyan-400 text-xs uppercase tracking-[0.2em] font-medium block mb-2">
+            <span className="text-cyan-600 text-xs uppercase tracking-[0.2em] font-medium block mb-2">
               Selected Works
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-white font-serif">
-              WORK<span className="text-cyan-400">.</span>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-slate-800 font-serif">
+              WORK<span className="text-cyan-600">.</span>
             </h2>
           </div>
           <div className="hidden md:flex flex-col items-end gap-1">
-            <span className="text-slate-400 text-sm">{projects.length} Projects</span>
+            <span className="text-slate-500 text-sm">{projects.length} Projects</span>
           </div>
         </div>
 
@@ -121,18 +121,18 @@ export const ProjectsSection = () => {
           {projects.map((project) => (
             <div
               key={project.id}
-              className="group relative flex items-center justify-between border-b border-slate-700/20 py-4 px-2 transition-all duration-500 cursor-pointer hover:bg-cyan-500/5 rounded-lg"
+              className="group relative flex items-center justify-between border-b border-slate-200 py-4 px-2 transition-all duration-500 cursor-pointer hover:bg-cyan-500/5 rounded-lg"
               onMouseEnter={() => setActiveProject(project.id)}
               onMouseLeave={() => setActiveProject(null)}
               onClick={() => handleProjectClick(project.url)}
             >
               {/* Left Side: ID & Title */}
               <div className="flex items-baseline gap-6 md:gap-10 relative z-10">
-                <span className="text-sm font-mono text-slate-500 group-hover:text-cyan-400 transition-colors duration-300">
+                <span className="text-sm font-mono text-slate-400 group-hover:text-cyan-600 transition-colors duration-300">
                   0{project.id}
                 </span>
                 <div>
-                  <h3 className="text-xl md:text-3xl font-semibold text-white group-hover:text-cyan-400 transition-all duration-500 font-serif">
+                  <h3 className="text-xl md:text-3xl font-semibold text-slate-800 group-hover:text-cyan-600 transition-all duration-500 font-serif">
                     {project.title}
                   </h3>
                   <p className="text-xs text-slate-500 mt-0.5">
@@ -143,10 +143,10 @@ export const ProjectsSection = () => {
               
               {/* Right Side: Meta Data */}
               <div className="flex flex-col items-end gap-1 relative z-10">
-                <span className="text-xs font-medium uppercase tracking-widest text-cyan-400">
+                <span className="text-xs font-medium uppercase tracking-widest text-cyan-600">
                   {project.category}
                 </span>
-                <span className="text-xs font-mono text-slate-500">
+                <span className="text-xs font-mono text-slate-400">
                   {project.year}
                 </span>
               </div>
