@@ -226,29 +226,29 @@ export const VideosSection = () => {
   return (
     <section className="relative h-screen flex flex-col justify-center px-6 overflow-hidden"
       style={{ 
-        background: '#ffffff'
+        background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%)'
       }}
     >
       
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500/15 rounded-full blur-2xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-purple-500/15 rounded-full blur-2xl animate-float" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/5 rounded-full blur-2xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-white/5 rounded-full blur-2xl animate-float" style={{ animationDelay: '1s' }} />
       </div>
 
       <div className="container mx-auto max-w-6xl relative z-10">
         
         {/* Compact Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4 border-b border-slate-200 pb-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4 border-b border-white/10 pb-4">
           <div>
-            <span className="text-cyan-600 text-xs uppercase tracking-[0.2em] font-medium block mb-2">
+            <span className="text-gray-400 text-xs uppercase tracking-[0.2em] font-medium block mb-2">
               Live Demonstrations
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-800 tracking-tighter font-serif">
-              Intelligent <span className="text-cyan-600">Agents</span>.
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tighter font-serif">
+              Intelligent <span className="text-gray-400">Agents</span>.
             </h2>
-            <p className="text-slate-500 text-sm mt-1">
+            <p className="text-gray-500 text-sm mt-1">
               Click a card to interact.
             </p>
           </div>

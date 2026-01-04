@@ -185,7 +185,7 @@ export const ContactSection = () => {
   return (
     <section ref={sectionRef} id="contact" className="relative min-h-screen py-32 lg:py-48 overflow-hidden"
       style={{ 
-        background: '#ffffff'
+        background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%)'
       }}
     >
       {/* Background pattern */}
@@ -193,7 +193,7 @@ export const ContactSection = () => {
         <div 
           className="absolute inset-0"
           style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(100, 116, 139, 0.3) 1px, transparent 0)`,
+            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.1) 1px, transparent 0)`,
             backgroundSize: '40px 40px',
           }}
         />
@@ -201,9 +201,9 @@ export const ContactSection = () => {
 
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-2xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/5 rounded-full blur-2xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-white/5 rounded-full blur-2xl" />
       </div>
 
       <div className="container mx-auto px-6 lg:px-12">
@@ -211,14 +211,14 @@ export const ContactSection = () => {
           {/* Header */}
           <div className="contact-header text-center mb-20">
             <motion.h2 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 tracking-tight font-serif mb-4"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight font-serif mb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              Let's Connect<span className="text-cyan-600">.</span>
+              Let's Connect<span className="text-gray-400">.</span>
             </motion.h2>
-            <p className="text-lg text-slate-500 max-w-xl mx-auto">
+            <p className="text-lg text-gray-400 max-w-xl mx-auto">
               Have a project in mind? I'd love to collaborate with you.
             </p>
           </div>
