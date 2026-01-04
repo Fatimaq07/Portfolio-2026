@@ -216,23 +216,23 @@ export const SkillsSection = () => {
   return (
     <section ref={sectionRef} id="skills" className="relative h-screen flex flex-col justify-center overflow-hidden"
       style={{ 
-        background: '#ffffff'
+        background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%)'
       }}
     >
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-2xl animate-float" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/5 rounded-full blur-2xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-white/5 rounded-full blur-2xl animate-float" style={{ animationDelay: '1s' }} />
       </div>
 
       <div className="container mx-auto px-6 lg:px-12 mb-6">
         <div className="skills-header text-center">
-          <span className="text-cyan-600 text-sm uppercase tracking-widest font-medium block mb-3">
+          <span className="text-gray-400 text-sm uppercase tracking-widest font-medium block mb-3">
             Technical Expertise
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 tracking-tight font-serif mb-2">
-            Skills & Technologies<span className="text-cyan-600">.</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight font-serif mb-2">
+            Skills & Technologies<span className="text-gray-400">.</span>
           </h2>
         </div>
       </div>
