@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { motion } from 'framer-motion';
-import { Play, Mail, Settings } from 'lucide-react';
+import { Play, Mail, Settings, Download, MessageCircle } from 'lucide-react';
 
 export const HeroSection = () => {
   const containerRef = useRef<HTMLElement>(null);
@@ -39,15 +39,11 @@ export const HeroSection = () => {
   };
 
   return (
-    <section ref={containerRef} id="hero" className="min-h-screen py-8 lg:py-12 px-4 lg:px-8 relative overflow-hidden"
-      style={{ 
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0f172a 60%, #020617 100%)'
-      }}
-    >
+    <section ref={containerRef} id="hero" className="min-h-screen py-8 lg:py-12 px-4 lg:px-8 relative overflow-hidden bg-white">
       {/* Decorative gradient orbs */}
-      <div className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-br from-blue-500/20 to-purple-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-40 left-10 w-80 h-80 bg-gradient-to-tr from-cyan-500/15 to-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-purple-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-40 left-10 w-80 h-80 bg-gradient-to-tr from-cyan-500/10 to-blue-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-violet-500/5 to-fuchsia-500/5 rounded-full blur-3xl pointer-events-none" />
       
       <div className="max-w-7xl mx-auto relative z-10">
         
@@ -56,14 +52,14 @@ export const HeroSection = () => {
           
           {/* About Me Header */}
           <div className="col-span-12 flex items-center gap-2 mb-2">
-            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-              <Settings className="w-4 h-4 text-slate-300" />
+            <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+              <Settings className="w-4 h-4 text-slate-600" />
             </div>
-            <span className="text-sm font-medium text-slate-300">About Me</span>
+            <span className="text-sm font-medium text-slate-600">About Me</span>
           </div>
 
           {/* Left Profile Card */}
-          <div className="bento-card col-span-12 lg:col-span-5 row-span-2 bg-slate-800/50 backdrop-blur-xl rounded-[2rem] p-6 lg:p-8 relative overflow-hidden shadow-2xl border border-slate-700/50">
+          <div className="bento-card col-span-12 lg:col-span-5 row-span-2 bg-gradient-to-br from-slate-50 to-slate-100 backdrop-blur-xl rounded-[2rem] p-6 lg:p-8 relative overflow-hidden shadow-2xl border border-slate-200">
             
             {/* Vertical Nav - Left Side */}
             <div className="hidden lg:flex flex-col gap-6 absolute left-4 top-1/2 -translate-y-1/2">
@@ -71,7 +67,7 @@ export const HeroSection = () => {
                 <button 
                   key={item}
                   onClick={() => scrollToSection(item.toLowerCase())}
-                  className="text-[11px] font-medium uppercase tracking-wider text-slate-500 hover:text-cyan-400 transition-colors"
+                  className="text-[11px] font-medium uppercase tracking-wider text-slate-400 hover:text-cyan-600 transition-colors"
                   style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
                 >
                   {item}
@@ -85,41 +81,41 @@ export const HeroSection = () => {
               <div className="relative w-48 h-48 lg:w-56 lg:h-56 mx-auto lg:mx-0 mb-6">
                 <div className="absolute inset-0 rounded-full bg-cyan-500/30" />
                 <div className="absolute inset-3 rounded-full bg-blue-500/40" />
-                <div className="absolute inset-6 rounded-full bg-slate-700 flex items-center justify-center overflow-hidden">
-                  <span className="text-7xl lg:text-8xl font-serif text-slate-400">F</span>
+                <div className="absolute inset-6 rounded-full bg-slate-200 flex items-center justify-center overflow-hidden">
+                  <span className="text-7xl lg:text-8xl font-serif text-slate-500">F</span>
                 </div>
               </div>
 
               {/* Name */}
               <div className="text-center lg:text-left">
-                <p className="text-sm italic text-slate-400 mb-1">I'm,</p>
-                <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight font-serif">
+                <p className="text-sm italic text-slate-500 mb-1">I'm,</p>
+                <h1 className="text-4xl lg:text-5xl font-bold text-slate-800 leading-tight font-serif">
                   Fatima
                   <br />
                   Qureshi
                 </h1>
                 
                 {/* Role */}
-                <p className="text-lg text-cyan-400 font-medium mt-2">Full Stack Developer</p>
-                <p className="text-slate-400 text-sm mt-1">MERN | AI Automation | UI/UX</p>
+                <p className="text-lg text-cyan-600 font-medium mt-2">Full Stack Developer</p>
+                <p className="text-slate-500 text-sm mt-1">MERN | AI Automation | UI/UX</p>
                 
                 {/* Email */}
                 <div className="flex items-center gap-2 mt-4 justify-center lg:justify-start">
                   <div className="w-6 h-6 rounded bg-cyan-500/20 flex items-center justify-center">
-                    <Mail className="w-3 h-3 text-cyan-400" />
+                    <Mail className="w-3 h-3 text-cyan-600" />
                   </div>
-                  <span className="text-sm text-slate-400">qfatima504@gmail.com</span>
+                  <span className="text-sm text-slate-500">qfatima504@gmail.com</span>
                 </div>
               </div>
 
               {/* Rotating Badge */}
               <div className="absolute bottom-6 right-6 lg:bottom-8 lg:right-8 w-16 h-16 lg:w-20 lg:h-20">
-                <div className="rotating-badge w-full h-full rounded-full bg-white flex items-center justify-center relative">
+                <div className="rotating-badge w-full h-full rounded-full bg-cyan-600 flex items-center justify-center relative">
                   <svg viewBox="0 0 100 100" className="absolute w-full h-full">
                     <defs>
                       <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" />
                     </defs>
-                    <text className="text-[8px] fill-slate-900 uppercase tracking-[0.15em]">
+                    <text className="text-[8px] fill-white uppercase tracking-[0.15em]">
                       <textPath href="#circlePath">
                         • UX DESIGN PORTFOLIO 2024 •
                       </textPath>
@@ -132,8 +128,8 @@ export const HeroSection = () => {
 
           {/* Portfolio Title */}
           <div className="bento-card col-span-12 lg:col-span-7 flex items-end pb-4">
-            <h2 className="hero-title text-6xl md:text-7xl lg:text-[8rem] font-bold text-white leading-none font-serif tracking-tight">
-              Portfolio<span className="text-cyan-400">'</span>
+            <h2 className="hero-title text-6xl md:text-7xl lg:text-[8rem] font-bold text-slate-800 leading-none font-serif tracking-tight">
+              Portfolio<span className="text-cyan-600">'</span>
             </h2>
           </div>
 
@@ -177,33 +173,50 @@ export const HeroSection = () => {
             </motion.div>
           </div>
 
-          {/* Clients Card */}
+          {/* Clients Card with Info */}
           <motion.div 
-            className="bento-card col-span-6 lg:col-span-2 rounded-[1.5rem] p-5 bg-slate-800/60 backdrop-blur-xl flex flex-col items-center justify-center border border-slate-700/50"
-            whileHover={{ scale: 1.03 }}
+            className="bento-card col-span-12 md:col-span-6 lg:col-span-4 rounded-[1.5rem] p-5 bg-gradient-to-br from-slate-50 to-slate-100 backdrop-blur-xl flex flex-col justify-center border border-slate-200"
+            whileHover={{ scale: 1.02 }}
           >
-            <div className="w-8 h-8 mb-2 text-white">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-              </svg>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-full bg-cyan-600 flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                </svg>
+              </div>
+              <span className="text-lg font-semibold text-slate-700">Clients</span>
             </div>
-            <span className="text-xs font-medium text-slate-400">Clients</span>
+            <p className="text-sm text-slate-500 leading-relaxed">
+              Building digital experiences for startups and businesses worldwide. Let's create something amazing together.
+            </p>
           </motion.div>
 
-          {/* Decorative Sphere Card */}
-          <motion.div 
-            className="bento-card col-span-6 lg:col-span-2 rounded-[1.5rem] overflow-hidden relative bg-slate-900/80 border border-slate-700/50"
-            whileHover={{ scale: 1.03 }}
+          {/* Resume Download Card */}
+          <motion.a
+            href="/Fatima_Qureshi_Resume.pdf"
+            download
+            className="bento-card col-span-6 lg:col-span-2 rounded-[1.5rem] p-5 bg-gradient-to-br from-slate-800 to-slate-900 flex flex-col items-center justify-center cursor-pointer border border-slate-700"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
           >
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 opacity-80 blur-sm" />
-              <div className="absolute w-16 h-16 rounded-full" 
-                style={{ 
-                  background: 'conic-gradient(from 0deg, #06b6d4, #3b82f6, #8b5cf6, #06b6d4)',
-                }} 
-              />
-            </div>
-          </motion.div>
+            <Download className="w-8 h-8 text-white mb-2" />
+            <span className="text-sm font-medium text-white">Resume</span>
+            <span className="text-xs text-slate-400 mt-1">Download PDF</span>
+          </motion.a>
+
+          {/* Hire Me - WhatsApp */}
+          <motion.a
+            href="https://wa.me/919399723080"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bento-card col-span-6 lg:col-span-2 rounded-[1.5rem] p-5 bg-gradient-to-br from-green-500 to-green-600 flex flex-col items-center justify-center cursor-pointer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <MessageCircle className="w-8 h-8 text-white mb-2" />
+            <span className="text-sm font-medium text-white">Hire Me</span>
+            <span className="text-xs text-white/80 mt-1">WhatsApp</span>
+          </motion.a>
 
           {/* MERN + React Card */}
           <motion.div 

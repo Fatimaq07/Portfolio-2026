@@ -216,7 +216,7 @@ export const SkillsSection = () => {
   return (
     <section ref={sectionRef} id="skills" className="relative h-screen flex flex-col justify-center overflow-hidden"
       style={{ 
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0f172a 60%, #020617 100%)'
+        background: '#ffffff'
       }}
     >
       {/* Background effects */}
@@ -228,11 +228,11 @@ export const SkillsSection = () => {
 
       <div className="container mx-auto px-6 lg:px-12 mb-6">
         <div className="skills-header text-center">
-          <span className="text-cyan-400 text-sm uppercase tracking-widest font-medium block mb-3">
+          <span className="text-cyan-600 text-sm uppercase tracking-widest font-medium block mb-3">
             Technical Expertise
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight font-serif mb-2">
-            Skills & Technologies<span className="text-cyan-400">.</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 tracking-tight font-serif mb-2">
+            Skills & Technologies<span className="text-cyan-600">.</span>
           </h2>
         </div>
       </div>

@@ -185,7 +185,7 @@ export const ContactSection = () => {
   return (
     <section ref={sectionRef} id="contact" className="relative min-h-screen py-32 lg:py-48 overflow-hidden"
       style={{ 
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0f172a 60%, #020617 100%)'
+        background: '#ffffff'
       }}
     >
       {/* Background pattern */}
@@ -211,14 +211,14 @@ export const ContactSection = () => {
           {/* Header */}
           <div className="contact-header text-center mb-20">
             <motion.h2 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight font-serif mb-4"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 tracking-tight font-serif mb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              Let's Connect<span className="text-cyan-400">.</span>
+              Let's Connect<span className="text-cyan-600">.</span>
             </motion.h2>
-            <p className="text-lg text-slate-400 max-w-xl mx-auto">
+            <p className="text-lg text-slate-500 max-w-xl mx-auto">
               Have a project in mind? I'd love to collaborate with you.
             </p>
           </div>
