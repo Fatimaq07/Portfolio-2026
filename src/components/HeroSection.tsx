@@ -124,15 +124,15 @@ export const HeroSection = () => {
       id="hero" 
       className="h-screen flex items-center px-6 lg:px-16 relative overflow-hidden"
     >
-      {/* Background Image */}
+      {/* Background Image with Dark Blue-Black Overlay */}
       <div className="absolute inset-0">
         <img 
           src={heroBg} 
           alt="" 
-          className="hero-bg-layer absolute inset-0 w-full h-full object-cover opacity-50"
+          className="hero-bg-layer absolute inset-0 w-full h-full object-cover opacity-40"
         />
-        {/* Overlay for readability */}
-        <div className="absolute inset-0 bg-background/40" />
+        {/* Dark black-blue overlay for visibility */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/70 via-blue-950/60 to-slate-900/70" />
       </div>
 
       {/* Main Content */}
