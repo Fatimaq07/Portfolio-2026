@@ -179,15 +179,12 @@ export const ContactSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="contact" className="relative min-h-screen py-32 lg:py-48 overflow-hidden"
-      style={{ 
-        background: 'linear-gradient(180deg, #ebe4de 0%, #f5f0ec 50%, #faf7f5 100%)'
-      }}
+    <section ref={sectionRef} id="contact" className="relative min-h-screen py-32 lg:py-48 overflow-hidden bg-background"
     >
       {/* Subtle pattern */}
-      <div className="absolute inset-0 opacity-[0.02]" 
+      <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]" 
         style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, #8b7355 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--muted-foreground)) 1px, transparent 0)',
           backgroundSize: '40px 40px'
         }}
       />
@@ -197,14 +194,14 @@ export const ContactSection = () => {
           {/* Header */}
           <div className="contact-header text-center mb-20">
             <motion.h2 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-stone-800 tracking-tight font-serif mb-4"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight font-serif mb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              Let's Connect<span className="text-rose-400">.</span>
+              Let's Connect<span className="text-primary">.</span>
             </motion.h2>
-            <p className="text-lg text-stone-600 max-w-xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-xl mx-auto">
               Have a project in mind? I'd love to collaborate with you.
             </p>
           </div>

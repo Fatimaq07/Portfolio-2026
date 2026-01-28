@@ -6,6 +6,7 @@ import { ProjectsSection } from '@/components/ProjectsSection';
 import { VideosSection } from '@/components/VideosSection';
 import { ExperienceSection } from '@/components/ExperienceSection';
 import { ContactSection } from '@/components/ContactSection';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const sections = [
   { id: 'hero', component: HeroSection, label: 'Home' },
@@ -113,12 +114,16 @@ const Index = () => {
   return (
     <div 
       ref={containerRef}
-      className="relative h-screen w-screen overflow-hidden"
-      style={{ background: 'hsl(197 93% 84%)' }}
+      className="relative h-screen w-screen overflow-hidden bg-background"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
+      {/* Theme Toggle - Top Right */}
+      <div className="fixed top-6 right-6 z-50">
+        <ThemeToggle />
+      </div>
+
       {/* Section Content */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -137,12 +142,12 @@ const Index = () => {
       {currentSection > 0 && (
         <button
           onClick={prevSection}
-          className="fixed left-8 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 text-white/70 hover:text-cyan-400 transition-colors group"
+          className="fixed left-8 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
         >
           <motion.span
             animate={{ x: [0, -6, 0] }}
             transition={{ repeat: Infinity, duration: 1.2 }}
-            className="text-cyan-400 text-3xl"
+            className="text-primary text-3xl"
           >
             ←
           </motion.span>
@@ -154,13 +159,13 @@ const Index = () => {
       {currentSection < sections.length - 1 && (
         <button
           onClick={nextSection}
-          className="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 text-white/70 hover:text-cyan-400 transition-colors group"
+          className="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
         >
           <span className="text-sm font-medium uppercase tracking-wider">Swipe</span>
           <motion.span
             animate={{ x: [0, 6, 0] }}
             transition={{ repeat: Infinity, duration: 1.2 }}
-            className="text-cyan-400 text-3xl"
+            className="text-primary text-3xl"
           >
             →
           </motion.span>
@@ -175,8 +180,8 @@ const Index = () => {
             onClick={() => goToSection(index)}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               currentSection === index 
-                ? 'bg-cyan-400 w-8' 
-                : 'bg-white/30 hover:bg-cyan-400/60'
+                ? 'bg-primary w-8' 
+                : 'bg-muted-foreground/30 hover:bg-primary/60'
             }`}
           />
         ))}

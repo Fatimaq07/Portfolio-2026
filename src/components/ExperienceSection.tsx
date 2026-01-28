@@ -78,15 +78,12 @@ export const ExperienceSection = () => {
   return (
     <section 
       id="experience" 
-      className="h-screen w-full flex items-center justify-center relative overflow-hidden"
-      style={{ 
-        background: 'linear-gradient(180deg, #ebe4de 0%, #f5f0ec 50%, #faf7f5 100%)'
-      }}
+      className="h-screen w-full flex items-center justify-center relative overflow-hidden bg-background"
     >
       {/* Subtle pattern */}
-      <div className="absolute inset-0 opacity-[0.02]" 
+      <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]" 
         style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, #8b7355 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--muted-foreground)) 1px, transparent 0)',
           backgroundSize: '40px 40px'
         }}
       />

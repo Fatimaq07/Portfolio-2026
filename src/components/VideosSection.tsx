@@ -220,16 +220,13 @@ export const VideosSection = () => {
   const [activeId, setActiveId] = useState<number>(1);
 
   return (
-    <section className="relative h-screen flex flex-col justify-center px-6 overflow-hidden"
-      style={{ 
-        background: 'linear-gradient(180deg, #faf7f5 0%, #f5f0ec 50%, #ebe4de 100%)'
-      }}
+    <section className="relative h-screen flex flex-col justify-center px-6 overflow-hidden bg-background"
     >
       
       {/* Subtle pattern */}
-      <div className="absolute inset-0 opacity-[0.02]" 
+      <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]" 
         style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, #8b7355 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--muted-foreground)) 1px, transparent 0)',
           backgroundSize: '40px 40px'
         }}
       />
@@ -237,15 +234,15 @@ export const VideosSection = () => {
       <div className="container mx-auto max-w-6xl relative z-10">
         
         {/* Compact Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4 border-b border-stone-300 pb-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4 border-b border-border pb-4">
           <div>
-            <span className="text-rose-400 text-xs uppercase tracking-[0.2em] font-medium block mb-2">
+            <span className="text-primary text-xs uppercase tracking-[0.2em] font-medium block mb-2">
               Live Demonstrations
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-stone-800 tracking-tighter font-serif">
-              Intelligent <span className="text-rose-400">Agents</span>.
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tighter font-serif">
+              Intelligent <span className="text-primary">Agents</span>.
             </h2>
-            <p className="text-stone-500 text-sm mt-1">
+            <p className="text-muted-foreground text-sm mt-1">
               Click a card to interact.
             </p>
           </div>

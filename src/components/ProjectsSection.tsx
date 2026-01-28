@@ -86,16 +86,13 @@ export const ProjectsSection = () => {
 
   return (
     <section 
-      className="relative h-screen flex flex-col justify-center px-6 overflow-hidden cursor-none" 
+      className="relative h-screen flex flex-col justify-center px-6 overflow-hidden cursor-none bg-background" 
       onMouseMove={handleMouseMove}
-      style={{ 
-        background: 'linear-gradient(180deg, #faf7f5 0%, #f5f0ec 50%, #ebe4de 100%)'
-      }}
     >
       {/* Subtle pattern */}
-      <div className="absolute inset-0 opacity-[0.02]" 
+      <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]" 
         style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, #8b7355 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--muted-foreground)) 1px, transparent 0)',
           backgroundSize: '40px 40px'
         }}
       />
@@ -103,17 +100,17 @@ export const ProjectsSection = () => {
       <div className="container mx-auto max-w-5xl relative z-10">
         
         {/* Compact Header */}
-        <div className="flex items-end justify-between mb-6 border-b border-stone-300 pb-4">
+        <div className="flex items-end justify-between mb-6 border-b border-border pb-4">
           <div>
-            <span className="text-rose-400 text-xs uppercase tracking-[0.2em] font-medium block mb-2">
+            <span className="text-primary text-xs uppercase tracking-[0.2em] font-medium block mb-2">
               Selected Works
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-stone-800 font-serif">
-              WORK<span className="text-rose-400">.</span>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-foreground font-serif">
+              WORK<span className="text-primary">.</span>
             </h2>
           </div>
           <div className="hidden md:flex flex-col items-end gap-1">
-            <span className="text-stone-500 text-sm">{projects.length} Projects</span>
+            <span className="text-muted-foreground text-sm">{projects.length} Projects</span>
           </div>
         </div>
 
@@ -122,21 +119,21 @@ export const ProjectsSection = () => {
           {projects.map((project) => (
             <div
               key={project.id}
-              className="group relative flex items-center justify-between border-b border-stone-200 py-4 px-2 transition-all duration-500 cursor-pointer hover:bg-rose-50/50 rounded-lg"
+              className="group relative flex items-center justify-between border-b border-border py-4 px-2 transition-all duration-500 cursor-pointer hover:bg-muted/50 rounded-lg"
               onMouseEnter={() => setActiveProject(project.id)}
               onMouseLeave={() => setActiveProject(null)}
               onClick={() => handleProjectClick(project.url)}
             >
               {/* Left Side: ID & Title */}
               <div className="flex items-baseline gap-6 md:gap-10 relative z-10">
-                <span className="text-sm font-mono text-stone-400 group-hover:text-rose-400 transition-colors duration-300">
+                <span className="text-sm font-mono text-muted-foreground group-hover:text-primary transition-colors duration-300">
                   0{project.id}
                 </span>
                 <div>
-                  <h3 className="text-xl md:text-3xl font-semibold text-stone-800 group-hover:text-stone-600 transition-all duration-500 font-serif">
+                  <h3 className="text-xl md:text-3xl font-semibold text-foreground group-hover:text-foreground/80 transition-all duration-500 font-serif">
                     {project.title}
                   </h3>
-                  <p className="text-xs text-stone-500 mt-0.5">
+                  <p className="text-xs text-muted-foreground mt-0.5">
                     {project.description}
                   </p>
                 </div>
@@ -144,10 +141,10 @@ export const ProjectsSection = () => {
               
               {/* Right Side: Meta Data */}
               <div className="flex flex-col items-end gap-1 relative z-10">
-                <span className="text-xs font-medium uppercase tracking-widest text-rose-400">
+                <span className="text-xs font-medium uppercase tracking-widest text-primary">
                   {project.category}
                 </span>
-                <span className="text-xs font-mono text-stone-400">
+                <span className="text-xs font-mono text-muted-foreground">
                   {project.year}
                 </span>
               </div>
