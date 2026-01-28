@@ -96,10 +96,10 @@ const VideoCard = ({
         isActive ? 'flex-[3]' : 'flex-[1] hover:flex-[1.2]'
       }`}
     >
-      <div className={`absolute inset-0 p-[1px] rounded-3xl bg-gradient-to-br from-transparent via-amber-500/10 to-transparent transition-all duration-500 ${
-        isActive ? 'from-amber-500 via-amber-400 to-emerald-600' : 'group-hover:from-amber-500/20 group-hover:to-amber-500/5'
+      <div className={`absolute inset-0 p-[1px] rounded-3xl transition-all duration-500 ${
+        isActive ? 'bg-gradient-to-br from-rose-300 via-rose-200 to-stone-300' : 'bg-stone-200'
       }`}>
-        <div className="absolute inset-0 bg-emerald-950 rounded-[23px] overflow-hidden">
+        <div className="absolute inset-0 bg-stone-50 rounded-[23px] overflow-hidden">
           
           <div className="absolute inset-0 w-full h-full">
             <AnimatePresence mode="wait">
@@ -128,9 +128,9 @@ const VideoCard = ({
                   <img 
                     src={video.thumbnail} 
                     alt={video.title} 
-                    className="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                    className="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-emerald-950 via-emerald-950/60 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-100 via-stone-100/40 to-transparent" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -141,10 +141,10 @@ const VideoCard = ({
             <div className="flex justify-between items-start">
               <motion.div 
                 layout="position"
-                className={`backdrop-blur-xl border px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 shadow-lg ${
+                className={`backdrop-blur-sm border px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 ${
                   isActive 
-                    ? 'bg-amber-500/20 border-amber-400/30 text-amber-200' 
-                    : 'bg-amber-500/5 border-amber-500/10 text-amber-200/60 group-hover:text-amber-200 group-hover:bg-amber-500/10 transition-colors'
+                    ? 'bg-rose-100 border-rose-200 text-rose-600' 
+                    : 'bg-white/80 border-stone-200 text-stone-500 group-hover:text-stone-700 transition-colors'
                 }`}
               >
                 {getIcon()} {video.category}
@@ -154,7 +154,7 @@ const VideoCard = ({
                 <div className="flex gap-2">
                   <button 
                     onClick={(e) => { e.stopPropagation(); setIsMuted(!isMuted); }}
-                    className="p-2 rounded-full bg-emerald-950/60 backdrop-blur-md text-amber-100 hover:bg-amber-500 hover:text-emerald-950 transition-colors border border-amber-500/20"
+                    className="p-2 rounded-full bg-white/80 text-stone-600 hover:bg-stone-800 hover:text-white transition-colors border border-stone-200"
                   >
                     {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
                   </button>
@@ -167,8 +167,8 @@ const VideoCard = ({
                 layout="position"
                 className={`font-bold mb-1 leading-tight transition-all duration-500 ${
                   isActive 
-                    ? 'text-2xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-amber-50 via-amber-100 to-amber-200' 
-                    : 'text-lg text-amber-50/80 rotate-0 md:-rotate-90 md:origin-bottom-left md:translate-x-6 md:-translate-y-6 whitespace-nowrap'
+                    ? 'text-2xl md:text-3xl text-stone-800' 
+                    : 'text-lg text-stone-700 rotate-0 md:-rotate-90 md:origin-bottom-left md:translate-x-6 md:-translate-y-6 whitespace-nowrap'
                 }`}
               >
                 {video.title}
@@ -180,7 +180,7 @@ const VideoCard = ({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
                 >
-                  <p className="text-amber-100/70 text-xs max-w-md mb-3 line-clamp-2 leading-relaxed">
+                  <p className="text-stone-600 text-xs max-w-md mb-3 line-clamp-2 leading-relaxed">
                     {video.description}
                   </p>
                   
@@ -188,11 +188,11 @@ const VideoCard = ({
                     <motion.button 
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-emerald-950 px-4 py-2 rounded-full text-xs font-bold hover:shadow-[0_0_20px_rgba(217,119,6,0.5)] transition-shadow"
+                      className="flex items-center gap-2 bg-stone-800 text-white px-4 py-2 rounded-full text-xs font-bold hover:bg-stone-700 transition-colors"
                     >
                       <Play size={12} fill="currentColor" /> Watch
                     </motion.button>
-                    <span className="text-amber-400/50 text-xs font-mono">
+                    <span className="text-stone-500 text-xs font-mono">
                       {video.duration}
                     </span>
                   </div>
@@ -201,9 +201,9 @@ const VideoCard = ({
             </div>
 
             {isActive && (
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-amber-500/10">
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-stone-200">
                 <motion.div 
-                  className="h-full bg-gradient-to-r from-amber-500 to-amber-400 shadow-[0_0_10px_rgba(217,119,6,0.8)]"
+                  className="h-full bg-rose-400"
                   style={{ width: `${progress}%` }}
                   transition={{ type: 'tween', ease: 'linear' }}
                 />
@@ -212,10 +212,6 @@ const VideoCard = ({
           </div>
         </div>
       </div>
-
-      {isActive && (
-        <div className="absolute -inset-4 bg-gradient-to-r from-amber-500/20 via-emerald-500/10 to-amber-500/20 z-[-1] blur-2xl opacity-50" />
-      )}
     </motion.div>
   );
 };
@@ -226,29 +222,30 @@ export const VideosSection = () => {
   return (
     <section className="relative h-screen flex flex-col justify-center px-6 overflow-hidden"
       style={{ 
-        background: 'linear-gradient(135deg, #0d1f0d 0%, #1a2f1a 50%, #0f1f0f 100%)'
+        background: 'linear-gradient(180deg, #faf7f5 0%, #f5f0ec 50%, #ebe4de 100%)'
       }}
     >
       
-      {/* Background effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-amber-500/5 rounded-full blur-2xl animate-float" style={{ animationDelay: '1s' }} />
-      </div>
+      {/* Subtle pattern */}
+      <div className="absolute inset-0 opacity-[0.02]" 
+        style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, #8b7355 1px, transparent 0)',
+          backgroundSize: '40px 40px'
+        }}
+      />
 
       <div className="container mx-auto max-w-6xl relative z-10">
         
         {/* Compact Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4 border-b border-amber-500/20 pb-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4 border-b border-stone-300 pb-4">
           <div>
-            <span className="text-amber-400/70 text-xs uppercase tracking-[0.2em] font-medium block mb-2">
+            <span className="text-rose-400 text-xs uppercase tracking-[0.2em] font-medium block mb-2">
               Live Demonstrations
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-amber-50 tracking-tighter font-serif">
-              Intelligent <span className="text-amber-400">Agents</span>.
+            <h2 className="text-3xl md:text-4xl font-bold text-stone-800 tracking-tighter font-serif">
+              Intelligent <span className="text-rose-400">Agents</span>.
             </h2>
-            <p className="text-emerald-400/50 text-sm mt-1">
+            <p className="text-stone-500 text-sm mt-1">
               Click a card to interact.
             </p>
           </div>
