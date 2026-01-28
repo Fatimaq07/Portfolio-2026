@@ -219,9 +219,48 @@ export const SkillsSection = () => {
         <img 
           src={skillsBg} 
           alt="" 
-          className="w-full h-full object-cover opacity-60"
+          className="w-full h-full object-cover opacity-50"
         />
-        <div className="absolute inset-0 bg-background/40" />
+        <div className="absolute inset-0 bg-background/30" />
+        
+        {/* Decorative flowing curves - SVG ribbons */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none" viewBox="0 0 1440 900">
+          {/* Main flowing curve - top */}
+          <path 
+            d="M-100,200 C200,100 400,300 600,200 S900,50 1100,150 S1400,300 1600,200" 
+            stroke="hsl(var(--primary) / 0.15)" 
+            strokeWidth="120" 
+            fill="none"
+            className="animate-pulse"
+          />
+          {/* Secondary curve - middle */}
+          <path 
+            d="M-50,500 C150,400 350,600 550,450 S850,350 1050,500 S1350,650 1550,500" 
+            stroke="hsl(var(--primary) / 0.1)" 
+            strokeWidth="80" 
+            fill="none"
+          />
+          {/* Accent curve - bottom */}
+          <path 
+            d="M0,750 C250,650 450,800 700,700 S1000,550 1250,700 S1500,850 1700,700" 
+            stroke="hsl(var(--accent) / 0.12)" 
+            strokeWidth="100" 
+            fill="none"
+          />
+          {/* Thin highlight curves */}
+          <path 
+            d="M-100,300 C100,200 300,350 500,280 S800,150 1000,250 S1300,400 1500,300" 
+            stroke="hsl(var(--primary) / 0.08)" 
+            strokeWidth="40" 
+            fill="none"
+          />
+          <path 
+            d="M100,600 C300,500 500,650 700,580 S1000,450 1200,550 S1400,700 1600,600" 
+            stroke="hsl(var(--primary-foreground) / 0.05)" 
+            strokeWidth="60" 
+            fill="none"
+          />
+        </svg>
       </div>
 
       <div className="container mx-auto px-6 lg:px-12 mb-6">
