@@ -124,7 +124,7 @@ export const HeroSection = () => {
       className="h-screen flex items-center px-6 lg:px-16 relative overflow-hidden"
     >
       {/* Floating Objects Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 overflow-hidden">
+      <div className="absolute inset-0 bg-background overflow-hidden">
         {/* Floating geometric shapes */}
         <motion.div 
           className="floating-shape absolute top-[10%] left-[10%] w-20 h-20 border-2 border-primary/30 rounded-full"
@@ -138,7 +138,7 @@ export const HeroSection = () => {
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div 
-          className="floating-shape absolute top-[60%] left-[8%] w-12 h-12 border border-blue-400/20 rotate-45"
+          className="floating-shape absolute top-[60%] left-[8%] w-12 h-12 border border-accent/20 rotate-45"
           animate={{ y: [0, -50, 0], x: [0, 30, 0] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
         />
@@ -148,12 +148,12 @@ export const HeroSection = () => {
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div 
-          className="floating-shape absolute top-[40%] left-[30%] w-8 h-8 bg-blue-500/15 rounded-full blur-sm"
+          className="floating-shape absolute top-[40%] left-[30%] w-8 h-8 bg-accent/15 rounded-full blur-sm"
           animate={{ y: [0, 60, 0], x: [0, -40, 0] }}
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div 
-          className="floating-shape absolute bottom-[20%] left-[20%] w-14 h-14 border-2 border-indigo-400/20"
+          className="floating-shape absolute bottom-[20%] left-[20%] w-14 h-14 border-2 border-accent/20"
           animate={{ rotate: [0, 360], y: [0, -20, 0] }}
           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
         />
@@ -168,12 +168,12 @@ export const HeroSection = () => {
           transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div 
-          className="floating-shape absolute top-[70%] right-[40%] w-5 h-5 bg-blue-400/20 rounded-full"
+          className="floating-shape absolute top-[70%] right-[40%] w-5 h-5 bg-accent/20 rounded-full"
           animate={{ x: [0, 50, 0], y: [0, -30, 0] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div 
-          className="floating-shape absolute top-[5%] right-[35%] w-16 h-16 border border-indigo-300/15"
+          className="floating-shape absolute top-[5%] right-[35%] w-16 h-16 border border-accent/15"
           style={{ clipPath: 'polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)' }}
           animate={{ rotate: [0, -180, -360], y: [0, 25, 0] }}
           transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
@@ -181,7 +181,7 @@ export const HeroSection = () => {
         
         {/* Soft glow spots */}
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-accent/10 rounded-full blur-3xl" />
       </div>
 
       {/* Main Content */}
