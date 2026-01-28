@@ -141,6 +141,7 @@ const SkillCard = ({ skill, side }: { skill: Skill | null; side: 'left' | 'right
 
 export const SkillsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const leaveTimeoutRef = useRef<number | null>(null);
   const [rotation, setRotation] = useState({ inner: 0, outer: 0 });
   const [activeIndex, setActiveIndex] = useState({ left: 0, right: 0 });
   const [dimensions, setDimensions] = useState({ width: 420, height: 420 });
@@ -152,14 +153,29 @@ export const SkillsSection = () => {
   const rightSkills = allSkills.slice(Math.ceil(allSkills.length / 2));
 
   const handleSkillHover = (skill: Skill) => {
+    if (leaveTimeoutRef.current) {
+      window.clearTimeout(leaveTimeoutRef.current);
+      leaveTimeoutRef.current = null;
+    }
     setHoveredSkill(skill);
     setIsPaused(true);
   };
 
   const handleSkillLeave = () => {
-    setHoveredSkill(null);
-    setIsPaused(false);
+    // Debounce leave to prevent flicker when hovering moving nodes.
+    if (leaveTimeoutRef.current) window.clearTimeout(leaveTimeoutRef.current);
+    leaveTimeoutRef.current = window.setTimeout(() => {
+      setHoveredSkill(null);
+      setIsPaused(false);
+      leaveTimeoutRef.current = null;
+    }, 140);
   };
+
+  useEffect(() => {
+    return () => {
+      if (leaveTimeoutRef.current) window.clearTimeout(leaveTimeoutRef.current);
+    };
+  }, []);
 
   // Handle responsive sizing - smaller orbits
   useEffect(() => {
@@ -184,7 +200,7 @@ export const SkillsSection = () => {
       }));
     }, 2500);
     return () => clearInterval(interval);
-  }, [leftSkills.length, rightSkills.length]);
+  }, [isPaused, leftSkills.length, rightSkills.length]);
 
   // Smooth continuous rotation (pauses on hover)
   useEffect(() => {
