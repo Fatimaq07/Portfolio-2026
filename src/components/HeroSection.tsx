@@ -4,7 +4,6 @@ import { TextPlugin } from 'gsap/TextPlugin';
 import { motion } from 'framer-motion';
 import { MessageCircle, Download, ArrowDownRight } from 'lucide-react';
 import profilePhoto from '@/assets/profile-photo.jpg';
-import heroBg from '@/assets/hero-bg.png';
 
 gsap.registerPlugin(TextPlugin);
 
@@ -124,15 +123,29 @@ export const HeroSection = () => {
       id="hero" 
       className="h-screen flex items-center px-6 lg:px-16 relative overflow-hidden"
     >
-      {/* Background Image with Dark Blue-Black Overlay */}
-      <div className="absolute inset-0">
-        <img 
-          src={heroBg} 
-          alt="" 
-          className="hero-bg-layer absolute inset-0 w-full h-full object-cover opacity-40"
+      {/* Animated Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
+        {/* Animated gradient orbs */}
+        <div className="hero-bg-layer absolute top-1/4 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />
+        <div className="hero-bg-layer absolute bottom-1/4 right-0 w-80 h-80 bg-blue-600/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="hero-bg-layer absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-900/20 rounded-full blur-3xl" />
+        
+        {/* Subtle grid pattern */}
+        <div 
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px'
+          }}
         />
-        {/* Dark black-blue overlay for visibility */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/70 via-blue-950/60 to-slate-900/70" />
+        
+        {/* Noise texture overlay */}
+        <div className="absolute inset-0 opacity-30" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
+        }} />
       </div>
 
       {/* Main Content */}
