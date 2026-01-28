@@ -58,7 +58,7 @@ const SkillNode = ({
       initial={false}
       animate={{
         scale: isHighlighted ? 1.2 : 1,
-        opacity: isDimmed ? 0.12 : 1,
+        opacity: isDimmed ? 0.6 : 1,
       }}
       transition={{ 
         type: 'tween', 
@@ -68,7 +68,7 @@ const SkillNode = ({
       style={{ zIndex: isHighlighted ? 50 : 1, pointerEvents: isDimmed ? 'none' : 'auto' }}
     >
       <div 
-        className={`flex items-center justify-center ${nodeSize} rounded-xl bg-card border-2 transition-all duration-300`}
+        className={`flex items-center justify-center ${nodeSize} rounded-full bg-card border-2 transition-all duration-300`}
         style={{
           borderColor: isHighlighted ? 'hsl(var(--primary))' : 'hsl(var(--border))',
           boxShadow: isHighlighted ? '0 0 25px hsl(var(--primary) / 0.5)' : 'none',
@@ -83,18 +83,6 @@ const SkillNode = ({
           }}
         />
       </div>
-      {/* Skill name tooltip - pointer-events-none prevents flickering */}
-      <motion.div
-        className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-semibold text-primary pointer-events-none px-2 py-1 rounded bg-card/80 backdrop-blur-sm"
-        initial={false}
-        animate={{
-          opacity: isHighlighted ? 1 : 0,
-          y: isHighlighted ? 0 : 4,
-        }}
-        transition={{ duration: 0.2, ease: 'easeOut' }}
-      >
-        {skill.name}
-      </motion.div>
     </motion.div>
   );
 };
