@@ -129,10 +129,10 @@ export const HeroSection = () => {
         <img 
           src={heroBg} 
           alt="" 
-          className="hero-bg-layer absolute inset-0 w-full h-full object-cover opacity-80"
+          className="hero-bg-layer absolute inset-0 w-full h-full object-cover opacity-50"
         />
         {/* Overlay for readability */}
-        <div className="absolute inset-0 bg-background/20" />
+        <div className="absolute inset-0 bg-background/40" />
       </div>
 
       {/* Main Content */}
