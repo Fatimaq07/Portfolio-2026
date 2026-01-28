@@ -64,14 +64,6 @@ export const HeroSection = () => {
         { width: 'auto', duration: 2, delay: 1.5, ease: 'steps(20)' }
       );
 
-      // Glowing pulse on name
-      gsap.to('.name-glow', {
-        textShadow: '0 0 40px rgba(147, 197, 253, 0.8), 0 0 80px rgba(147, 197, 253, 0.4)',
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-      });
 
       // Letter spacing animation
       gsap.fromTo('.letter-animate',
