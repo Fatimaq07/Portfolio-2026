@@ -184,11 +184,6 @@ export const ProjectsSection = () => {
         </AnimatePresence>
       </motion.div>
 
-      {/* Custom Cursor */}
-      <motion.div 
-        className="fixed top-0 left-0 w-3 h-3 bg-primary rounded-full pointer-events-none z-50 hidden md:block"
-        style={{ x, y }}
-      />
     </section>
   );
 };
