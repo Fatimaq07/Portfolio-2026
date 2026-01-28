@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { motion } from 'framer-motion';
-import { Mail, Download, MessageCircle, ArrowDown } from 'lucide-react';
+import { Mail, Download, MessageCircle, ArrowDown, Sparkles } from 'lucide-react';
 import profilePhoto from '@/assets/profile-photo.jpg';
 
 export const HeroSection = () => {
@@ -11,42 +11,36 @@ export const HeroSection = () => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
-      // Animate profile image
       tl.fromTo('.profile-image',
         { scale: 0.8, opacity: 0 },
         { scale: 1, opacity: 1, duration: 1 },
         0.2
       );
 
-      // Animate name letters
       tl.fromTo('.name-letter', 
         { y: 100, opacity: 0, rotateX: -90 },
         { y: 0, opacity: 1, rotateX: 0, duration: 1, stagger: 0.05 },
         0.4
       );
 
-      // Animate role text
       tl.fromTo('.role-text',
         { y: 40, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8 },
         0.9
       );
 
-      // Animate about section
       tl.fromTo('.about-content',
         { y: 60, opacity: 0 },
         { y: 0, opacity: 1, duration: 1 },
         1.1
       );
 
-      // Animate CTA buttons
       tl.fromTo('.cta-btn',
         { y: 30, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.6, stagger: 0.1 },
         1.3
       );
 
-      // Floating animation for decorative elements
       gsap.to('.float-element', {
         y: -20,
         duration: 2,
@@ -70,27 +64,26 @@ export const HeroSection = () => {
       id="hero" 
       className="min-h-screen flex flex-col justify-center px-6 lg:px-16 relative overflow-hidden"
       style={{ 
-        background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%)'
+        background: 'linear-gradient(135deg, #0d1f0d 0%, #1a2f1a 50%, #0f1f0f 100%)'
       }}
     >
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="float-element absolute top-20 right-20 w-64 h-64 rounded-full bg-gradient-to-br from-white/5 to-transparent blur-3xl" />
-        <div className="float-element absolute bottom-40 left-10 w-80 h-80 rounded-full bg-gradient-to-tr from-white/3 to-transparent blur-3xl" />
-        <div className="float-element absolute top-1/2 right-1/4 w-40 h-40 rounded-full border border-white/5" />
+        <div className="float-element absolute top-20 right-20 w-64 h-64 rounded-full bg-gradient-to-br from-amber-500/10 to-transparent blur-3xl" />
+        <div className="float-element absolute bottom-40 left-10 w-80 h-80 rounded-full bg-gradient-to-tr from-emerald-500/10 to-transparent blur-3xl" />
+        <div className="float-element absolute top-1/2 right-1/4 w-40 h-40 rounded-full border border-amber-500/10" />
         
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-[0.02]" 
+        {/* Leaf pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.03]" 
           style={{
-            backgroundImage: 'linear-gradient(white 1px, transparent 1px), linear-gradient(90deg, white 1px, transparent 1px)',
-            backgroundSize: '100px 100px'
+            backgroundImage: 'radial-gradient(circle at 2px 2px, #d4af37 1px, transparent 0)',
+            backgroundSize: '60px 60px'
           }}
         />
       </div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
         
-        {/* Main Content */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           {/* Left Side - Profile Photo & Name */}
@@ -99,15 +92,15 @@ export const HeroSection = () => {
             {/* Profile Photo */}
             <div className="profile-image relative w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto lg:mx-0">
               {/* Decorative rings */}
-              <div className="absolute -inset-4 rounded-full border border-white/10 animate-pulse" />
-              <div className="absolute -inset-8 rounded-full border border-white/5" />
+              <div className="absolute -inset-4 rounded-full border border-amber-500/20 animate-pulse" />
+              <div className="absolute -inset-8 rounded-full border border-emerald-500/10" />
               
-              {/* Gradient glow */}
-              <div className="absolute -inset-2 bg-gradient-to-br from-white/20 via-transparent to-white/10 rounded-full blur-xl" />
+              {/* Gold glow */}
+              <div className="absolute -inset-2 bg-gradient-to-br from-amber-500/30 via-transparent to-emerald-500/20 rounded-full blur-xl" />
               
               {/* Photo container */}
               <motion.div 
-                className="relative w-full h-full rounded-full overflow-hidden border-2 border-white/20"
+                className="relative w-full h-full rounded-full overflow-hidden border-2 border-amber-500/40"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
@@ -119,18 +112,19 @@ export const HeroSection = () => {
               </motion.div>
               
               {/* Status badge */}
-              <div className="absolute -bottom-2 -right-2 bg-green-500 w-6 h-6 rounded-full border-4 border-neutral-900 animate-pulse" />
+              <div className="absolute -bottom-2 -right-2 bg-emerald-500 w-6 h-6 rounded-full border-4 border-emerald-900 animate-pulse" />
             </div>
 
             {/* Greeting */}
-            <motion.p 
+            <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-gray-400 text-lg tracking-widest uppercase text-center lg:text-left"
+              className="flex items-center gap-2 text-center lg:text-left justify-center lg:justify-start"
             >
-              Hello, I'm
-            </motion.p>
+              <Sparkles className="w-4 h-4 text-amber-400" />
+              <span className="text-amber-400/80 text-lg tracking-widest uppercase">Hello, I'm</span>
+            </motion.div>
 
             {/* Name - Large Typography */}
             <div className="space-y-2 text-center lg:text-left" style={{ perspective: '1000px' }}>
@@ -139,7 +133,7 @@ export const HeroSection = () => {
                   {firstName.split('').map((letter, i) => (
                     <span 
                       key={i} 
-                      className="name-letter inline-block text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight"
+                      className="name-letter inline-block text-5xl md:text-7xl lg:text-8xl font-bold text-amber-50 tracking-tight"
                       style={{ fontFamily: 'serif' }}
                     >
                       {letter}
@@ -152,7 +146,7 @@ export const HeroSection = () => {
                   {lastName.split('').map((letter, i) => (
                     <span 
                       key={i} 
-                      className="name-letter inline-block text-5xl md:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-600 tracking-tight"
+                      className="name-letter inline-block text-5xl md:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600 tracking-tight"
                       style={{ fontFamily: 'serif' }}
                     >
                       {letter}
@@ -164,20 +158,20 @@ export const HeroSection = () => {
 
             {/* Role */}
             <div className="role-text space-y-2 text-center lg:text-left">
-              <p className="text-xl md:text-2xl text-white font-light">
+              <p className="text-xl md:text-2xl text-amber-50 font-light">
                 Full Stack Developer
               </p>
-              <p className="text-gray-500 text-base">
+              <p className="text-emerald-400/70 text-base">
                 MERN Stack • AI Automation • UI/UX Design
               </p>
             </div>
 
             {/* Email */}
             <div className="role-text flex items-center gap-3 justify-center lg:justify-start">
-              <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                <Mail className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+                <Mail className="w-5 h-5 text-amber-400" />
               </div>
-              <span className="text-gray-400">qfatima504@gmail.com</span>
+              <span className="text-amber-100/60">qfatima504@gmail.com</span>
             </div>
 
             {/* CTA Buttons */}
@@ -186,7 +180,7 @@ export const HeroSection = () => {
                 href="https://wa.me/919399723080"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="cta-btn group flex items-center gap-3 bg-white text-black px-8 py-4 rounded-full font-semibold hover:bg-gray-200 transition-all"
+                className="cta-btn group flex items-center gap-3 bg-gradient-to-r from-amber-500 to-amber-600 text-emerald-950 px-8 py-4 rounded-full font-semibold hover:from-amber-400 hover:to-amber-500 transition-all shadow-lg shadow-amber-500/20"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -197,7 +191,7 @@ export const HeroSection = () => {
               <motion.a
                 href="/Fatima_Qureshi_Resume.pdf"
                 download
-                className="cta-btn group flex items-center gap-3 border border-white/20 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all"
+                className="cta-btn group flex items-center gap-3 border border-amber-500/30 text-amber-100 px-8 py-4 rounded-full font-semibold hover:bg-amber-500/10 transition-all"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -212,32 +206,32 @@ export const HeroSection = () => {
             
             {/* About Card */}
             <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-white/10 via-white/5 to-white/10 rounded-3xl blur-xl" />
-              <div className="relative bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-white/10">
+              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/20 via-emerald-500/10 to-amber-500/20 rounded-3xl blur-xl" />
+              <div className="relative bg-gradient-to-br from-emerald-950/80 to-emerald-900/60 backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-amber-500/20">
                 
-                <h2 className="text-sm uppercase tracking-[0.3em] text-gray-400 mb-6">About Me</h2>
+                <h2 className="text-sm uppercase tracking-[0.3em] text-amber-400 mb-6">About Me</h2>
                 
-                <p className="text-lg lg:text-xl text-gray-300 leading-relaxed mb-6">
-                  I craft <span className="text-white font-semibold">digital experiences</span> that blend creativity with cutting-edge technology. Specializing in full-stack development and AI automation.
+                <p className="text-lg lg:text-xl text-amber-50/90 leading-relaxed mb-6">
+                  I craft <span className="text-amber-400 font-semibold">digital experiences</span> that blend creativity with cutting-edge technology. Specializing in full-stack development and AI automation.
                 </p>
                 
-                <p className="text-gray-400 leading-relaxed mb-8">
+                <p className="text-amber-100/50 leading-relaxed mb-8">
                   Building digital experiences for startups and businesses worldwide. From sleek web applications to intelligent AI solutions, I transform ideas into reality.
                 </p>
 
                 {/* Stats */}
-                <div className="grid grid-cols-3 gap-6 pt-6 border-t border-white/10">
+                <div className="grid grid-cols-3 gap-6 pt-6 border-t border-amber-500/20">
                   <div className="text-center">
-                    <span className="block text-3xl lg:text-4xl font-bold text-white">8+</span>
-                    <span className="text-sm text-gray-500">Projects</span>
+                    <span className="block text-3xl lg:text-4xl font-bold text-amber-400">8+</span>
+                    <span className="text-sm text-emerald-400/60">Projects</span>
                   </div>
                   <div className="text-center">
-                    <span className="block text-3xl lg:text-4xl font-bold text-white">AI</span>
-                    <span className="text-sm text-gray-500">Automation</span>
+                    <span className="block text-3xl lg:text-4xl font-bold text-amber-400">AI</span>
+                    <span className="text-sm text-emerald-400/60">Automation</span>
                   </div>
                   <div className="text-center">
-                    <span className="block text-3xl lg:text-4xl font-bold text-white">2+</span>
-                    <span className="text-sm text-gray-500">Years Exp</span>
+                    <span className="block text-3xl lg:text-4xl font-bold text-amber-400">2+</span>
+                    <span className="text-sm text-emerald-400/60">Years Exp</span>
                   </div>
                 </div>
               </div>
@@ -245,7 +239,7 @@ export const HeroSection = () => {
 
             {/* Decorative text */}
             <div className="hidden lg:block text-right">
-              <span className="text-[120px] font-bold text-white/[0.02] leading-none select-none">
+              <span className="text-[120px] font-bold text-amber-500/[0.03] leading-none select-none">
                 2026
               </span>
             </div>
@@ -258,7 +252,7 @@ export const HeroSection = () => {
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <div className="flex flex-col items-center gap-2 text-gray-500">
+          <div className="flex flex-col items-center gap-2 text-amber-500/50">
             <span className="text-xs uppercase tracking-widest">Scroll</span>
             <ArrowDown className="w-4 h-4" />
           </div>

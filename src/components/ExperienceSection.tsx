@@ -80,14 +80,14 @@ export const ExperienceSection = () => {
       id="experience" 
       className="h-screen w-full flex items-center justify-center relative overflow-hidden"
       style={{ 
-        background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%)'
+        background: 'linear-gradient(135deg, #0d1f0d 0%, #1a2f1a 50%, #0f1f0f 100%)'
       }}
     >
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-white/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-amber-500/5 rounded-full blur-3xl" />
         <motion.div 
-          className="absolute top-1/4 left-1/4 w-24 h-24 bg-white/5 rounded-full blur-2xl"
+          className="absolute top-1/4 left-1/4 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl"
           animate={{ 
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3]
@@ -95,7 +95,7 @@ export const ExperienceSection = () => {
           transition={{ duration: 4, repeat: Infinity }}
         />
         <motion.div 
-          className="absolute bottom-1/4 right-1/4 w-32 h-32 bg-white/5 rounded-full blur-2xl"
+          className="absolute bottom-1/4 right-1/4 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl"
           animate={{ 
             scale: [1.2, 1, 1.2],
             opacity: [0.5, 0.3, 0.5]
@@ -112,7 +112,7 @@ export const ExperienceSection = () => {
             <motion.span 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-gray-400 text-xs uppercase tracking-widest font-medium block"
+              className="text-amber-400/70 text-xs uppercase tracking-widest font-medium block"
             >
               My Journey
             </motion.span>
@@ -121,9 +121,9 @@ export const ExperienceSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight font-serif"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-amber-50 tracking-tight font-serif"
             >
-              Experience<span className="text-gray-400">.</span>
+              Experience<span className="text-amber-400">.</span>
             </motion.h2>
 
             {/* Timeline Items */}
@@ -140,29 +140,29 @@ export const ExperienceSection = () => {
                   }}
                   className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-300 text-left group ${
                     activeIndex === index 
-                      ? 'bg-white/10 border border-white/20' 
-                      : 'hover:bg-white/5 border border-transparent'
+                      ? 'bg-amber-500/10 border border-amber-500/30' 
+                      : 'hover:bg-amber-500/5 border border-transparent'
                   }`}
                 >
                   <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${
                     activeIndex === index 
-                      ? 'bg-white text-black' 
-                      : 'bg-neutral-800 text-gray-400 group-hover:text-white'
+                      ? 'bg-amber-500 text-emerald-950' 
+                      : 'bg-emerald-900 text-amber-400/60 group-hover:text-amber-400'
                   }`}>
                     {getIcon(exp.type)}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className={`text-sm font-medium truncate transition-colors ${
-                      activeIndex === index ? 'text-white' : 'text-gray-400 group-hover:text-white'
+                      activeIndex === index ? 'text-amber-50' : 'text-amber-100/60 group-hover:text-amber-50'
                     }`}>
                       {exp.title}
                     </p>
-                    <p className="text-xs text-gray-500">{exp.period}</p>
+                    <p className="text-xs text-emerald-400/50">{exp.period}</p>
                   </div>
                   {activeIndex === index && (
                     <motion.div 
                       layoutId="activeIndicator"
-                      className="w-1 h-8 bg-white rounded-full"
+                      className="w-1 h-8 bg-amber-400 rounded-full"
                     />
                   )}
                 </motion.button>
@@ -179,14 +179,14 @@ export const ExperienceSection = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -40, scale: 0.95 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="relative p-6 lg:p-8 rounded-2xl bg-neutral-900 backdrop-blur-xl border border-white/10"
+                className="relative p-6 lg:p-8 rounded-2xl bg-emerald-950/80 backdrop-blur-xl border border-amber-500/20"
               >
                 {/* Number indicator */}
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-white flex items-center justify-center text-2xl font-bold text-black font-mono shadow-lg"
+                  className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center text-2xl font-bold text-emerald-950 font-mono shadow-lg"
                 >
                   0{activeIndex + 1}
                 </motion.div>
@@ -196,7 +196,7 @@ export const ExperienceSection = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 }}
-                  className="inline-block px-3 py-1 bg-white/10 text-gray-300 text-xs uppercase tracking-widest font-bold rounded-full mb-4"
+                  className="inline-block px-3 py-1 bg-amber-500/20 text-amber-300 text-xs uppercase tracking-widest font-bold rounded-full mb-4"
                 >
                   {currentExp.type}
                 </motion.span>
@@ -206,7 +206,7 @@ export const ExperienceSection = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15 }}
-                  className="text-2xl md:text-3xl font-bold text-white mb-1 font-serif"
+                  className="text-2xl md:text-3xl font-bold text-amber-50 mb-1 font-serif"
                 >
                   {currentExp.title}
                 </motion.h3>
@@ -215,7 +215,7 @@ export const ExperienceSection = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="text-gray-300 font-medium mb-1"
+                  className="text-amber-300 font-medium mb-1"
                 >
                   {currentExp.company}
                 </motion.p>
@@ -224,7 +224,7 @@ export const ExperienceSection = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.25 }}
-                  className="text-gray-500 text-sm mb-4"
+                  className="text-emerald-400/50 text-sm mb-4"
                 >
                   {currentExp.period}
                 </motion.p>
@@ -233,7 +233,7 @@ export const ExperienceSection = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="text-gray-400 leading-relaxed mb-5 text-sm lg:text-base"
+                  className="text-amber-100/50 leading-relaxed mb-5 text-sm lg:text-base"
                 >
                   {currentExp.description}
                 </motion.p>
@@ -251,7 +251,7 @@ export const ExperienceSection = () => {
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.4 + i * 0.05 }}
-                      className="px-3 py-1.5 bg-white/10 rounded-full text-xs text-gray-300 border border-white/10"
+                      className="px-3 py-1.5 bg-amber-500/10 rounded-full text-xs text-amber-200 border border-amber-500/20"
                     >
                       {h}
                     </motion.span>
@@ -259,10 +259,10 @@ export const ExperienceSection = () => {
                 </motion.div>
 
                 {/* Navigation arrows */}
-                <div className="flex items-center gap-2 mt-6 pt-4 border-t border-white/10">
+                <div className="flex items-center gap-2 mt-6 pt-4 border-t border-amber-500/20">
                   <button
                     onClick={goToPrev}
-                    className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/20 transition-all"
+                    className="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400/60 hover:text-amber-400 hover:bg-amber-500/20 transition-all"
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
@@ -275,14 +275,14 @@ export const ExperienceSection = () => {
                           setActiveIndex(i);
                         }}
                         className={`w-2 h-2 rounded-full transition-all ${
-                          activeIndex === i ? 'bg-white w-6' : 'bg-gray-600 hover:bg-gray-500'
+                          activeIndex === i ? 'bg-amber-400 w-6' : 'bg-emerald-700 hover:bg-emerald-600'
                         }`}
                       />
                     ))}
                   </div>
                   <button
                     onClick={goToNext}
-                    className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/20 transition-all"
+                    className="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400/60 hover:text-amber-400 hover:bg-amber-500/20 transition-all"
                   >
                     <ChevronRight className="w-5 h-5" />
                   </button>
