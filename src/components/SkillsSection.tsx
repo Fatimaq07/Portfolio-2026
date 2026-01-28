@@ -47,51 +47,54 @@ const SkillNode = ({
   onLeave: () => void;
   isDimmed: boolean;
 }) => {
-  const nodeSize = isInner ? 'w-10 h-10 md:w-12 md:h-12' : 'w-12 h-12 md:w-14 md:h-14';
-  const iconSize = isInner ? 'w-5 h-5 md:w-6 md:h-6' : 'w-6 h-6 md:w-7 md:h-7';
+  const nodeSize = isInner ? 'w-12 h-12 md:w-14 md:h-14' : 'w-14 h-14 md:w-16 md:h-16';
+  const iconSize = isInner ? 'w-6 h-6 md:w-7 md:h-7' : 'w-7 h-7 md:w-8 md:h-8';
 
   return (
     <motion.div
       className="relative cursor-pointer"
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
+      initial={false}
       animate={{
-        scale: isHighlighted ? 1.3 : 1,
-        zIndex: isHighlighted ? 50 : 1,
-        opacity: isDimmed ? 0.3 : 1,
+        scale: isHighlighted ? 1.2 : 1,
+        opacity: isDimmed ? 0.25 : 1,
       }}
-      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+      transition={{ 
+        type: 'tween', 
+        duration: 0.3,
+        ease: 'easeOut'
+      }}
+      style={{ zIndex: isHighlighted ? 50 : 1 }}
     >
-      <motion.div 
-        className={`flex items-center justify-center ${nodeSize} rounded-xl bg-card border border-border transition-all duration-300`}
+      <div 
+        className={`flex items-center justify-center ${nodeSize} rounded-xl bg-card border-2 transition-all duration-300`}
         style={{
-          borderColor: isHighlighted ? 'hsl(var(--primary))' : undefined,
-          boxShadow: isHighlighted ? '0 0 20px hsl(var(--primary) / 0.4)' : undefined,
+          borderColor: isHighlighted ? 'hsl(var(--primary))' : 'hsl(var(--border))',
+          boxShadow: isHighlighted ? '0 0 25px hsl(var(--primary) / 0.5)' : 'none',
         }}
       >
         <img 
           src={skill.icon} 
           alt={skill.name}
-          className={`${iconSize} object-contain dark:invert-0 transition-all duration-300`}
+          className={`${iconSize} object-contain dark:invert-0`}
           style={{ 
             filter: (skill.name === 'Next.js' || skill.name === 'Vercel') ? 'var(--icon-filter, none)' : 'none',
-            opacity: isDimmed ? 0.5 : 1,
           }}
         />
+      </div>
+      {/* Skill name tooltip - pointer-events-none prevents flickering */}
+      <motion.div
+        className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-semibold text-primary pointer-events-none px-2 py-1 rounded bg-card/80 backdrop-blur-sm"
+        initial={false}
+        animate={{
+          opacity: isHighlighted ? 1 : 0,
+          y: isHighlighted ? 0 : 4,
+        }}
+        transition={{ duration: 0.2, ease: 'easeOut' }}
+      >
+        {skill.name}
       </motion.div>
-      {/* Skill name tooltip on hover */}
-      <AnimatePresence>
-        {isHighlighted && (
-          <motion.div
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 5 }}
-            className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-primary"
-          >
-            {skill.name}
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.div>
   );
 };
