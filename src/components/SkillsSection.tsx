@@ -211,26 +211,23 @@ export const SkillsSection = () => {
   const currentRightSkill = rightSkills[activeIndex.right];
 
   return (
-    <section ref={sectionRef} id="skills" className="relative h-screen flex flex-col justify-center overflow-hidden"
-      style={{ 
-        background: 'linear-gradient(180deg, #ebe4de 0%, #f5f0ec 50%, #faf7f5 100%)'
-      }}
+    <section ref={sectionRef} id="skills" className="relative h-screen flex flex-col justify-center overflow-hidden bg-background"
     >
       {/* Subtle pattern */}
-      <div className="absolute inset-0 opacity-[0.02]" 
+      <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]" 
         style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, #8b7355 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--muted-foreground)) 1px, transparent 0)',
           backgroundSize: '40px 40px'
         }}
       />
 
       <div className="container mx-auto px-6 lg:px-12 mb-6">
         <div className="skills-header text-center">
-          <span className="text-rose-400 text-sm uppercase tracking-widest font-medium block mb-3">
+          <span className="text-primary text-sm uppercase tracking-widest font-medium block mb-3">
             Technical Expertise
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-stone-800 tracking-tight font-serif mb-2">
-            Skills & Technologies<span className="text-rose-400">.</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight font-serif mb-2">
+            Skills & Technologies<span className="text-primary">.</span>
           </h2>
         </div>
       </div>
@@ -249,7 +246,7 @@ export const SkillsSection = () => {
         >
           {/* Orbit rings */}
           <div 
-            className="absolute rounded-full border border-rose-200"
+            className="absolute rounded-full border border-primary/30"
             style={{
               left: centerX - innerRadius,
               top: centerY - innerRadius,
@@ -258,7 +255,7 @@ export const SkillsSection = () => {
             }}
           />
           <div 
-            className="absolute rounded-full border border-stone-300"
+            className="absolute rounded-full border border-border"
             style={{
               left: centerX - outerRadius,
               top: centerY - outerRadius,
@@ -275,10 +272,10 @@ export const SkillsSection = () => {
               transform: 'translate(-50%, -50%)',
             }}
           >
-            <h3 className="text-lg md:text-xl font-bold text-stone-800 tracking-tight font-serif">
+            <h3 className="text-lg md:text-xl font-bold text-foreground tracking-tight font-serif">
               FULL STACK
             </h3>
-            <span className="text-xs text-stone-500 uppercase tracking-widest">
+            <span className="text-xs text-muted-foreground uppercase tracking-widest">
               Developer
             </span>
           </div>
