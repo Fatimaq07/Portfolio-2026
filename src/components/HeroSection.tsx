@@ -192,14 +192,14 @@ export const HeroSection = () => {
           
           {/* Issue Number - Scattered */}
           <div className="scatter-element absolute -top-8 left-0 lg:left-[5%]">
-            <span className="text-xs tracking-[0.3em] text-slate-600 uppercase">Portfolio</span>
-            <span className="block text-4xl lg:text-5xl font-bold text-slate-900 font-serif">01</span>
+            <span className="text-xs tracking-[0.3em] text-muted-foreground uppercase">Portfolio</span>
+            <span className="block text-4xl lg:text-5xl font-bold text-foreground font-serif">01</span>
           </div>
 
           {/* Main Name - Editorial Typography */}
           <div className="pt-16 lg:pt-8">
             <div className="overflow-hidden">
-              <h1 className="hero-line name-glow text-[12vw] lg:text-[10vw] font-bold text-slate-900 leading-[0.85] tracking-tighter font-serif">
+              <h1 className="hero-line name-glow text-[12vw] lg:text-[10vw] font-bold text-foreground leading-[0.85] tracking-tighter font-serif">
                 FATIMA
               </h1>
             </div>
@@ -207,7 +207,7 @@ export const HeroSection = () => {
               <h1 className="hero-line name-glow text-[12vw] lg:text-[10vw] font-bold text-primary leading-[0.85] tracking-tighter font-serif">
                 QURESHI
               </h1>
-              <span className="hero-line letter-animate text-2xl lg:text-4xl text-slate-500 font-light mb-4 lg:mb-8">©2026</span>
+              <span className="hero-line letter-animate text-2xl lg:text-4xl text-muted-foreground font-light mb-4 lg:mb-8">©2026</span>
             </div>
           </div>
 
@@ -234,7 +234,7 @@ export const HeroSection = () => {
 
               {/* Photo label */}
               <div className="scatter-element absolute -bottom-6 -left-4 bg-primary/10 backdrop-blur-md border border-primary/30 px-3 py-1.5 rounded-sm">
-                <span className="text-[10px] uppercase tracking-widest text-slate-700">Est. 2023</span>
+                <span className="text-[10px] uppercase tracking-widest text-foreground/70">Est. 2023</span>
               </div>
             </div>
           </div>
@@ -247,14 +247,14 @@ export const HeroSection = () => {
           <div className="col-span-12 lg:col-span-3">
             <div className="info-block flex items-center gap-3 overflow-hidden">
               <ArrowDownRight className="w-5 h-5 text-primary" />
-              <span className="typing-text text-sm uppercase tracking-[0.2em] text-slate-800 whitespace-nowrap overflow-hidden">Full Stack Developer</span>
+              <span className="typing-text text-sm uppercase tracking-[0.2em] text-foreground whitespace-nowrap overflow-hidden">Full Stack Developer</span>
             </div>
           </div>
 
           {/* Description */}
           <div className="col-span-12 lg:col-span-4 lg:col-start-5">
-            <p className="info-block text-base lg:text-lg text-slate-600 leading-relaxed">
-              Building digital experiences for startups. Specializing in <span className="text-slate-900 font-medium">MERN Stack</span>, <span className="text-slate-900 font-medium">AI Automation</span> & UI/UX Design.
+            <p className="info-block text-base lg:text-lg text-muted-foreground leading-relaxed">
+              Building digital experiences for startups. Specializing in <span className="text-foreground font-medium">MERN Stack</span>, <span className="text-foreground font-medium">AI Automation</span> & UI/UX Design.
             </p>
           </div>
 
@@ -262,12 +262,12 @@ export const HeroSection = () => {
           <div className="col-span-12 lg:col-span-3 lg:col-start-10">
             <div className="info-block flex gap-8 lg:justify-end">
               <div>
-                <span className="block text-3xl lg:text-4xl font-bold text-slate-900 font-serif">8+</span>
-                <span className="text-xs text-slate-600 uppercase tracking-wider">Projects</span>
+                <span className="block text-3xl lg:text-4xl font-bold text-foreground font-serif">8+</span>
+                <span className="text-xs text-muted-foreground uppercase tracking-wider">Projects</span>
               </div>
               <div>
-                <span className="block text-3xl lg:text-4xl font-bold text-slate-900 font-serif">2+</span>
-                <span className="text-xs text-slate-600 uppercase tracking-wider">Years</span>
+                <span className="block text-3xl lg:text-4xl font-bold text-foreground font-serif">2+</span>
+                <span className="text-xs text-muted-foreground uppercase tracking-wider">Years</span>
               </div>
             </div>
           </div>
@@ -290,7 +290,7 @@ export const HeroSection = () => {
           <motion.a
             href="/Fatima_Qureshi_Resume.pdf"
             download
-            className="cta-editorial group flex items-center gap-3 border border-slate-400 text-slate-800 px-8 py-4 rounded-full font-medium hover:border-primary hover:bg-primary/10 transition-all duration-300"
+            className="cta-editorial group flex items-center gap-3 border border-border text-foreground px-8 py-4 rounded-full font-medium hover:border-primary hover:bg-primary/10 transition-all duration-300"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -299,8 +299,8 @@ export const HeroSection = () => {
           </motion.a>
 
           {/* Email floating */}
-          <div className="cta-editorial ml-auto hidden lg:flex items-center gap-2 text-slate-600">
-            <span className="w-8 h-px bg-slate-400" />
+          <div className="cta-editorial ml-auto hidden lg:flex items-center gap-2 text-muted-foreground">
+            <span className="w-8 h-px bg-border" />
             <span className="text-sm">qfatima504@gmail.com</span>
           </div>
         </div>
@@ -308,15 +308,15 @@ export const HeroSection = () => {
         {/* Moving Circle with 2025 Passout - Smaller size */}
         <div className="moving-circle scatter-element absolute bottom-[15%] left-[5%] w-16 h-16 lg:w-20 lg:h-20 border border-primary/50 rounded-full flex items-center justify-center backdrop-blur-sm bg-primary/5">
           <div className="circle-text text-center">
-            <span className="block text-sm lg:text-base font-bold text-slate-900 font-serif">2025</span>
-            <span className="text-[6px] lg:text-[8px] uppercase tracking-[0.1em] text-slate-600">Passout</span>
+            <span className="block text-sm lg:text-base font-bold text-foreground font-serif">2025</span>
+            <span className="text-[6px] lg:text-[8px] uppercase tracking-[0.1em] text-muted-foreground">Passout</span>
           </div>
         </div>
         
         {/* Other decorative elements */}
         <div className="scatter-element absolute top-[30%] right-[25%] w-3 h-3 bg-primary rounded-full" />
         <div className="scatter-element absolute bottom-[25%] right-[15%]">
-          <span className="text-6xl lg:text-8xl font-bold text-slate-900/10 font-serif select-none">*</span>
+          <span className="text-6xl lg:text-8xl font-bold text-foreground/10 font-serif select-none">*</span>
         </div>
       </div>
     </section>
