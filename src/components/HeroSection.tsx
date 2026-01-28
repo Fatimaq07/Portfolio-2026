@@ -92,7 +92,7 @@ export const HeroSection = () => {
       className="h-screen flex items-center px-6 lg:px-16 relative overflow-hidden"
     >
       {/* Floating Objects Background */}
-      <div className="absolute inset-0 bg-background overflow-hidden">
+      <div className="absolute inset-0 bg-background dark:bg-background bg-transparent overflow-hidden">
         {/* Floating geometric shapes */}
         <motion.div 
           className="floating-shape absolute top-[10%] left-[10%] w-20 h-20 border-2 border-primary/30 rounded-full"
