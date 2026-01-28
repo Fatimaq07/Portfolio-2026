@@ -166,17 +166,17 @@ export const ProjectsSection = () => {
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               exit={{ opacity: 0, scale: 0.8, rotate: 10 }}
               transition={{ type: "spring", stiffness: 150, damping: 15 }}
-              className="relative -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg w-[300px] h-[200px] border border-stone-200"
+              className="relative -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg w-[300px] h-[200px] border border-border"
             >
               <img
                 src={projects.find((p) => p.id === activeProject)?.image}
                 alt="Project Preview"
                 className="h-full w-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-transparent to-transparent flex flex-col justify-end p-4">
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-transparent to-transparent flex flex-col justify-end p-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-white font-bold text-sm tracking-tight">View Project</span>
-                  <ArrowUpRight className="text-rose-300 w-4 h-4" />
+                  <span className="text-background font-bold text-sm tracking-tight">View Project</span>
+                  <ArrowUpRight className="text-primary w-4 h-4" />
                 </div>
               </div>
             </motion.div>
@@ -186,7 +186,7 @@ export const ProjectsSection = () => {
 
       {/* Custom Cursor */}
       <motion.div 
-        className="fixed top-0 left-0 w-3 h-3 bg-rose-400 rounded-full pointer-events-none z-50 hidden md:block"
+        className="fixed top-0 left-0 w-3 h-3 bg-primary rounded-full pointer-events-none z-50 hidden md:block"
         style={{ x, y }}
       />
     </section>
