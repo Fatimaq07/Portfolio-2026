@@ -93,23 +93,23 @@ const SkillCard = ({ skill, side }: { skill: Skill | null; side: 'left' | 'right
       {skill && (
         <motion.div
           key={skill.name}
-          initial={{ opacity: 0, x: side === 'left' ? -20 : 20, scale: 0.9 }}
+          initial={{ opacity: 0, x: side === 'left' ? -30 : 30, scale: 0.9 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
-          exit={{ opacity: 0, x: side === 'left' ? -20 : 20, scale: 0.9 }}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="w-56 p-4 rounded-2xl bg-card border border-border"
+          exit={{ opacity: 0, x: side === 'left' ? -30 : 30, scale: 0.9 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="w-64 p-5 rounded-2xl bg-card border border-border shadow-lg"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+          <div className="flex items-center gap-4 mb-3">
+            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
               <img 
                 src={skill.icon} 
                 alt={skill.name}
-                className="w-6 h-6 object-contain"
+                className="w-7 h-7 object-contain"
               />
             </div>
             <div>
-              <h4 className="font-semibold text-foreground text-sm">{skill.name}</h4>
-              <span className={`text-xs ${
+              <h4 className="font-bold text-foreground text-base">{skill.name}</h4>
+              <span className={`text-sm font-medium ${
                 skill.level === 'Production-level' 
                   ? 'text-primary' 
                   : 'text-muted-foreground'
@@ -118,7 +118,7 @@ const SkillCard = ({ skill, side }: { skill: Skill | null; side: 'left' | 'right
               </span>
             </div>
           </div>
-          <p className="text-xs text-muted-foreground leading-relaxed">
+          <p className="text-sm text-foreground/80 leading-relaxed">
             {skill.usage}
           </p>
         </motion.div>
@@ -245,7 +245,7 @@ export const SkillsSection = () => {
         left: (prev.left + 1) % leftSkills.length,
         right: (prev.right + 1) % rightSkills.length,
       }));
-    }, 2500);
+    }, 4000);
     return () => clearInterval(interval);
   }, [isPaused, leftSkills.length, rightSkills.length]);
 
