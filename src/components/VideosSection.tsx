@@ -220,7 +220,7 @@ export const VideosSection = () => {
   const [activeId, setActiveId] = useState<number>(1);
 
   return (
-    <section className="relative h-screen flex flex-col justify-center px-6 overflow-hidden bg-background"
+    <section className="relative h-screen flex flex-col justify-center px-6 overflow-hidden bg-transparent dark:bg-background"
     >
       
       {/* Subtle pattern */}

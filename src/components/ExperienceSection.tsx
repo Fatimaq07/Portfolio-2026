@@ -78,7 +78,7 @@ export const ExperienceSection = () => {
   return (
     <section 
       id="experience" 
-      className="h-screen w-full flex items-center justify-center relative overflow-hidden bg-background"
+      className="h-screen w-full flex items-center justify-center relative overflow-hidden bg-transparent dark:bg-background"
     >
       {/* Subtle pattern */}
       <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]" 
