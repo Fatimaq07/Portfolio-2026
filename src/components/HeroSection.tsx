@@ -1,10 +1,13 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { TextPlugin } from 'gsap/TextPlugin';
 import { motion } from 'framer-motion';
 import { MessageCircle, Download, ArrowDownRight } from 'lucide-react';
 import profilePhoto from '@/assets/profile-photo.jpg';
 import heroBg1 from '@/assets/hero-bg-1.jpg';
 import heroBg2 from '@/assets/hero-bg-2.png';
+
+gsap.registerPlugin(TextPlugin);
 
 export const HeroSection = () => {
   const containerRef = useRef<HTMLElement>(null);
@@ -53,6 +56,27 @@ export const HeroSection = () => {
         { y: 30, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.6, stagger: 0.1 },
         1.3
+      );
+
+      // Text typing animation for role
+      gsap.fromTo('.typing-text',
+        { width: 0 },
+        { width: 'auto', duration: 2, delay: 1.5, ease: 'steps(20)' }
+      );
+
+      // Glowing pulse on name
+      gsap.to('.name-glow', {
+        textShadow: '0 0 40px rgba(147, 197, 253, 0.8), 0 0 80px rgba(147, 197, 253, 0.4)',
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+
+      // Letter spacing animation
+      gsap.fromTo('.letter-animate',
+        { letterSpacing: '0.5em', opacity: 0 },
+        { letterSpacing: '0.2em', opacity: 1, duration: 1.5, delay: 0.5, ease: 'power3.out' }
       );
 
       // Continuous float for image
@@ -140,15 +164,15 @@ export const HeroSection = () => {
           {/* Main Name - Editorial Typography */}
           <div className="pt-16 lg:pt-8">
             <div className="overflow-hidden">
-              <h1 className="hero-line text-[12vw] lg:text-[10vw] font-bold text-white leading-[0.85] tracking-tighter font-serif">
+              <h1 className="hero-line name-glow text-[12vw] lg:text-[10vw] font-bold text-white leading-[0.85] tracking-tighter font-serif">
                 FATIMA
               </h1>
             </div>
             <div className="overflow-hidden flex items-end gap-4 lg:gap-8">
-              <h1 className="hero-line text-[12vw] lg:text-[10vw] font-bold text-blue-300 leading-[0.85] tracking-tighter font-serif">
+              <h1 className="hero-line name-glow text-[12vw] lg:text-[10vw] font-bold text-blue-300 leading-[0.85] tracking-tighter font-serif">
                 QURESHI
               </h1>
-              <span className="hero-line text-2xl lg:text-4xl text-white/60 font-light mb-4 lg:mb-8">©2026</span>
+              <span className="hero-line letter-animate text-2xl lg:text-4xl text-white/60 font-light mb-4 lg:mb-8">©2026</span>
             </div>
           </div>
 
@@ -186,9 +210,9 @@ export const HeroSection = () => {
           
           {/* Role Tag */}
           <div className="col-span-12 lg:col-span-3">
-            <div className="info-block flex items-center gap-3">
+            <div className="info-block flex items-center gap-3 overflow-hidden">
               <ArrowDownRight className="w-5 h-5 text-blue-300" />
-              <span className="text-sm uppercase tracking-[0.2em] text-white">Full Stack Developer</span>
+              <span className="typing-text text-sm uppercase tracking-[0.2em] text-white whitespace-nowrap overflow-hidden">Full Stack Developer</span>
             </div>
           </div>
 
@@ -246,11 +270,11 @@ export const HeroSection = () => {
           </div>
         </div>
 
-        {/* Moving Circle with 2025 Passout */}
-        <div className="moving-circle scatter-element absolute bottom-[15%] left-[5%] w-24 h-24 lg:w-32 lg:h-32 border-2 border-white/50 rounded-full flex items-center justify-center backdrop-blur-sm bg-white/5">
+        {/* Moving Circle with 2025 Passout - Smaller size */}
+        <div className="moving-circle scatter-element absolute bottom-[15%] left-[5%] w-16 h-16 lg:w-20 lg:h-20 border border-white/50 rounded-full flex items-center justify-center backdrop-blur-sm bg-white/5">
           <div className="circle-text text-center">
-            <span className="block text-xl lg:text-2xl font-bold text-white font-serif">2025</span>
-            <span className="text-[8px] lg:text-[10px] uppercase tracking-[0.15em] text-white/70">Passout</span>
+            <span className="block text-sm lg:text-base font-bold text-white font-serif">2025</span>
+            <span className="text-[6px] lg:text-[8px] uppercase tracking-[0.1em] text-white/70">Passout</span>
           </div>
         </div>
         
