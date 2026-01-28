@@ -8,6 +8,7 @@ import { ExperienceSection } from '@/components/ExperienceSection';
 import { ContactSection } from '@/components/ContactSection';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import lightThemeBg from '@/assets/light-theme-bg.jpg';
+import darkThemeBg from '@/assets/dark-theme-bg.png';
 const sections = [
   { id: 'hero', component: HeroSection, label: 'Home' },
   { id: 'skills', component: SkillsSection, label: 'Skills' },
@@ -125,6 +126,13 @@ const Index = () => {
         style={{ backgroundImage: `url(${lightThemeBg})` }}
       >
         <div className="absolute inset-0 bg-background/60" />
+      </div>
+      {/* Dark theme background image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden dark:block"
+        style={{ backgroundImage: `url(${darkThemeBg})` }}
+      >
+        <div className="absolute inset-0 bg-background/40" />
       </div>
       {/* Theme Toggle - Top Right */}
       <div className="fixed top-6 right-6 z-50">
