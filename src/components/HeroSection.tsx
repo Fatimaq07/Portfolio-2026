@@ -1,55 +1,77 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { motion } from 'framer-motion';
-import { MessageCircle, Download, ArrowDownRight } from 'lucide-react';
+import { MessageCircle, Download } from 'lucide-react';
 import profilePhoto from '@/assets/profile-photo.jpg';
+import heroBg1 from '@/assets/hero-bg-1.jpg';
+import heroBg2 from '@/assets/hero-bg-2.png';
 
 export const HeroSection = () => {
   const containerRef = useRef<HTMLElement>(null);
+  const circleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
-      // Staggered line reveals
-      tl.fromTo('.hero-line', 
-        { y: 120, opacity: 0, skewY: 7 },
-        { y: 0, opacity: 1, skewY: 0, duration: 1.2, stagger: 0.12 },
-        0.3
+      // Background fade in
+      tl.fromTo('.hero-bg-layer',
+        { opacity: 0, scale: 1.1 },
+        { opacity: 1, scale: 1, duration: 2, stagger: 0.3 },
+        0
       );
 
-      // Profile image
-      tl.fromTo('.profile-editorial',
-        { scale: 0.8, opacity: 0, rotate: -8 },
-        { scale: 1, opacity: 1, rotate: 0, duration: 1.4, ease: 'elastic.out(1, 0.5)' },
+      // Profile image entrance
+      tl.fromTo('.profile-award',
+        { scale: 0, opacity: 0, rotation: -15 },
+        { scale: 1, opacity: 1, rotation: 0, duration: 1.5, ease: 'elastic.out(1, 0.4)' },
         0.5
       );
 
-      // Scattered elements
-      tl.fromTo('.scatter-element', 
-        { opacity: 0, scale: 0 },
-        { opacity: 1, scale: 1, duration: 0.6, stagger: 0.1, ease: 'back.out(2)' },
+      // Name letters stagger
+      tl.fromTo('.name-char',
+        { y: 150, opacity: 0, rotationX: -90 },
+        { y: 0, opacity: 1, rotationX: 0, duration: 1, stagger: 0.05, ease: 'back.out(2)' },
         0.8
       );
 
-      // Info blocks
-      tl.fromTo('.info-block',
-        { x: -40, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.8, stagger: 0.15 },
-        1.0
+      // Role text
+      tl.fromTo('.role-text',
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8 },
+        1.5
       );
 
-      // CTA
-      tl.fromTo('.cta-editorial',
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1 },
-        1.3
+      // CTAs
+      tl.fromTo('.cta-btn',
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, stagger: 0.15 },
+        1.8
       );
 
-      // Continuous float for image
-      gsap.to('.profile-editorial', {
-        y: -12,
-        rotation: 2,
+      // Floating circle with continuous movement
+      gsap.to('.moving-circle', {
+        x: '+=100',
+        y: '+=50',
+        rotation: 360,
+        duration: 20,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+
+      // Additional floating animation for circle
+      gsap.to('.moving-circle', {
+        scale: 1.1,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power1.inOut'
+      });
+
+      // Profile float
+      gsap.to('.profile-award', {
+        y: -15,
         duration: 3,
         repeat: -1,
         yoyo: true,
@@ -61,148 +83,196 @@ export const HeroSection = () => {
     return () => ctx.revert();
   }, []);
 
+  // Mouse follower for circle
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (circleRef.current) {
+        const x = (e.clientX / window.innerWidth - 0.5) * 100;
+        const y = (e.clientY / window.innerHeight - 0.5) * 100;
+        gsap.to(circleRef.current, {
+          x: x,
+          y: y,
+          duration: 2,
+          ease: 'power2.out'
+        });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  const firstName = "FATIMA";
+  const lastName = "QURESHI";
+
   return (
     <section 
       ref={containerRef} 
       id="hero" 
-      className="h-screen flex items-center px-6 lg:px-16 relative overflow-hidden bg-background"
+      className="h-screen flex items-center justify-center relative overflow-hidden"
     >
-      {/* Editorial grid lines */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute left-[10%] top-0 bottom-0 w-px bg-border/30" />
-        <div className="absolute left-[50%] top-0 bottom-0 w-px bg-border/30" />
-        <div className="absolute left-[90%] top-0 bottom-0 w-px bg-border/30" />
-        <div className="absolute top-[20%] left-0 right-0 h-px bg-border/30" />
-        <div className="absolute top-[80%] left-0 right-0 h-px bg-border/30" />
+      {/* Layered Background Images */}
+      <div className="absolute inset-0">
+        <img 
+          src={heroBg1} 
+          alt="" 
+          className="hero-bg-layer absolute inset-0 w-full h-full object-cover opacity-0"
+        />
+        <img 
+          src={heroBg2} 
+          alt="" 
+          className="hero-bg-layer absolute inset-0 w-full h-full object-cover opacity-0 mix-blend-soft-light"
+        />
+        {/* Gradient overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/20" />
+      </div>
+
+      {/* Moving Circle with 2025 Passout */}
+      <div 
+        ref={circleRef}
+        className="moving-circle absolute top-[15%] right-[20%] w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-white/60 flex items-center justify-center backdrop-blur-sm bg-white/10 z-20"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        <div className="text-center">
+          <span className="block text-2xl md:text-3xl font-bold text-white font-serif">2025</span>
+          <span className="text-xs md:text-sm uppercase tracking-[0.2em] text-white/80">Passout</span>
+        </div>
+        {/* Rotating ring */}
+        <div className="absolute inset-0 rounded-full border border-white/30 animate-spin" style={{ animationDuration: '10s' }} />
+        <div className="absolute -inset-2 rounded-full border border-white/20" />
       </div>
 
       {/* Main Content */}
-      <div className="w-full max-w-[1800px] mx-auto relative z-10">
+      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-6 lg:px-16 flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
         
-        {/* Top Row - Name & Photo */}
-        <div className="relative">
+        {/* Left - Profile Photo */}
+        <div className="profile-award relative flex-shrink-0">
+          {/* Decorative frame */}
+          <div className="absolute -inset-4 md:-inset-6 border border-white/30 rounded-lg" style={{ transform: 'rotate(-3deg)' }} />
+          <div className="absolute -inset-8 md:-inset-12 border border-white/10 rounded-lg" style={{ transform: 'rotate(3deg)' }} />
           
-          {/* Issue Number - Scattered */}
-          <div className="scatter-element absolute -top-8 left-0 lg:left-[5%]">
-            <span className="text-xs tracking-[0.3em] text-muted-foreground uppercase">Portfolio</span>
-            <span className="block text-4xl lg:text-5xl font-bold text-primary font-serif">01</span>
+          {/* Main photo */}
+          <div className="relative w-48 h-60 md:w-64 md:h-80 lg:w-80 lg:h-[400px] overflow-hidden rounded-lg shadow-2xl">
+            <img 
+              src={profilePhoto} 
+              alt="Fatima Qureshi" 
+              className="w-full h-full object-cover"
+            />
+            {/* Shine effect */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent" />
           </div>
 
-          {/* Main Name - Editorial Typography */}
-          <div className="pt-16 lg:pt-8">
-            <div className="overflow-hidden">
-              <h1 className="hero-line text-[12vw] lg:text-[10vw] font-bold text-foreground leading-[0.85] tracking-tighter font-serif">
-                FATIMA
-              </h1>
-            </div>
-            <div className="overflow-hidden flex items-end gap-4 lg:gap-8">
-              <h1 className="hero-line text-[12vw] lg:text-[10vw] font-bold text-primary leading-[0.85] tracking-tighter font-serif">
-                QURESHI
-              </h1>
-              <span className="hero-line text-2xl lg:text-4xl text-muted-foreground font-light mb-4 lg:mb-8">©2026</span>
-            </div>
-          </div>
-
-          {/* Profile Photo - Asymmetric Position */}
-          <div className="profile-editorial absolute -top-4 right-0 lg:right-[8%] w-32 h-40 md:w-48 md:h-60 lg:w-64 lg:h-80">
-            <div className="relative w-full h-full">
-              {/* Frame decoration */}
-              <div className="absolute -inset-2 border border-primary/40 rounded-sm" style={{ transform: 'rotate(3deg)' }} />
-              
-              <div className="relative w-full h-full overflow-hidden rounded-sm shadow-2xl">
-                <img 
-                  src={profilePhoto} 
-                  alt="Fatima Qureshi" 
-                  className="w-full h-full object-cover"
-                />
-                {/* Halftone overlay effect */}
-                <div className="absolute inset-0 mix-blend-overlay opacity-20" 
-                  style={{
-                    backgroundImage: 'radial-gradient(circle, hsl(var(--foreground)) 1px, transparent 1px)',
-                    backgroundSize: '4px 4px'
-                  }}
-                />
-              </div>
-
-              {/* Photo label */}
-              <div className="scatter-element absolute -bottom-6 -left-4 bg-card border border-border px-3 py-1.5 rounded-sm">
-                <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Est. 2023</span>
-              </div>
-            </div>
+          {/* Badge */}
+          <div className="absolute -bottom-4 -right-4 bg-white/10 backdrop-blur-md border border-white/30 px-4 py-2 rounded-full">
+            <span className="text-sm font-medium text-white">Full Stack Developer</span>
           </div>
         </div>
 
-        {/* Bottom Row - Info & CTA */}
-        <div className="mt-12 lg:mt-16 grid grid-cols-12 gap-4 lg:gap-8">
-          
-          {/* Role Tag */}
-          <div className="col-span-12 lg:col-span-3">
-            <div className="info-block flex items-center gap-3">
-              <ArrowDownRight className="w-5 h-5 text-primary" />
-              <span className="text-sm uppercase tracking-[0.2em] text-foreground">Full Stack Developer</span>
-            </div>
+        {/* Right - Text Content */}
+        <div className="flex-1 text-center lg:text-left">
+          {/* Small intro */}
+          <motion.p 
+            className="role-text text-white/70 text-sm md:text-base uppercase tracking-[0.3em] mb-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5 }}
+          >
+            Creative Developer & Designer
+          </motion.p>
+
+          {/* Name - First */}
+          <div className="overflow-hidden mb-2">
+            <h1 className="text-[14vw] md:text-[10vw] lg:text-[8vw] font-bold text-white leading-[0.9] tracking-tight font-serif">
+              {firstName.split('').map((char, i) => (
+                <span key={i} className="name-char inline-block" style={{ transformStyle: 'preserve-3d' }}>
+                  {char}
+                </span>
+              ))}
+            </h1>
+          </div>
+
+          {/* Name - Last */}
+          <div className="overflow-hidden">
+            <h1 className="text-[14vw] md:text-[10vw] lg:text-[8vw] font-bold leading-[0.9] tracking-tight font-serif bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
+              {lastName.split('').map((char, i) => (
+                <span key={i} className="name-char inline-block" style={{ transformStyle: 'preserve-3d' }}>
+                  {char}
+                </span>
+              ))}
+            </h1>
           </div>
 
           {/* Description */}
-          <div className="col-span-12 lg:col-span-4 lg:col-start-5">
-            <p className="info-block text-base lg:text-lg text-muted-foreground leading-relaxed">
-              Building digital experiences for startups. Specializing in <span className="text-foreground font-medium">MERN Stack</span>, <span className="text-foreground font-medium">AI Automation</span> & UI/UX Design.
-            </p>
-          </div>
+          <motion.p 
+            className="role-text mt-6 md:mt-8 text-white/80 text-base md:text-lg lg:text-xl max-w-xl mx-auto lg:mx-0 leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2 }}
+          >
+            Building exceptional digital experiences with 
+            <span className="text-white font-medium"> MERN Stack</span>, 
+            <span className="text-white font-medium"> AI Automation</span> & 
+            <span className="text-white font-medium"> UI/UX Design</span>
+          </motion.p>
 
-          {/* Stats - Scattered */}
-          <div className="col-span-12 lg:col-span-3 lg:col-start-10">
-            <div className="info-block flex gap-8 lg:justify-end">
-              <div>
-                <span className="block text-3xl lg:text-4xl font-bold text-foreground font-serif">8+</span>
-                <span className="text-xs text-muted-foreground uppercase tracking-wider">Projects</span>
-              </div>
-              <div>
-                <span className="block text-3xl lg:text-4xl font-bold text-foreground font-serif">2+</span>
-                <span className="text-xs text-muted-foreground uppercase tracking-wider">Years</span>
-              </div>
+          {/* Stats */}
+          <div className="role-text flex justify-center lg:justify-start gap-8 mt-6 md:mt-8">
+            <div>
+              <span className="block text-3xl md:text-4xl font-bold text-white font-serif">8+</span>
+              <span className="text-xs md:text-sm text-white/60 uppercase tracking-wider">Projects</span>
+            </div>
+            <div className="w-px bg-white/20" />
+            <div>
+              <span className="block text-3xl md:text-4xl font-bold text-white font-serif">2+</span>
+              <span className="text-xs md:text-sm text-white/60 uppercase tracking-wider">Years Exp</span>
             </div>
           </div>
-        </div>
 
-        {/* CTA Row */}
-        <div className="mt-12 lg:mt-16 flex flex-wrap items-center gap-4 lg:gap-6">
-          <motion.a
-            href="https://wa.me/919399723080"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cta-editorial group flex items-center gap-3 bg-foreground text-background px-8 py-4 rounded-full font-medium hover:bg-primary transition-all duration-300"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <MessageCircle className="w-5 h-5" />
-            <span>Hire Me</span>
-          </motion.a>
-          
-          <motion.a
-            href="/Fatima_Qureshi_Resume.pdf"
-            download
-            className="cta-editorial group flex items-center gap-3 border border-foreground/30 text-foreground px-8 py-4 rounded-full font-medium hover:border-primary hover:text-primary transition-all duration-300"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Download className="w-5 h-5" />
-            <span>Download CV</span>
-          </motion.a>
-
-          {/* Email floating */}
-          <div className="cta-editorial ml-auto hidden lg:flex items-center gap-2 text-muted-foreground">
-            <span className="w-8 h-px bg-muted-foreground" />
-            <span className="text-sm">qfatima504@gmail.com</span>
+          {/* CTAs */}
+          <div className="flex flex-wrap justify-center lg:justify-start gap-4 mt-8 md:mt-10">
+            <motion.a
+              href="https://wa.me/919399723080"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-btn group flex items-center gap-3 bg-white text-gray-900 px-8 py-4 rounded-full font-medium hover:bg-white/90 transition-all duration-300 shadow-lg shadow-white/20"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <MessageCircle className="w-5 h-5" />
+              <span>Hire Me</span>
+            </motion.a>
+            
+            <motion.a
+              href="/Fatima_Qureshi_Resume.pdf"
+              download
+              className="cta-btn group flex items-center gap-3 border border-white/40 text-white px-8 py-4 rounded-full font-medium hover:bg-white/10 hover:border-white transition-all duration-300 backdrop-blur-sm"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Download className="w-5 h-5" />
+              <span>Download CV</span>
+            </motion.a>
           </div>
-        </div>
 
-        {/* Decorative Elements */}
-        <div className="scatter-element absolute bottom-[15%] left-[5%] w-16 h-16 border border-primary/30 rounded-full" />
-        <div className="scatter-element absolute top-[30%] right-[25%] w-3 h-3 bg-primary rounded-full" />
-        <div className="scatter-element absolute bottom-[25%] right-[15%]">
-          <span className="text-6xl lg:text-8xl font-bold text-muted/20 font-serif select-none">*</span>
+          {/* Email */}
+          <motion.p 
+            className="role-text mt-8 text-white/50 text-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2.5 }}
+          >
+            qfatima504@gmail.com
+          </motion.p>
         </div>
+      </div>
+
+      {/* Bottom decorative elements */}
+      <div className="absolute bottom-8 left-8 text-white/30 text-sm tracking-widest">
+        <span>PORTFOLIO © 2025</span>
+      </div>
+      <div className="absolute bottom-8 right-8 text-white/30 text-sm tracking-widest">
+        <span>SCROLL →</span>
       </div>
     </section>
   );
