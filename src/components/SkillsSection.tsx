@@ -54,16 +54,16 @@ const SkillNode = ({
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
     >
       <motion.div 
-        className={`flex items-center justify-center ${nodeSize} rounded-xl bg-white border transition-all duration-300`}
+        className={`flex items-center justify-center ${nodeSize} rounded-xl bg-card border border-border transition-all duration-300`}
         style={{
-          borderColor: isHighlighted ? 'rgb(244 63 94)' : 'rgba(214, 211, 209, 0.5)',
+          borderColor: isHighlighted ? 'hsl(var(--primary))' : undefined,
         }}
       >
         <img 
           src={skill.icon} 
           alt={skill.name}
-          className={`${iconSize} object-contain`}
-          style={{ filter: skill.name === 'Next.js' || skill.name === 'Vercel' ? 'invert(1)' : 'none' }}
+          className={`${iconSize} object-contain dark:invert-0`}
+          style={{ filter: (skill.name === 'Next.js' || skill.name === 'Vercel') ? 'var(--icon-filter, none)' : 'none' }}
         />
       </motion.div>
     </motion.div>
@@ -80,10 +80,10 @@ const SkillCard = ({ skill, side }: { skill: Skill | null; side: 'left' | 'right
           animate={{ opacity: 1, x: 0, scale: 1 }}
           exit={{ opacity: 0, x: side === 'left' ? -20 : 20, scale: 0.9 }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="w-56 p-4 rounded-2xl bg-white border border-stone-200"
+          className="w-56 p-4 rounded-2xl bg-card border border-border"
         >
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-rose-50 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
               <img 
                 src={skill.icon} 
                 alt={skill.name}
@@ -91,17 +91,17 @@ const SkillCard = ({ skill, side }: { skill: Skill | null; side: 'left' | 'right
               />
             </div>
             <div>
-              <h4 className="font-semibold text-stone-800 text-sm">{skill.name}</h4>
+              <h4 className="font-semibold text-foreground text-sm">{skill.name}</h4>
               <span className={`text-xs ${
                 skill.level === 'Production-level' 
-                  ? 'text-rose-500' 
-                  : 'text-stone-500'
+                  ? 'text-primary' 
+                  : 'text-muted-foreground'
               }`}>
                 {skill.level}
               </span>
             </div>
           </div>
-          <p className="text-xs text-stone-500 leading-relaxed">
+          <p className="text-xs text-muted-foreground leading-relaxed">
             {skill.usage}
           </p>
         </motion.div>

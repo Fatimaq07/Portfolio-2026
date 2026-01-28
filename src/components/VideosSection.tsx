@@ -97,9 +97,9 @@ const VideoCard = ({
       }`}
     >
       <div className={`absolute inset-0 p-[1px] rounded-3xl transition-all duration-500 ${
-        isActive ? 'bg-gradient-to-br from-rose-300 via-rose-200 to-stone-300' : 'bg-stone-200'
+        isActive ? 'bg-gradient-to-br from-primary/60 via-primary/40 to-accent/40' : 'bg-border'
       }`}>
-        <div className="absolute inset-0 bg-stone-50 rounded-[23px] overflow-hidden">
+        <div className="absolute inset-0 bg-card rounded-[23px] overflow-hidden">
           
           <div className="absolute inset-0 w-full h-full">
             <AnimatePresence mode="wait">
@@ -130,7 +130,7 @@ const VideoCard = ({
                     alt={video.title} 
                     className="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-100 via-stone-100/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -143,8 +143,8 @@ const VideoCard = ({
                 layout="position"
                 className={`backdrop-blur-sm border px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 ${
                   isActive 
-                    ? 'bg-rose-100 border-rose-200 text-rose-600' 
-                    : 'bg-white/80 border-stone-200 text-stone-500 group-hover:text-stone-700 transition-colors'
+                    ? 'bg-primary/20 border-primary/30 text-primary' 
+                    : 'bg-card/80 border-border text-muted-foreground group-hover:text-foreground transition-colors'
                 }`}
               >
                 {getIcon()} {video.category}
@@ -154,7 +154,7 @@ const VideoCard = ({
                 <div className="flex gap-2">
                   <button 
                     onClick={(e) => { e.stopPropagation(); setIsMuted(!isMuted); }}
-                    className="p-2 rounded-full bg-white/80 text-stone-600 hover:bg-stone-800 hover:text-white transition-colors border border-stone-200"
+                    className="p-2 rounded-full bg-card/80 text-muted-foreground hover:bg-foreground hover:text-background transition-colors border border-border"
                   >
                     {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
                   </button>
@@ -167,8 +167,8 @@ const VideoCard = ({
                 layout="position"
                 className={`font-bold mb-1 leading-tight transition-all duration-500 ${
                   isActive 
-                    ? 'text-2xl md:text-3xl text-stone-800' 
-                    : 'text-lg text-stone-700 rotate-0 md:-rotate-90 md:origin-bottom-left md:translate-x-6 md:-translate-y-6 whitespace-nowrap'
+                    ? 'text-2xl md:text-3xl text-foreground' 
+                    : 'text-lg text-foreground/80 rotate-0 md:-rotate-90 md:origin-bottom-left md:translate-x-6 md:-translate-y-6 whitespace-nowrap'
                 }`}
               >
                 {video.title}
@@ -180,7 +180,7 @@ const VideoCard = ({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
                 >
-                  <p className="text-stone-600 text-xs max-w-md mb-3 line-clamp-2 leading-relaxed">
+                  <p className="text-muted-foreground text-xs max-w-md mb-3 line-clamp-2 leading-relaxed">
                     {video.description}
                   </p>
                   
@@ -188,11 +188,11 @@ const VideoCard = ({
                     <motion.button 
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 bg-stone-800 text-white px-4 py-2 rounded-full text-xs font-bold hover:bg-stone-700 transition-colors"
+                      className="flex items-center gap-2 bg-foreground text-background px-4 py-2 rounded-full text-xs font-bold hover:bg-foreground/90 transition-colors"
                     >
                       <Play size={12} fill="currentColor" /> Watch
                     </motion.button>
-                    <span className="text-stone-500 text-xs font-mono">
+                    <span className="text-muted-foreground text-xs font-mono">
                       {video.duration}
                     </span>
                   </div>
@@ -201,9 +201,9 @@ const VideoCard = ({
             </div>
 
             {isActive && (
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-stone-200">
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-border">
                 <motion.div 
-                  className="h-full bg-rose-400"
+                  className="h-full bg-primary"
                   style={{ width: `${progress}%` }}
                   transition={{ type: 'tween', ease: 'linear' }}
                 />

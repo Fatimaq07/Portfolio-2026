@@ -72,11 +72,11 @@ const HexagonIcon = ({
         <div 
           className="w-28 h-32 md:w-36 md:h-40 flex items-center justify-center relative z-10"
           style={{
-            background: 'linear-gradient(145deg, #fb7185, #f43f5e)',
+            background: 'linear-gradient(145deg, hsl(var(--primary)), hsl(var(--accent)))',
             clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
           }}
         >
-          <span className="text-3xl md:text-4xl text-white font-bold">@</span>
+          <span className="text-3xl md:text-4xl text-primary-foreground font-bold">@</span>
         </div>
       </motion.div>
     );
@@ -108,20 +108,20 @@ const HexagonIcon = ({
         className="w-20 h-24 md:w-24 md:h-28 flex items-center justify-center relative transition-all duration-300"
         style={{
           background: isHovered 
-            ? 'linear-gradient(145deg, #fb7185, #f43f5e)' 
-            : 'linear-gradient(145deg, #f5f5f4, #e7e5e4)',
+            ? 'linear-gradient(145deg, hsl(var(--primary)), hsl(var(--accent)))' 
+            : 'linear-gradient(145deg, hsl(var(--muted)), hsl(var(--secondary)))',
           clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
         }}
       >
         <IconComponent 
           className={`w-6 h-6 md:w-8 md:h-8 transition-colors duration-300 ${
-            isHovered ? 'text-white' : 'text-stone-500'
+            isHovered ? 'text-primary-foreground' : 'text-muted-foreground'
           }`}
         />
         
         {/* Connection dots */}
-        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-stone-300" />
-        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-stone-300" />
+        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-border" />
+        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-border" />
       </div>
 
       {/* Hover tooltip */}
@@ -129,10 +129,10 @@ const HexagonIcon = ({
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap bg-stone-800 text-white px-4 py-2 rounded-lg text-sm font-medium z-20"
+          className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap bg-foreground text-background px-4 py-2 rounded-lg text-sm font-medium z-20"
         >
           {social.hoverText}
-          <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-stone-800 rotate-45" />
+          <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-foreground rotate-45" />
         </motion.div>
       )}
     </motion.div>
@@ -228,7 +228,7 @@ export const ContactSection = () => {
               <div 
                 className="w-20 h-24 md:w-24 md:h-28 flex items-center justify-center opacity-30"
                 style={{
-                  background: 'linear-gradient(145deg, #f5f5f4, #e7e5e4)',
+                  background: 'linear-gradient(145deg, hsl(var(--muted)), hsl(var(--secondary)))',
                   clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
                 }}
               />
@@ -237,7 +237,7 @@ export const ContactSection = () => {
 
           {/* Subtitle */}
           <motion.p
-            className="text-center text-lg md:text-xl text-stone-500 mt-16"
+            className="text-center text-lg md:text-xl text-muted-foreground mt-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -249,7 +249,7 @@ export const ContactSection = () => {
       </div>
 
       {/* Marquee Footer */}
-      <div className="mt-32 overflow-hidden border-t border-stone-300 pt-8">
+      <div className="mt-32 overflow-hidden border-t border-border pt-8">
         <motion.div
           className="flex whitespace-nowrap"
           animate={{ x: ['0%', '-50%'] }}
@@ -260,7 +260,7 @@ export const ContactSection = () => {
           }}
         >
           {[...Array(4)].map((_, i) => (
-            <span key={i} className="text-6xl lg:text-8xl font-bold text-stone-200 mx-8">
+            <span key={i} className="text-6xl lg:text-8xl font-bold text-muted/50 mx-8">
               Available for Projects • Let's Collaborate • 
             </span>
           ))}

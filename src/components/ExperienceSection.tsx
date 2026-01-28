@@ -96,7 +96,7 @@ export const ExperienceSection = () => {
             <motion.span 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-rose-400 text-xs uppercase tracking-widest font-medium block"
+              className="text-primary text-xs uppercase tracking-widest font-medium block"
             >
               My Journey
             </motion.span>
@@ -105,9 +105,9 @@ export const ExperienceSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-stone-800 tracking-tight font-serif"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight font-serif"
             >
-              Experience<span className="text-rose-400">.</span>
+              Experience<span className="text-primary">.</span>
             </motion.h2>
 
             {/* Timeline Items */}
@@ -124,29 +124,29 @@ export const ExperienceSection = () => {
                   }}
                   className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-300 text-left group ${
                     activeIndex === index 
-                      ? 'bg-white border border-stone-200' 
-                      : 'hover:bg-white/50 border border-transparent'
+                      ? 'bg-card border border-border' 
+                      : 'hover:bg-card/50 border border-transparent'
                   }`}
                 >
                   <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${
                     activeIndex === index 
-                      ? 'bg-rose-400 text-white' 
-                      : 'bg-stone-100 text-stone-500 group-hover:text-stone-700'
+                      ? 'bg-primary text-primary-foreground' 
+                      : 'bg-muted text-muted-foreground group-hover:text-foreground'
                   }`}>
                     {getIcon(exp.type)}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className={`text-sm font-medium truncate transition-colors ${
-                      activeIndex === index ? 'text-stone-800' : 'text-stone-600 group-hover:text-stone-800'
+                      activeIndex === index ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
                     }`}>
                       {exp.title}
                     </p>
-                    <p className="text-xs text-stone-500">{exp.period}</p>
+                    <p className="text-xs text-muted-foreground">{exp.period}</p>
                   </div>
                   {activeIndex === index && (
                     <motion.div 
                       layoutId="activeIndicator"
-                      className="w-1 h-8 bg-rose-400 rounded-full"
+                      className="w-1 h-8 bg-primary rounded-full"
                     />
                   )}
                 </motion.button>
@@ -163,14 +163,14 @@ export const ExperienceSection = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -40, scale: 0.95 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="relative p-6 lg:p-8 rounded-2xl bg-white border border-stone-200"
+                className="relative p-6 lg:p-8 rounded-2xl bg-card border border-border"
               >
                 {/* Number indicator */}
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-stone-800 flex items-center justify-center text-2xl font-bold text-white font-mono"
+                  className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-foreground flex items-center justify-center text-2xl font-bold text-background font-mono"
                 >
                   0{activeIndex + 1}
                 </motion.div>
@@ -180,7 +180,7 @@ export const ExperienceSection = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 }}
-                  className="inline-block px-3 py-1 bg-rose-50 text-rose-500 text-xs uppercase tracking-widest font-bold rounded-full mb-4"
+                  className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs uppercase tracking-widest font-bold rounded-full mb-4"
                 >
                   {currentExp.type}
                 </motion.span>
@@ -190,7 +190,7 @@ export const ExperienceSection = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15 }}
-                  className="text-2xl md:text-3xl font-bold text-stone-800 mb-1 font-serif"
+                  className="text-2xl md:text-3xl font-bold text-foreground mb-1 font-serif"
                 >
                   {currentExp.title}
                 </motion.h3>
@@ -199,7 +199,7 @@ export const ExperienceSection = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="text-stone-700 font-medium mb-1"
+                  className="text-foreground/80 font-medium mb-1"
                 >
                   {currentExp.company}
                 </motion.p>
@@ -208,7 +208,7 @@ export const ExperienceSection = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.25 }}
-                  className="text-stone-500 text-sm mb-4"
+                  className="text-muted-foreground text-sm mb-4"
                 >
                   {currentExp.period}
                 </motion.p>
@@ -217,7 +217,7 @@ export const ExperienceSection = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="text-stone-600 leading-relaxed mb-5 text-sm lg:text-base"
+                  className="text-muted-foreground leading-relaxed mb-5 text-sm lg:text-base"
                 >
                   {currentExp.description}
                 </motion.p>
@@ -235,7 +235,7 @@ export const ExperienceSection = () => {
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.4 + i * 0.05 }}
-                      className="px-3 py-1.5 bg-stone-100 rounded-full text-xs text-stone-600 border border-stone-200"
+                      className="px-3 py-1.5 bg-muted rounded-full text-xs text-muted-foreground border border-border"
                     >
                       {h}
                     </motion.span>
@@ -243,10 +243,10 @@ export const ExperienceSection = () => {
                 </motion.div>
 
                 {/* Navigation arrows */}
-                <div className="flex items-center gap-2 mt-6 pt-4 border-t border-stone-200">
+                <div className="flex items-center gap-2 mt-6 pt-4 border-t border-border">
                   <button
                     onClick={goToPrev}
-                    className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 hover:text-stone-800 hover:bg-stone-200 transition-all"
+                    className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-all"
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
@@ -259,14 +259,14 @@ export const ExperienceSection = () => {
                           setActiveIndex(i);
                         }}
                         className={`w-2 h-2 rounded-full transition-all ${
-                          activeIndex === i ? 'bg-rose-400 w-6' : 'bg-stone-300 hover:bg-stone-400'
+                          activeIndex === i ? 'bg-primary w-6' : 'bg-border hover:bg-muted-foreground/50'
                         }`}
                       />
                     ))}
                   </div>
                   <button
                     onClick={goToNext}
-                    className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 hover:text-stone-800 hover:bg-stone-200 transition-all"
+                    className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-all"
                   >
                     <ChevronRight className="w-5 h-5" />
                   </button>
