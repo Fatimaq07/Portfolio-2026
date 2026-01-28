@@ -123,29 +123,65 @@ export const HeroSection = () => {
       id="hero" 
       className="h-screen flex items-center px-6 lg:px-16 relative overflow-hidden"
     >
-      {/* Animated Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
-        {/* Animated gradient orbs */}
-        <div className="hero-bg-layer absolute top-1/4 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />
-        <div className="hero-bg-layer absolute bottom-1/4 right-0 w-80 h-80 bg-blue-600/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="hero-bg-layer absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-900/20 rounded-full blur-3xl" />
-        
-        {/* Subtle grid pattern */}
-        <div 
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px'
-          }}
+      {/* Floating Objects Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 overflow-hidden">
+        {/* Floating geometric shapes */}
+        <motion.div 
+          className="floating-shape absolute top-[10%] left-[10%] w-20 h-20 border-2 border-primary/30 rounded-full"
+          animate={{ y: [0, -30, 0], x: [0, 20, 0], rotate: [0, 180, 360] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="floating-shape absolute top-[20%] right-[15%] w-16 h-16 bg-primary/10 backdrop-blur-sm"
+          style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}
+          animate={{ y: [0, 40, 0], rotate: [0, -90, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="floating-shape absolute top-[60%] left-[8%] w-12 h-12 border border-blue-400/20 rotate-45"
+          animate={{ y: [0, -50, 0], x: [0, 30, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="floating-shape absolute bottom-[30%] right-[25%] w-24 h-24 border border-primary/20 rounded-full"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="floating-shape absolute top-[40%] left-[30%] w-8 h-8 bg-blue-500/15 rounded-full blur-sm"
+          animate={{ y: [0, 60, 0], x: [0, -40, 0] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="floating-shape absolute bottom-[20%] left-[20%] w-14 h-14 border-2 border-indigo-400/20"
+          animate={{ rotate: [0, 360], y: [0, -20, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div 
+          className="floating-shape absolute top-[15%] left-[50%] w-6 h-6 bg-primary/20 rounded-full"
+          animate={{ y: [0, 80, 0], scale: [1, 1.5, 1] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="floating-shape absolute bottom-[40%] right-[10%] w-10 h-10 border border-primary/25 rounded-lg rotate-12"
+          animate={{ y: [0, -35, 0], rotate: [12, 192, 12] }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="floating-shape absolute top-[70%] right-[40%] w-5 h-5 bg-blue-400/20 rounded-full"
+          animate={{ x: [0, 50, 0], y: [0, -30, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="floating-shape absolute top-[5%] right-[35%] w-16 h-16 border border-indigo-300/15"
+          style={{ clipPath: 'polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)' }}
+          animate={{ rotate: [0, -180, -360], y: [0, 25, 0] }}
+          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
         />
         
-        {/* Noise texture overlay */}
-        <div className="absolute inset-0 opacity-30" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
-        }} />
+        {/* Soft glow spots */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl" />
       </div>
 
       {/* Main Content */}
