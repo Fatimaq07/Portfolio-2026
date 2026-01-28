@@ -58,14 +58,14 @@ const SkillNode = ({
       initial={false}
       animate={{
         scale: isHighlighted ? 1.2 : 1,
-        opacity: isDimmed ? 0.25 : 1,
+        opacity: isDimmed ? 0.12 : 1,
       }}
       transition={{ 
         type: 'tween', 
         duration: 0.3,
         ease: 'easeOut'
       }}
-      style={{ zIndex: isHighlighted ? 50 : 1 }}
+      style={{ zIndex: isHighlighted ? 50 : 1, pointerEvents: isDimmed ? 'none' : 'auto' }}
     >
       <div 
         className={`flex items-center justify-center ${nodeSize} rounded-xl bg-card border-2 transition-all duration-300`}
@@ -142,11 +142,16 @@ const SkillCard = ({ skill, side }: { skill: Skill | null; side: 'left' | 'right
 export const SkillsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const leaveTimeoutRef = useRef<number | null>(null);
-  const [rotation, setRotation] = useState({ inner: 0, outer: 0 });
   const [activeIndex, setActiveIndex] = useState({ left: 0, right: 0 });
   const [dimensions, setDimensions] = useState({ width: 420, height: 420 });
   const [hoveredSkill, setHoveredSkill] = useState<Skill | null>(null);
   const [isPaused, setIsPaused] = useState(false);
+
+  // GSAP-driven orbit rotation (prevents jitter from React re-renders)
+  const innerOrbitRef = useRef<HTMLDivElement>(null);
+  const outerOrbitRef = useRef<HTMLDivElement>(null);
+  const innerTweenRef = useRef<gsap.core.Tween | null>(null);
+  const outerTweenRef = useRef<gsap.core.Tween | null>(null);
 
   const allSkills = [...coreSkills, ...aiSkills];
   const leftSkills = allSkills.slice(0, Math.ceil(allSkills.length / 2));
@@ -159,6 +164,10 @@ export const SkillsSection = () => {
     }
     setHoveredSkill(skill);
     setIsPaused(true);
+
+    // Freeze orbit motion instantly so hover stays locked and clear.
+    innerTweenRef.current?.pause();
+    outerTweenRef.current?.pause();
   };
 
   const handleSkillLeave = () => {
@@ -168,12 +177,62 @@ export const SkillsSection = () => {
       setHoveredSkill(null);
       setIsPaused(false);
       leaveTimeoutRef.current = null;
+
+      innerTweenRef.current?.play();
+      outerTweenRef.current?.play();
     }, 140);
   };
 
   useEffect(() => {
     return () => {
       if (leaveTimeoutRef.current) window.clearTimeout(leaveTimeoutRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!innerOrbitRef.current || !outerOrbitRef.current) return;
+
+    const innerUpright = gsap.utils.toArray<HTMLElement>(
+      '[data-upright="inner"]',
+      innerOrbitRef.current
+    );
+    const outerUpright = gsap.utils.toArray<HTMLElement>(
+      '[data-upright="outer"]',
+      outerOrbitRef.current
+    );
+
+    gsap.set(innerOrbitRef.current, { rotation: 0, transformOrigin: '50% 50%' });
+    gsap.set(outerOrbitRef.current, { rotation: 0, transformOrigin: '50% 50%' });
+    gsap.set(innerUpright, { rotation: 0, transformOrigin: '50% 50%' });
+    gsap.set(outerUpright, { rotation: 0, transformOrigin: '50% 50%' });
+
+    innerTweenRef.current = gsap.to(innerOrbitRef.current, {
+      rotation: -360,
+      duration: 28,
+      repeat: -1,
+      ease: 'none',
+      onUpdate: () => {
+        const r = Number(gsap.getProperty(innerOrbitRef.current!, 'rotation'));
+        gsap.set(innerUpright, { rotation: -r });
+      },
+    });
+
+    outerTweenRef.current = gsap.to(outerOrbitRef.current, {
+      rotation: 360,
+      duration: 40,
+      repeat: -1,
+      ease: 'none',
+      onUpdate: () => {
+        const r = Number(gsap.getProperty(outerOrbitRef.current!, 'rotation'));
+        gsap.set(outerUpright, { rotation: -r });
+      },
+    });
+
+    return () => {
+      innerTweenRef.current?.kill();
+      outerTweenRef.current?.kill();
+      innerTweenRef.current = null;
+      outerTweenRef.current = null;
     };
   }, []);
 
@@ -202,28 +261,7 @@ export const SkillsSection = () => {
     return () => clearInterval(interval);
   }, [isPaused, leftSkills.length, rightSkills.length]);
 
-  // Smooth continuous rotation (pauses on hover)
-  useEffect(() => {
-    if (isPaused) return;
-    
-    let animationId: number;
-    let lastTime = performance.now();
-    
-    const animate = (currentTime: number) => {
-      const delta = (currentTime - lastTime) / 1000;
-      lastTime = currentTime;
-      
-      setRotation(prev => ({
-        inner: (prev.inner + delta * 12) % 360,
-        outer: (prev.outer - delta * 8) % 360,
-      }));
-      
-      animationId = requestAnimationFrame(animate);
-    };
-    
-    animationId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationId);
-  }, [isPaused]);
+  // Orbit rotation handled by GSAP refs (above).
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -270,7 +308,7 @@ export const SkillsSection = () => {
 
   // When hovering, show hovered skill in cards; otherwise use auto-cycled skills
   const currentLeftSkill = hoveredSkill || leftSkills[activeIndex.left];
-  const currentRightSkill = hoveredSkill ? null : rightSkills[activeIndex.right];
+  const currentRightSkill = hoveredSkill || rightSkills[activeIndex.right];
 
   return (
     <section ref={sectionRef} id="skills" className="relative h-screen flex flex-col justify-center overflow-hidden bg-background"
@@ -338,80 +376,68 @@ export const SkillsSection = () => {
           </div>
 
           {/* Inner orbit - AI Skills */}
-          <div 
-            className="absolute"
-            style={{
-              left: centerX,
-              top: centerY,
-              width: 0,
-              height: 0,
-            }}
-          >
+          <div ref={innerOrbitRef} className="absolute inset-0 will-change-transform">
             {aiSkills.map((skill, index) => {
               const baseAngle = (360 / aiSkills.length) * index;
-              const angle = baseAngle + rotation.inner;
-              const radians = (angle * Math.PI) / 180;
-              const x = Math.cos(radians) * innerRadius;
-              const y = Math.sin(radians) * innerRadius;
-              const isHighlighted = hoveredSkill ? skill.name === hoveredSkill.name : (skill.name === currentLeftSkill?.name || skill.name === currentRightSkill?.name);
+              const isHighlighted = hoveredSkill
+                ? skill.name === hoveredSkill.name
+                : (skill.name === currentLeftSkill?.name || skill.name === currentRightSkill?.name);
               const isDimmed = hoveredSkill !== null && skill.name !== hoveredSkill.name;
-              
+
               return (
                 <div
                   key={skill.name}
                   className="absolute"
                   style={{
-                    transform: `translate(${x}px, ${y}px) translate(-50%, -50%)`,
+                    left: centerX,
+                    top: centerY,
+                    transform: `translate(-50%, -50%) rotate(${baseAngle}deg) translateX(${innerRadius}px)`,
                   }}
                 >
-                  <SkillNode
-                    skill={skill}
-                    isHighlighted={isHighlighted}
-                    isInner={true}
-                    onHover={() => handleSkillHover(skill)}
-                    onLeave={handleSkillLeave}
-                    isDimmed={isDimmed}
-                  />
+                  <div data-upright="inner" className="will-change-transform">
+                    <SkillNode
+                      skill={skill}
+                      isHighlighted={isHighlighted}
+                      isInner={true}
+                      onHover={() => handleSkillHover(skill)}
+                      onLeave={handleSkillLeave}
+                      isDimmed={isDimmed}
+                    />
+                  </div>
                 </div>
               );
             })}
           </div>
 
           {/* Outer orbit - Core Skills */}
-          <div 
-            className="absolute"
-            style={{
-              left: centerX,
-              top: centerY,
-              width: 0,
-              height: 0,
-            }}
-          >
+          <div ref={outerOrbitRef} className="absolute inset-0 will-change-transform">
             {coreSkills.map((skill, index) => {
               const baseAngle = (360 / coreSkills.length) * index;
-              const angle = baseAngle + rotation.outer;
-              const radians = (angle * Math.PI) / 180;
-              const x = Math.cos(radians) * outerRadius;
-              const y = Math.sin(radians) * outerRadius;
-              const isHighlighted = hoveredSkill ? skill.name === hoveredSkill.name : (skill.name === currentLeftSkill?.name || skill.name === currentRightSkill?.name);
+              const isHighlighted = hoveredSkill
+                ? skill.name === hoveredSkill.name
+                : (skill.name === currentLeftSkill?.name || skill.name === currentRightSkill?.name);
               const isDimmed = hoveredSkill !== null && skill.name !== hoveredSkill.name;
-              
+
               return (
                 <div
                   key={skill.name}
                   className="absolute"
                   style={{
-                    transform: `translate(${x}px, ${y}px) translate(-50%, -50%)`,
+                    left: centerX,
+                    top: centerY,
+                    transform: `translate(-50%, -50%) rotate(${baseAngle}deg) translateX(${outerRadius}px)`,
                   }}
                 >
-                  <SkillNode
-                    skill={skill}
-                    isHighlighted={isHighlighted}
-                    isInner={false}
-                    onHover={() => handleSkillHover(skill)}
-                    onLeave={handleSkillLeave}
-                    isDimmed={isDimmed}
-                  />
+                  <div data-upright="outer" className="will-change-transform">
+                    <SkillNode
+                      skill={skill}
+                      isHighlighted={isHighlighted}
+                      isInner={false}
+                      onHover={() => handleSkillHover(skill)}
+                      onLeave={handleSkillLeave}
+                      isDimmed={isDimmed}
+                    />
+                  </div>
                 </div>
               );
             })}
