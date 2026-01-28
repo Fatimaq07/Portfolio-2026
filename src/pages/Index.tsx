@@ -132,7 +132,7 @@ const Index = () => {
           animate={{ opacity: 1, x: 0, scale: 1 }}
           exit={{ opacity: 0, x: -100, scale: 0.95 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="h-full w-full section-scroll-container overflow-y-auto overflow-x-hidden"
+          className="h-full w-full"
         >
           <CurrentComponent />
         </motion.div>
