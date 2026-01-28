@@ -93,11 +93,12 @@ const SkillCard = ({ skill, side }: { skill: Skill | null; side: 'left' | 'right
       {skill && (
         <motion.div
           key={skill.name}
-          initial={{ opacity: 0, x: side === 'left' ? -30 : 30, scale: 0.9 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          exit={{ opacity: 0, x: side === 'left' ? -30 : 30, scale: 0.9 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="w-64 p-5 rounded-2xl bg-card border border-border shadow-lg"
+          // Avoid transform-based transitions (x/scale) to prevent text/icon blur while cycling
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.45, ease: 'easeOut' }}
+          className="w-64 p-5 rounded-2xl bg-card border border-border shadow-lg will-change-[opacity]"
         >
           <div className="flex items-center gap-4 mb-3">
             <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
@@ -118,7 +119,7 @@ const SkillCard = ({ skill, side }: { skill: Skill | null; side: 'left' | 'right
               </span>
             </div>
           </div>
-          <p className="text-sm text-foreground/80 leading-relaxed">
+          <p className="text-sm text-foreground leading-relaxed">
             {skill.usage}
           </p>
         </motion.div>
