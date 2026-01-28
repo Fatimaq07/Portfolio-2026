@@ -143,22 +143,22 @@ export const HeroSection = () => {
           
           {/* Issue Number - Scattered */}
           <div className="scatter-element absolute -top-8 left-0 lg:left-[5%]">
-            <span className="text-xs tracking-[0.3em] text-white/70 uppercase">Portfolio</span>
-            <span className="block text-4xl lg:text-5xl font-bold text-white font-serif">01</span>
+            <span className="text-xs tracking-[0.3em] text-foreground/60 uppercase">Portfolio</span>
+            <span className="block text-4xl lg:text-5xl font-bold text-foreground font-serif">01</span>
           </div>
 
           {/* Main Name - Editorial Typography */}
           <div className="pt-16 lg:pt-8">
             <div className="overflow-hidden">
-              <h1 className="hero-line name-glow text-[12vw] lg:text-[10vw] font-bold text-white leading-[0.85] tracking-tighter font-serif">
+              <h1 className="hero-line name-glow text-[12vw] lg:text-[10vw] font-bold text-foreground leading-[0.85] tracking-tighter font-serif">
                 FATIMA
               </h1>
             </div>
             <div className="overflow-hidden flex items-end gap-4 lg:gap-8">
-              <h1 className="hero-line name-glow text-[12vw] lg:text-[10vw] font-bold text-blue-300 leading-[0.85] tracking-tighter font-serif">
+              <h1 className="hero-line name-glow text-[12vw] lg:text-[10vw] font-bold text-primary leading-[0.85] tracking-tighter font-serif">
                 QURESHI
               </h1>
-              <span className="hero-line letter-animate text-2xl lg:text-4xl text-white/60 font-light mb-4 lg:mb-8">©2026</span>
+              <span className="hero-line letter-animate text-2xl lg:text-4xl text-foreground/50 font-light mb-4 lg:mb-8">©2026</span>
             </div>
           </div>
 
@@ -166,7 +166,7 @@ export const HeroSection = () => {
           <div className="profile-editorial absolute -top-4 right-0 lg:right-[8%] w-32 h-40 md:w-48 md:h-60 lg:w-64 lg:h-80">
             <div className="relative w-full h-full">
               {/* Frame decoration */}
-              <div className="absolute -inset-2 border border-white/40 rounded-sm" style={{ transform: 'rotate(3deg)' }} />
+              <div className="absolute -inset-2 border border-primary/40 rounded-sm" style={{ transform: 'rotate(3deg)' }} />
               
               <div className="relative w-full h-full overflow-hidden rounded-sm shadow-2xl">
                 <img 
@@ -177,15 +177,15 @@ export const HeroSection = () => {
                 {/* Halftone overlay effect */}
                 <div className="absolute inset-0 mix-blend-overlay opacity-20" 
                   style={{
-                    backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
+                    backgroundImage: 'radial-gradient(circle, hsl(var(--primary)) 1px, transparent 1px)',
                     backgroundSize: '4px 4px'
                   }}
                 />
               </div>
 
               {/* Photo label */}
-              <div className="scatter-element absolute -bottom-6 -left-4 bg-white/10 backdrop-blur-md border border-white/30 px-3 py-1.5 rounded-sm">
-                <span className="text-[10px] uppercase tracking-widest text-white/80">Est. 2023</span>
+              <div className="scatter-element absolute -bottom-6 -left-4 bg-primary/10 backdrop-blur-md border border-primary/30 px-3 py-1.5 rounded-sm">
+                <span className="text-[10px] uppercase tracking-widest text-foreground/80">Est. 2023</span>
               </div>
             </div>
           </div>
@@ -197,15 +197,15 @@ export const HeroSection = () => {
           {/* Role Tag */}
           <div className="col-span-12 lg:col-span-3">
             <div className="info-block flex items-center gap-3 overflow-hidden">
-              <ArrowDownRight className="w-5 h-5 text-blue-300" />
-              <span className="typing-text text-sm uppercase tracking-[0.2em] text-white whitespace-nowrap overflow-hidden">Full Stack Developer</span>
+              <ArrowDownRight className="w-5 h-5 text-primary" />
+              <span className="typing-text text-sm uppercase tracking-[0.2em] text-foreground whitespace-nowrap overflow-hidden">Full Stack Developer</span>
             </div>
           </div>
 
           {/* Description */}
           <div className="col-span-12 lg:col-span-4 lg:col-start-5">
-            <p className="info-block text-base lg:text-lg text-white/70 leading-relaxed">
-              Building digital experiences for startups. Specializing in <span className="text-white font-medium">MERN Stack</span>, <span className="text-white font-medium">AI Automation</span> & UI/UX Design.
+            <p className="info-block text-base lg:text-lg text-foreground/70 leading-relaxed">
+              Building digital experiences for startups. Specializing in <span className="text-foreground font-medium">MERN Stack</span>, <span className="text-foreground font-medium">AI Automation</span> & UI/UX Design.
             </p>
           </div>
 
@@ -213,12 +213,12 @@ export const HeroSection = () => {
           <div className="col-span-12 lg:col-span-3 lg:col-start-10">
             <div className="info-block flex gap-8 lg:justify-end">
               <div>
-                <span className="block text-3xl lg:text-4xl font-bold text-white font-serif">8+</span>
-                <span className="text-xs text-white/60 uppercase tracking-wider">Projects</span>
+                <span className="block text-3xl lg:text-4xl font-bold text-foreground font-serif">8+</span>
+                <span className="text-xs text-foreground/60 uppercase tracking-wider">Projects</span>
               </div>
               <div>
-                <span className="block text-3xl lg:text-4xl font-bold text-white font-serif">2+</span>
-                <span className="text-xs text-white/60 uppercase tracking-wider">Years</span>
+                <span className="block text-3xl lg:text-4xl font-bold text-foreground font-serif">2+</span>
+                <span className="text-xs text-foreground/60 uppercase tracking-wider">Years</span>
               </div>
             </div>
           </div>
@@ -230,7 +230,7 @@ export const HeroSection = () => {
             href="https://wa.me/919399723080"
             target="_blank"
             rel="noopener noreferrer"
-            className="cta-editorial group flex items-center gap-3 bg-white text-gray-900 px-8 py-4 rounded-full font-medium hover:bg-blue-100 transition-all duration-300"
+            className="cta-editorial group flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 rounded-full font-medium hover:bg-primary/90 transition-all duration-300"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -241,7 +241,7 @@ export const HeroSection = () => {
           <motion.a
             href="/Fatima_Qureshi_Resume.pdf"
             download
-            className="cta-editorial group flex items-center gap-3 border border-white/40 text-white px-8 py-4 rounded-full font-medium hover:border-white hover:bg-white/10 transition-all duration-300"
+            className="cta-editorial group flex items-center gap-3 border border-foreground/30 text-foreground px-8 py-4 rounded-full font-medium hover:border-primary hover:bg-primary/10 transition-all duration-300"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -250,24 +250,24 @@ export const HeroSection = () => {
           </motion.a>
 
           {/* Email floating */}
-          <div className="cta-editorial ml-auto hidden lg:flex items-center gap-2 text-white/60">
-            <span className="w-8 h-px bg-white/40" />
+          <div className="cta-editorial ml-auto hidden lg:flex items-center gap-2 text-foreground/60">
+            <span className="w-8 h-px bg-foreground/40" />
             <span className="text-sm">qfatima504@gmail.com</span>
           </div>
         </div>
 
         {/* Moving Circle with 2025 Passout - Smaller size */}
-        <div className="moving-circle scatter-element absolute bottom-[15%] left-[5%] w-16 h-16 lg:w-20 lg:h-20 border border-white/50 rounded-full flex items-center justify-center backdrop-blur-sm bg-white/5">
+        <div className="moving-circle scatter-element absolute bottom-[15%] left-[5%] w-16 h-16 lg:w-20 lg:h-20 border border-primary/50 rounded-full flex items-center justify-center backdrop-blur-sm bg-primary/5">
           <div className="circle-text text-center">
-            <span className="block text-sm lg:text-base font-bold text-white font-serif">2025</span>
-            <span className="text-[6px] lg:text-[8px] uppercase tracking-[0.1em] text-white/70">Passout</span>
+            <span className="block text-sm lg:text-base font-bold text-foreground font-serif">2025</span>
+            <span className="text-[6px] lg:text-[8px] uppercase tracking-[0.1em] text-foreground/70">Passout</span>
           </div>
         </div>
         
         {/* Other decorative elements */}
-        <div className="scatter-element absolute top-[30%] right-[25%] w-3 h-3 bg-blue-300 rounded-full" />
+        <div className="scatter-element absolute top-[30%] right-[25%] w-3 h-3 bg-primary rounded-full" />
         <div className="scatter-element absolute bottom-[25%] right-[15%]">
-          <span className="text-6xl lg:text-8xl font-bold text-white/10 font-serif select-none">*</span>
+          <span className="text-6xl lg:text-8xl font-bold text-foreground/10 font-serif select-none">*</span>
         </div>
       </div>
     </section>
