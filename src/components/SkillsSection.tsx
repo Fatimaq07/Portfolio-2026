@@ -35,21 +35,30 @@ const aiSkills: Skill[] = [
 const SkillNode = ({ 
   skill, 
   isHighlighted,
-  isInner
+  isInner,
+  onHover,
+  onLeave,
+  isDimmed
 }: { 
   skill: Skill; 
   isHighlighted: boolean;
   isInner: boolean;
+  onHover: () => void;
+  onLeave: () => void;
+  isDimmed: boolean;
 }) => {
   const nodeSize = isInner ? 'w-10 h-10 md:w-12 md:h-12' : 'w-12 h-12 md:w-14 md:h-14';
   const iconSize = isInner ? 'w-5 h-5 md:w-6 md:h-6' : 'w-6 h-6 md:w-7 md:h-7';
 
   return (
     <motion.div
-      className="relative"
+      className="relative cursor-pointer"
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
       animate={{
         scale: isHighlighted ? 1.3 : 1,
         zIndex: isHighlighted ? 50 : 1,
+        opacity: isDimmed ? 0.3 : 1,
       }}
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
     >
@@ -57,15 +66,32 @@ const SkillNode = ({
         className={`flex items-center justify-center ${nodeSize} rounded-xl bg-card border border-border transition-all duration-300`}
         style={{
           borderColor: isHighlighted ? 'hsl(var(--primary))' : undefined,
+          boxShadow: isHighlighted ? '0 0 20px hsl(var(--primary) / 0.4)' : undefined,
         }}
       >
         <img 
           src={skill.icon} 
           alt={skill.name}
-          className={`${iconSize} object-contain dark:invert-0`}
-          style={{ filter: (skill.name === 'Next.js' || skill.name === 'Vercel') ? 'var(--icon-filter, none)' : 'none' }}
+          className={`${iconSize} object-contain dark:invert-0 transition-all duration-300`}
+          style={{ 
+            filter: (skill.name === 'Next.js' || skill.name === 'Vercel') ? 'var(--icon-filter, none)' : 'none',
+            opacity: isDimmed ? 0.5 : 1,
+          }}
         />
       </motion.div>
+      {/* Skill name tooltip on hover */}
+      <AnimatePresence>
+        {isHighlighted && (
+          <motion.div
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 5 }}
+            className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-primary"
+          >
+            {skill.name}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
@@ -115,10 +141,22 @@ export const SkillsSection = () => {
   const [rotation, setRotation] = useState({ inner: 0, outer: 0 });
   const [activeIndex, setActiveIndex] = useState({ left: 0, right: 0 });
   const [dimensions, setDimensions] = useState({ width: 420, height: 420 });
+  const [hoveredSkill, setHoveredSkill] = useState<Skill | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
 
   const allSkills = [...coreSkills, ...aiSkills];
   const leftSkills = allSkills.slice(0, Math.ceil(allSkills.length / 2));
   const rightSkills = allSkills.slice(Math.ceil(allSkills.length / 2));
+
+  const handleSkillHover = (skill: Skill) => {
+    setHoveredSkill(skill);
+    setIsPaused(true);
+  };
+
+  const handleSkillLeave = () => {
+    setHoveredSkill(null);
+    setIsPaused(false);
+  };
 
   // Handle responsive sizing - smaller orbits
   useEffect(() => {
@@ -132,8 +170,10 @@ export const SkillsSection = () => {
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
-  // Auto-cycle skills for left and right cards
+  // Auto-cycle skills for left and right cards (pauses on hover)
   useEffect(() => {
+    if (isPaused) return;
+    
     const interval = setInterval(() => {
       setActiveIndex(prev => ({
         left: (prev.left + 1) % leftSkills.length,
@@ -143,8 +183,10 @@ export const SkillsSection = () => {
     return () => clearInterval(interval);
   }, [leftSkills.length, rightSkills.length]);
 
-  // Smooth continuous rotation
+  // Smooth continuous rotation (pauses on hover)
   useEffect(() => {
+    if (isPaused) return;
+    
     let animationId: number;
     let lastTime = performance.now();
     
@@ -162,7 +204,7 @@ export const SkillsSection = () => {
     
     animationId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationId);
-  }, []);
+  }, [isPaused]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -207,8 +249,9 @@ export const SkillsSection = () => {
   const innerRadius = Math.min(dimensions.width, dimensions.height) * 0.22;
   const outerRadius = Math.min(dimensions.width, dimensions.height) * 0.42;
 
-  const currentLeftSkill = leftSkills[activeIndex.left];
-  const currentRightSkill = rightSkills[activeIndex.right];
+  // When hovering, show hovered skill in cards; otherwise use auto-cycled skills
+  const currentLeftSkill = hoveredSkill || leftSkills[activeIndex.left];
+  const currentRightSkill = hoveredSkill ? null : rightSkills[activeIndex.right];
 
   return (
     <section ref={sectionRef} id="skills" className="relative h-screen flex flex-col justify-center overflow-hidden bg-background"
@@ -291,7 +334,8 @@ export const SkillsSection = () => {
               const radians = (angle * Math.PI) / 180;
               const x = Math.cos(radians) * innerRadius;
               const y = Math.sin(radians) * innerRadius;
-              const isHighlighted = skill.name === currentLeftSkill?.name || skill.name === currentRightSkill?.name;
+              const isHighlighted = hoveredSkill ? skill.name === hoveredSkill.name : (skill.name === currentLeftSkill?.name || skill.name === currentRightSkill?.name);
+              const isDimmed = hoveredSkill !== null && skill.name !== hoveredSkill.name;
               
               return (
                 <div
@@ -305,6 +349,9 @@ export const SkillsSection = () => {
                     skill={skill}
                     isHighlighted={isHighlighted}
                     isInner={true}
+                    onHover={() => handleSkillHover(skill)}
+                    onLeave={handleSkillLeave}
+                    isDimmed={isDimmed}
                   />
                 </div>
               );
@@ -327,7 +374,8 @@ export const SkillsSection = () => {
               const radians = (angle * Math.PI) / 180;
               const x = Math.cos(radians) * outerRadius;
               const y = Math.sin(radians) * outerRadius;
-              const isHighlighted = skill.name === currentLeftSkill?.name || skill.name === currentRightSkill?.name;
+              const isHighlighted = hoveredSkill ? skill.name === hoveredSkill.name : (skill.name === currentLeftSkill?.name || skill.name === currentRightSkill?.name);
+              const isDimmed = hoveredSkill !== null && skill.name !== hoveredSkill.name;
               
               return (
                 <div
@@ -341,6 +389,9 @@ export const SkillsSection = () => {
                     skill={skill}
                     isHighlighted={isHighlighted}
                     isInner={false}
+                    onHover={() => handleSkillHover(skill)}
+                    onLeave={handleSkillLeave}
+                    isDimmed={isDimmed}
                   />
                 </div>
               );
