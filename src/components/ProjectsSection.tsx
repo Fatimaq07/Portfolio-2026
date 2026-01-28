@@ -89,30 +89,30 @@ export const ProjectsSection = () => {
       className="relative h-screen flex flex-col justify-center px-6 overflow-hidden cursor-none" 
       onMouseMove={handleMouseMove}
       style={{ 
-        background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%)'
+        background: 'linear-gradient(135deg, #0d1f0d 0%, #1a2f1a 50%, #0f1f0f 100%)'
       }}
     >
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/5 rounded-full blur-2xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-white/5 rounded-full blur-2xl animate-float" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-amber-500/5 rounded-full blur-2xl animate-float" style={{ animationDelay: '1s' }} />
       </div>
 
       <div className="container mx-auto max-w-5xl relative z-10">
         
         {/* Compact Header */}
-        <div className="flex items-end justify-between mb-6 border-b border-white/10 pb-4">
+        <div className="flex items-end justify-between mb-6 border-b border-amber-500/20 pb-4">
           <div>
-            <span className="text-gray-400 text-xs uppercase tracking-[0.2em] font-medium block mb-2">
+            <span className="text-amber-400/70 text-xs uppercase tracking-[0.2em] font-medium block mb-2">
               Selected Works
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-white font-serif">
-              WORK<span className="text-gray-400">.</span>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-amber-50 font-serif">
+              WORK<span className="text-amber-400">.</span>
             </h2>
           </div>
           <div className="hidden md:flex flex-col items-end gap-1">
-            <span className="text-gray-500 text-sm">{projects.length} Projects</span>
+            <span className="text-emerald-400/60 text-sm">{projects.length} Projects</span>
           </div>
         </div>
 
@@ -121,21 +121,21 @@ export const ProjectsSection = () => {
           {projects.map((project) => (
             <div
               key={project.id}
-              className="group relative flex items-center justify-between border-b border-white/10 py-4 px-2 transition-all duration-500 cursor-pointer hover:bg-white/5 rounded-lg"
+              className="group relative flex items-center justify-between border-b border-amber-500/10 py-4 px-2 transition-all duration-500 cursor-pointer hover:bg-amber-500/5 rounded-lg"
               onMouseEnter={() => setActiveProject(project.id)}
               onMouseLeave={() => setActiveProject(null)}
               onClick={() => handleProjectClick(project.url)}
             >
               {/* Left Side: ID & Title */}
               <div className="flex items-baseline gap-6 md:gap-10 relative z-10">
-                <span className="text-sm font-mono text-gray-500 group-hover:text-white transition-colors duration-300">
+                <span className="text-sm font-mono text-amber-500/50 group-hover:text-amber-400 transition-colors duration-300">
                   0{project.id}
                 </span>
                 <div>
-                  <h3 className="text-xl md:text-3xl font-semibold text-white group-hover:text-gray-300 transition-all duration-500 font-serif">
+                  <h3 className="text-xl md:text-3xl font-semibold text-amber-50 group-hover:text-amber-200 transition-all duration-500 font-serif">
                     {project.title}
                   </h3>
-                  <p className="text-xs text-gray-500 mt-0.5">
+                  <p className="text-xs text-emerald-400/50 mt-0.5">
                     {project.description}
                   </p>
                 </div>
@@ -143,10 +143,10 @@ export const ProjectsSection = () => {
               
               {/* Right Side: Meta Data */}
               <div className="flex flex-col items-end gap-1 relative z-10">
-                <span className="text-xs font-medium uppercase tracking-widest text-gray-400">
+                <span className="text-xs font-medium uppercase tracking-widest text-amber-400/60">
                   {project.category}
                 </span>
-                <span className="text-xs font-mono text-gray-500">
+                <span className="text-xs font-mono text-emerald-400/40">
                   {project.year}
                 </span>
               </div>
@@ -168,17 +168,17 @@ export const ProjectsSection = () => {
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               exit={{ opacity: 0, scale: 0.8, rotate: 10 }}
               transition={{ type: "spring", stiffness: 150, damping: 15 }}
-              className="relative -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg w-[300px] h-[200px] border border-cyan-500/30 shadow-lg"
+              className="relative -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg w-[300px] h-[200px] border border-amber-500/30 shadow-lg"
             >
               <img
                 src={projects.find((p) => p.id === activeProject)?.image}
                 alt="Project Preview"
                 className="h-full w-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent flex flex-col justify-end p-4">
+              <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/90 via-transparent to-transparent flex flex-col justify-end p-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-white font-bold text-sm tracking-tight">View Project</span>
-                  <ArrowUpRight className="text-cyan-400 w-4 h-4" />
+                  <span className="text-amber-50 font-bold text-sm tracking-tight">View Project</span>
+                  <ArrowUpRight className="text-amber-400 w-4 h-4" />
                 </div>
               </div>
             </motion.div>
@@ -188,7 +188,7 @@ export const ProjectsSection = () => {
 
       {/* Custom Cursor */}
       <motion.div 
-        className="fixed top-0 left-0 w-3 h-3 bg-cyan-400 rounded-full pointer-events-none z-50 hidden md:block"
+        className="fixed top-0 left-0 w-3 h-3 bg-amber-400 rounded-full pointer-events-none z-50 hidden md:block"
         style={{ x, y }}
       />
     </section>
