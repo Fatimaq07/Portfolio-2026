@@ -54,10 +54,9 @@ const SkillNode = ({
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
     >
       <motion.div 
-        className={`flex items-center justify-center ${nodeSize} rounded-xl bg-emerald-950/90 backdrop-blur-sm border transition-all duration-300`}
+        className={`flex items-center justify-center ${nodeSize} rounded-xl bg-white border transition-all duration-300`}
         style={{
-          borderColor: isHighlighted ? 'rgb(217 119 6)' : 'rgba(217, 119, 6, 0.2)',
-          boxShadow: isHighlighted ? '0 0 25px rgba(217, 119, 6, 0.6), 0 0 50px rgba(217, 119, 6, 0.3)' : 'none',
+          borderColor: isHighlighted ? 'rgb(244 63 94)' : 'rgba(214, 211, 209, 0.5)',
         }}
       >
         <img 
@@ -81,30 +80,28 @@ const SkillCard = ({ skill, side }: { skill: Skill | null; side: 'left' | 'right
           animate={{ opacity: 1, x: 0, scale: 1 }}
           exit={{ opacity: 0, x: side === 'left' ? -20 : 20, scale: 0.9 }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="w-56 p-4 rounded-2xl bg-emerald-950/80 backdrop-blur-md border border-amber-500/30 shadow-xl"
-          style={{ boxShadow: '0 0 30px rgba(217, 119, 6, 0.2)' }}
+          className="w-56 p-4 rounded-2xl bg-white border border-stone-200"
         >
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-rose-50 flex items-center justify-center">
               <img 
                 src={skill.icon} 
                 alt={skill.name}
                 className="w-6 h-6 object-contain"
-                style={{ filter: skill.name === 'Next.js' || skill.name === 'Vercel' ? 'invert(1)' : 'none' }}
               />
             </div>
             <div>
-              <h4 className="font-semibold text-amber-50 text-sm">{skill.name}</h4>
+              <h4 className="font-semibold text-stone-800 text-sm">{skill.name}</h4>
               <span className={`text-xs ${
                 skill.level === 'Production-level' 
-                  ? 'text-amber-400' 
-                  : 'text-emerald-400/60'
+                  ? 'text-rose-500' 
+                  : 'text-stone-500'
               }`}>
                 {skill.level}
               </span>
             </div>
           </div>
-          <p className="text-xs text-amber-100/50 leading-relaxed">
+          <p className="text-xs text-stone-500 leading-relaxed">
             {skill.usage}
           </p>
         </motion.div>
@@ -216,23 +213,24 @@ export const SkillsSection = () => {
   return (
     <section ref={sectionRef} id="skills" className="relative h-screen flex flex-col justify-center overflow-hidden"
       style={{ 
-        background: 'linear-gradient(135deg, #0d1f0d 0%, #1a2f1a 50%, #0f1f0f 100%)'
+        background: 'linear-gradient(180deg, #ebe4de 0%, #f5f0ec 50%, #faf7f5 100%)'
       }}
     >
-      {/* Background effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-amber-500/5 rounded-full blur-2xl animate-float" style={{ animationDelay: '1s' }} />
-      </div>
+      {/* Subtle pattern */}
+      <div className="absolute inset-0 opacity-[0.02]" 
+        style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, #8b7355 1px, transparent 0)',
+          backgroundSize: '40px 40px'
+        }}
+      />
 
       <div className="container mx-auto px-6 lg:px-12 mb-6">
         <div className="skills-header text-center">
-          <span className="text-amber-400/70 text-sm uppercase tracking-widest font-medium block mb-3">
+          <span className="text-rose-400 text-sm uppercase tracking-widest font-medium block mb-3">
             Technical Expertise
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-amber-50 tracking-tight font-serif mb-2">
-            Skills & Technologies<span className="text-amber-400">.</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-stone-800 tracking-tight font-serif mb-2">
+            Skills & Technologies<span className="text-rose-400">.</span>
           </h2>
         </div>
       </div>
@@ -251,7 +249,7 @@ export const SkillsSection = () => {
         >
           {/* Orbit rings */}
           <div 
-            className="absolute rounded-full border border-amber-500/20"
+            className="absolute rounded-full border border-rose-200"
             style={{
               left: centerX - innerRadius,
               top: centerY - innerRadius,
@@ -260,7 +258,7 @@ export const SkillsSection = () => {
             }}
           />
           <div 
-            className="absolute rounded-full border border-emerald-500/20"
+            className="absolute rounded-full border border-stone-300"
             style={{
               left: centerX - outerRadius,
               top: centerY - outerRadius,
@@ -269,7 +267,6 @@ export const SkillsSection = () => {
             }}
           />
 
-          {/* Center content */}
           <div 
             className="absolute flex flex-col items-center justify-center text-center"
             style={{
@@ -278,10 +275,10 @@ export const SkillsSection = () => {
               transform: 'translate(-50%, -50%)',
             }}
           >
-            <h3 className="text-lg md:text-xl font-bold text-amber-50 tracking-tight font-serif">
+            <h3 className="text-lg md:text-xl font-bold text-stone-800 tracking-tight font-serif">
               FULL STACK
             </h3>
-            <span className="text-xs text-amber-400/60 uppercase tracking-widest">
+            <span className="text-xs text-stone-500 uppercase tracking-widest">
               Developer
             </span>
           </div>
