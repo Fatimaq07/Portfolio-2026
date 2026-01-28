@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { motion } from 'framer-motion';
-import { Play, Mail, Settings, Download, MessageCircle } from 'lucide-react';
+import { Mail, Download, MessageCircle, ArrowDown } from 'lucide-react';
 
 export const HeroSection = () => {
   const containerRef = useRef<HTMLElement>(null);
@@ -10,227 +10,225 @@ export const HeroSection = () => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
-      tl.fromTo('.bento-card', 
-        { y: 40, opacity: 0, scale: 0.95 },
-        { y: 0, opacity: 1, scale: 1, duration: 0.8, stagger: 0.08 },
-        0.2
+      // Animate name letters
+      tl.fromTo('.name-letter', 
+        { y: 100, opacity: 0, rotateX: -90 },
+        { y: 0, opacity: 1, rotateX: 0, duration: 1, stagger: 0.05 },
+        0.3
       );
 
-      tl.fromTo('.hero-title',
+      // Animate role text
+      tl.fromTo('.role-text',
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8 },
+        0.8
+      );
+
+      // Animate about section
+      tl.fromTo('.about-content',
         { y: 60, opacity: 0 },
         { y: 0, opacity: 1, duration: 1 },
-        0.4
+        1
       );
 
-      // Rotating badge
-      gsap.to('.rotating-badge', {
-        rotation: 360,
-        duration: 20,
+      // Animate CTA buttons
+      tl.fromTo('.cta-btn',
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1 },
+        1.2
+      );
+
+      // Floating animation for decorative elements
+      gsap.to('.float-element', {
+        y: -20,
+        duration: 2,
         repeat: -1,
-        ease: 'none'
+        yoyo: true,
+        ease: 'power1.inOut',
+        stagger: 0.3
       });
+
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
-  const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const firstName = "FATIMA";
+  const lastName = "QURESHI";
 
   return (
-    <section ref={containerRef} id="hero" className="min-h-screen py-8 lg:py-12 px-4 lg:px-8 relative overflow-hidden"
+    <section 
+      ref={containerRef} 
+      id="hero" 
+      className="min-h-screen flex flex-col justify-center px-6 lg:px-16 relative overflow-hidden"
       style={{ 
         background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%)'
       }}
     >
-      {/* Decorative gradient orbs */}
-      <div className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-br from-white/5 to-white/2 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-40 left-10 w-80 h-80 bg-gradient-to-tr from-white/5 to-white/2 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-white/3 to-white/2 rounded-full blur-3xl pointer-events-none" />
-      
-      <div className="max-w-7xl mx-auto relative z-10">
+      {/* Decorative Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="float-element absolute top-20 right-20 w-64 h-64 rounded-full bg-gradient-to-br from-white/5 to-transparent blur-3xl" />
+        <div className="float-element absolute bottom-40 left-10 w-80 h-80 rounded-full bg-gradient-to-tr from-white/3 to-transparent blur-3xl" />
+        <div className="float-element absolute top-1/2 right-1/4 w-40 h-40 rounded-full border border-white/5" />
         
-        {/* Bento Grid */}
-        <div className="grid grid-cols-12 grid-rows-[auto_auto_auto] gap-4 lg:gap-5">
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-[0.02]" 
+          style={{
+            backgroundImage: 'linear-gradient(white 1px, transparent 1px), linear-gradient(90deg, white 1px, transparent 1px)',
+            backgroundSize: '100px 100px'
+          }}
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto w-full relative z-10">
+        
+        {/* Main Content */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           
-          {/* About Me Header */}
-          <div className="col-span-12 flex items-center gap-2 mb-2">
-            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-              <Settings className="w-4 h-4 text-gray-300" />
+          {/* Left Side - Name & Title */}
+          <div className="space-y-8">
+            
+            {/* Greeting */}
+            <motion.p 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-gray-400 text-lg tracking-widest uppercase"
+            >
+              Hello, I'm
+            </motion.p>
+
+            {/* Name - Large Typography */}
+            <div className="space-y-2" style={{ perspective: '1000px' }}>
+              <h1 className="overflow-hidden">
+                <span className="flex">
+                  {firstName.split('').map((letter, i) => (
+                    <span 
+                      key={i} 
+                      className="name-letter inline-block text-6xl md:text-8xl lg:text-9xl font-bold text-white tracking-tight"
+                      style={{ fontFamily: 'serif' }}
+                    >
+                      {letter}
+                    </span>
+                  ))}
+                </span>
+              </h1>
+              <h1 className="overflow-hidden">
+                <span className="flex">
+                  {lastName.split('').map((letter, i) => (
+                    <span 
+                      key={i} 
+                      className="name-letter inline-block text-6xl md:text-8xl lg:text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-600 tracking-tight"
+                      style={{ fontFamily: 'serif' }}
+                    >
+                      {letter}
+                    </span>
+                  ))}
+                </span>
+              </h1>
             </div>
-            <span className="text-sm font-medium text-gray-300">About Me</span>
+
+            {/* Role */}
+            <div className="role-text space-y-2">
+              <p className="text-2xl md:text-3xl text-white font-light">
+                Full Stack Developer
+              </p>
+              <p className="text-gray-500 text-lg">
+                MERN Stack • AI Automation • UI/UX Design
+              </p>
+            </div>
+
+            {/* Email */}
+            <div className="role-text flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                <Mail className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-gray-400">qfatima504@gmail.com</span>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap gap-4 pt-4">
+              <motion.a
+                href="https://wa.me/919399723080"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cta-btn group flex items-center gap-3 bg-white text-black px-8 py-4 rounded-full font-semibold hover:bg-gray-200 transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <MessageCircle className="w-5 h-5" />
+                Hire Me
+              </motion.a>
+              
+              <motion.a
+                href="/Fatima_Qureshi_Resume.pdf"
+                download
+                className="cta-btn group flex items-center gap-3 border border-white/20 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Download className="w-5 h-5" />
+                Download CV
+              </motion.a>
+            </div>
           </div>
 
-          {/* Left Profile Card */}
-          <div className="bento-card col-span-12 lg:col-span-5 row-span-2 bg-gradient-to-br from-neutral-900 to-neutral-800 backdrop-blur-xl rounded-[2rem] p-6 lg:p-8 relative overflow-hidden shadow-2xl border border-white/10">
+          {/* Right Side - About Me */}
+          <div className="about-content space-y-8">
             
-            {/* Vertical Nav - Left Side */}
-            <div className="hidden lg:flex flex-col gap-6 absolute left-4 top-1/2 -translate-y-1/2">
-              {['Clients', 'Research', 'Portfolio', 'Podcast'].map((item) => (
-                <button 
-                  key={item}
-                  onClick={() => scrollToSection(item.toLowerCase())}
-                  className="text-[11px] font-medium uppercase tracking-wider text-gray-500 hover:text-white transition-colors"
-                  style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-
-            {/* Profile Content */}
-            <div className="lg:ml-8">
-              {/* Circular Profile Image */}
-              <div className="relative w-48 h-48 lg:w-56 lg:h-56 mx-auto lg:mx-0 mb-6">
-                <div className="absolute inset-0 rounded-full bg-white/20" />
-                <div className="absolute inset-3 rounded-full bg-white/10" />
-                <div className="absolute inset-6 rounded-full bg-neutral-800 flex items-center justify-center overflow-hidden">
-                  <span className="text-7xl lg:text-8xl font-serif text-gray-400">F</span>
-                </div>
-              </div>
-
-              {/* Name */}
-              <div className="text-center lg:text-left">
-                <p className="text-sm italic text-gray-400 mb-1">I'm,</p>
-                <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight font-serif">
-                  Fatima
-                  <br />
-                  Qureshi
-                </h1>
+            {/* About Card */}
+            <div className="relative">
+              <div className="absolute -inset-1 bg-gradient-to-r from-white/10 via-white/5 to-white/10 rounded-3xl blur-xl" />
+              <div className="relative bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-white/10">
                 
-                {/* Role */}
-                <p className="text-lg text-gray-300 font-medium mt-2">Full Stack Developer</p>
-                <p className="text-gray-500 text-sm mt-1">MERN | AI Automation | UI/UX</p>
+                <h2 className="text-sm uppercase tracking-[0.3em] text-gray-400 mb-6">About Me</h2>
                 
-                {/* Email */}
-                <div className="flex items-center gap-2 mt-4 justify-center lg:justify-start">
-                  <div className="w-6 h-6 rounded bg-white/10 flex items-center justify-center">
-                    <Mail className="w-3 h-3 text-gray-300" />
+                <p className="text-lg lg:text-xl text-gray-300 leading-relaxed mb-6">
+                  I craft <span className="text-white font-semibold">digital experiences</span> that blend creativity with cutting-edge technology. Specializing in full-stack development and AI automation.
+                </p>
+                
+                <p className="text-gray-400 leading-relaxed mb-8">
+                  Building digital experiences for startups and businesses worldwide. From sleek web applications to intelligent AI solutions, I transform ideas into reality.
+                </p>
+
+                {/* Stats */}
+                <div className="grid grid-cols-3 gap-6 pt-6 border-t border-white/10">
+                  <div className="text-center">
+                    <span className="block text-3xl lg:text-4xl font-bold text-white">8+</span>
+                    <span className="text-sm text-gray-500">Projects</span>
                   </div>
-                  <span className="text-sm text-gray-400">qfatima504@gmail.com</span>
-                </div>
-              </div>
-
-              {/* Rotating Badge */}
-              <div className="absolute bottom-6 right-6 lg:bottom-8 lg:right-8 w-16 h-16 lg:w-20 lg:h-20">
-                <div className="rotating-badge w-full h-full rounded-full bg-white flex items-center justify-center relative">
-                  <svg viewBox="0 0 100 100" className="absolute w-full h-full">
-                    <defs>
-                      <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" />
-                    </defs>
-                    <text className="text-[8px] fill-black uppercase tracking-[0.15em]">
-                      <textPath href="#circlePath">
-                        • UX DESIGN PORTFOLIO 2024 •
-                      </textPath>
-                    </text>
-                  </svg>
+                  <div className="text-center">
+                    <span className="block text-3xl lg:text-4xl font-bold text-white">AI</span>
+                    <span className="text-sm text-gray-500">Automation</span>
+                  </div>
+                  <div className="text-center">
+                    <span className="block text-3xl lg:text-4xl font-bold text-white">2+</span>
+                    <span className="text-sm text-gray-500">Years Exp</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Portfolio Title */}
-          <div className="bento-card col-span-12 lg:col-span-7 flex items-end pb-4">
-            <h2 className="hero-title text-6xl md:text-7xl lg:text-[8rem] font-bold text-white leading-none font-serif tracking-tight">
-              Portfolio<span className="text-gray-400">'</span>
-            </h2>
-          </div>
-
-          {/* Featured Video Card */}
-          <motion.div 
-            className="bento-card col-span-12 md:col-span-6 lg:col-span-4 aspect-[4/3] rounded-[2rem] overflow-hidden relative cursor-pointer group"
-            whileHover={{ scale: 1.02 }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-teal-500 via-emerald-600 to-green-700" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              {/* Decorative tropical elements */}
-              <div className="absolute inset-0 opacity-60">
-                <div className="absolute top-4 left-4 w-20 h-32 bg-pink-400/30 rounded-full blur-xl" />
-                <div className="absolute bottom-4 right-4 w-24 h-24 bg-orange-400/30 rounded-full blur-xl" />
-              </div>
-              {/* Play Button */}
-              <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-                <Play className="w-6 h-6 text-slate-800 ml-1" fill="currentColor" />
-              </div>
+            {/* Decorative text */}
+            <div className="hidden lg:block text-right">
+              <span className="text-[120px] font-bold text-white/[0.02] leading-none select-none">
+                2024
+              </span>
             </div>
-          </motion.div>
-
-          {/* Stats Cards - Right Side */}
-          <div className="col-span-12 md:col-span-6 lg:col-span-3 grid grid-rows-2 gap-4">
-            {/* Projects Card */}
-            <motion.div 
-              className="bento-card rounded-[1.5rem] p-5 flex flex-col justify-center bg-gradient-to-br from-neutral-800 to-neutral-900 border border-white/10"
-              whileHover={{ scale: 1.03 }}
-            >
-              <span className="text-4xl lg:text-5xl font-bold text-white">8+</span>
-              <span className="text-sm font-medium text-gray-400 mt-1">Projects</span>
-            </motion.div>
-            
-            {/* AI Automations Card */}
-            <motion.div 
-              className="bento-card rounded-[1.5rem] p-5 flex flex-col justify-center bg-gradient-to-br from-neutral-800 to-neutral-900 border border-white/10"
-              whileHover={{ scale: 1.03 }}
-            >
-              <span className="text-4xl lg:text-5xl font-bold text-white">AI</span>
-              <span className="text-sm font-medium text-gray-400 mt-1">Automations</span>
-            </motion.div>
           </div>
-
-          {/* Clients Card with Info */}
-          <motion.div 
-            className="bento-card col-span-12 md:col-span-6 lg:col-span-4 rounded-[1.5rem] p-5 bg-gradient-to-br from-neutral-900 to-neutral-800 backdrop-blur-xl flex flex-col justify-center border border-white/10"
-            whileHover={{ scale: 1.02 }}
-          >
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
-                <svg className="w-5 h-5 text-black" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                </svg>
-              </div>
-              <span className="text-lg font-semibold text-white">Clients</span>
-            </div>
-            <p className="text-sm text-gray-400 leading-relaxed">
-              Building digital experiences for startups and businesses worldwide. Let's create something amazing together.
-            </p>
-          </motion.div>
-
-          {/* Resume Download Card */}
-          <motion.a
-            href="/Fatima_Qureshi_Resume.pdf"
-            download
-            className="bento-card col-span-6 lg:col-span-2 rounded-[1.5rem] p-5 bg-white flex flex-col items-center justify-center cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Download className="w-8 h-8 text-black mb-2" />
-            <span className="text-sm font-medium text-black">Resume</span>
-            <span className="text-xs text-gray-600 mt-1">Download PDF</span>
-          </motion.a>
-
-          {/* Hire Me - WhatsApp */}
-          <motion.a
-            href="https://wa.me/919399723080"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bento-card col-span-6 lg:col-span-2 rounded-[1.5rem] p-5 bg-gradient-to-br from-neutral-800 to-neutral-900 border border-white/10 flex flex-col items-center justify-center cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <MessageCircle className="w-8 h-8 text-white mb-2" />
-            <span className="text-sm font-medium text-white">Hire Me</span>
-            <span className="text-xs text-gray-400 mt-1">WhatsApp</span>
-          </motion.a>
-
-          {/* MERN + React Card */}
-          <motion.div 
-            className="bento-card col-span-12 lg:col-span-3 rounded-[1.5rem] p-5 flex flex-col justify-center bg-gradient-to-br from-neutral-800 to-neutral-900 border border-white/10"
-            whileHover={{ scale: 1.03 }}
-          >
-            <span className="text-4xl lg:text-5xl font-bold text-white">MERN</span>
-            <span className="text-sm font-medium text-gray-400 mt-1">+ React Stack.</span>
-          </motion.div>
         </div>
+
+        {/* Scroll Indicator */}
+        <motion.div 
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <div className="flex flex-col items-center gap-2 text-gray-500">
+            <span className="text-xs uppercase tracking-widest">Scroll</span>
+            <ArrowDown className="w-4 h-4" />
+          </div>
+        </motion.div>
       </div>
     </section>
   );
