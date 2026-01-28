@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { motion } from 'framer-motion';
 import { Mail, Download, MessageCircle, ArrowDown } from 'lucide-react';
+import profilePhoto from '@/assets/profile-photo.jpg';
 
 export const HeroSection = () => {
   const containerRef = useRef<HTMLElement>(null);
@@ -10,32 +11,39 @@ export const HeroSection = () => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
+      // Animate profile image
+      tl.fromTo('.profile-image',
+        { scale: 0.8, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 1 },
+        0.2
+      );
+
       // Animate name letters
       tl.fromTo('.name-letter', 
         { y: 100, opacity: 0, rotateX: -90 },
         { y: 0, opacity: 1, rotateX: 0, duration: 1, stagger: 0.05 },
-        0.3
+        0.4
       );
 
       // Animate role text
       tl.fromTo('.role-text',
         { y: 40, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8 },
-        0.8
+        0.9
       );
 
       // Animate about section
       tl.fromTo('.about-content',
         { y: 60, opacity: 0 },
         { y: 0, opacity: 1, duration: 1 },
-        1
+        1.1
       );
 
       // Animate CTA buttons
       tl.fromTo('.cta-btn',
         { y: 30, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.6, stagger: 0.1 },
-        1.2
+        1.3
       );
 
       // Floating animation for decorative elements
@@ -83,29 +91,55 @@ export const HeroSection = () => {
       <div className="max-w-7xl mx-auto w-full relative z-10">
         
         {/* Main Content */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
-          {/* Left Side - Name & Title */}
+          {/* Left Side - Profile Photo & Name */}
           <div className="space-y-8">
             
+            {/* Profile Photo */}
+            <div className="profile-image relative w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto lg:mx-0">
+              {/* Decorative rings */}
+              <div className="absolute -inset-4 rounded-full border border-white/10 animate-pulse" />
+              <div className="absolute -inset-8 rounded-full border border-white/5" />
+              
+              {/* Gradient glow */}
+              <div className="absolute -inset-2 bg-gradient-to-br from-white/20 via-transparent to-white/10 rounded-full blur-xl" />
+              
+              {/* Photo container */}
+              <motion.div 
+                className="relative w-full h-full rounded-full overflow-hidden border-2 border-white/20"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+              >
+                <img 
+                  src={profilePhoto} 
+                  alt="Fatima Qureshi" 
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+              
+              {/* Status badge */}
+              <div className="absolute -bottom-2 -right-2 bg-green-500 w-6 h-6 rounded-full border-4 border-neutral-900 animate-pulse" />
+            </div>
+
             {/* Greeting */}
             <motion.p 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-gray-400 text-lg tracking-widest uppercase"
+              className="text-gray-400 text-lg tracking-widest uppercase text-center lg:text-left"
             >
               Hello, I'm
             </motion.p>
 
             {/* Name - Large Typography */}
-            <div className="space-y-2" style={{ perspective: '1000px' }}>
+            <div className="space-y-2 text-center lg:text-left" style={{ perspective: '1000px' }}>
               <h1 className="overflow-hidden">
-                <span className="flex">
+                <span className="flex justify-center lg:justify-start">
                   {firstName.split('').map((letter, i) => (
                     <span 
                       key={i} 
-                      className="name-letter inline-block text-6xl md:text-8xl lg:text-9xl font-bold text-white tracking-tight"
+                      className="name-letter inline-block text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight"
                       style={{ fontFamily: 'serif' }}
                     >
                       {letter}
@@ -114,11 +148,11 @@ export const HeroSection = () => {
                 </span>
               </h1>
               <h1 className="overflow-hidden">
-                <span className="flex">
+                <span className="flex justify-center lg:justify-start">
                   {lastName.split('').map((letter, i) => (
                     <span 
                       key={i} 
-                      className="name-letter inline-block text-6xl md:text-8xl lg:text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-600 tracking-tight"
+                      className="name-letter inline-block text-5xl md:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-600 tracking-tight"
                       style={{ fontFamily: 'serif' }}
                     >
                       {letter}
@@ -129,17 +163,17 @@ export const HeroSection = () => {
             </div>
 
             {/* Role */}
-            <div className="role-text space-y-2">
-              <p className="text-2xl md:text-3xl text-white font-light">
+            <div className="role-text space-y-2 text-center lg:text-left">
+              <p className="text-xl md:text-2xl text-white font-light">
                 Full Stack Developer
               </p>
-              <p className="text-gray-500 text-lg">
+              <p className="text-gray-500 text-base">
                 MERN Stack • AI Automation • UI/UX Design
               </p>
             </div>
 
             {/* Email */}
-            <div className="role-text flex items-center gap-3">
+            <div className="role-text flex items-center gap-3 justify-center lg:justify-start">
               <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
                 <Mail className="w-5 h-5 text-white" />
               </div>
@@ -147,7 +181,7 @@ export const HeroSection = () => {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 pt-4">
+            <div className="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start">
               <motion.a
                 href="https://wa.me/919399723080"
                 target="_blank"
@@ -212,7 +246,7 @@ export const HeroSection = () => {
             {/* Decorative text */}
             <div className="hidden lg:block text-right">
               <span className="text-[120px] font-bold text-white/[0.02] leading-none select-none">
-                2024
+                2026
               </span>
             </div>
           </div>
