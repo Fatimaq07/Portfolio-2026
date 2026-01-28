@@ -80,39 +80,6 @@ export const HeroSection = () => {
         ease: 'sine.inOut'
       });
 
-      // Moving circle animation - continuous path movement
-      gsap.to('.moving-circle', {
-        motionPath: {
-          path: [
-            { x: 0, y: 0 },
-            { x: 50, y: -30 },
-            { x: 100, y: 0 },
-            { x: 50, y: 30 },
-            { x: 0, y: 0 }
-          ],
-          curviness: 1.5
-        },
-        duration: 8,
-        repeat: -1,
-        ease: 'none'
-      });
-
-      // Circle rotation
-      gsap.to('.moving-circle', {
-        rotation: 360,
-        duration: 20,
-        repeat: -1,
-        ease: 'none'
-      });
-
-      // Inner text counter-rotation to keep text readable
-      gsap.to('.circle-text', {
-        rotation: -360,
-        duration: 20,
-        repeat: -1,
-        ease: 'none'
-      });
-
     }, containerRef);
 
     return () => ctx.revert();
@@ -327,8 +294,8 @@ export const HeroSection = () => {
                 <span className="text-xs text-muted-foreground uppercase tracking-wider">Projects</span>
               </div>
               <div>
-                <span className="block text-3xl lg:text-4xl font-bold text-foreground font-serif">2+</span>
-                <span className="text-xs text-muted-foreground uppercase tracking-wider">Years</span>
+                <span className="block text-3xl lg:text-4xl font-bold text-foreground font-serif">5+</span>
+                <span className="text-xs text-muted-foreground uppercase tracking-wider">Skills</span>
               </div>
             </div>
           </div>
@@ -366,13 +333,15 @@ export const HeroSection = () => {
           </div>
         </div>
 
-        {/* Moving Circle with 2025 Passout - Smaller size */}
-        <div className="moving-circle scatter-element absolute bottom-[15%] left-[5%] w-16 h-16 lg:w-20 lg:h-20 border border-primary/50 rounded-full flex items-center justify-center backdrop-blur-sm bg-primary/5">
-          <div className="circle-text text-center">
-            <span className="block text-sm lg:text-base font-bold text-foreground font-serif">2025</span>
-            <span className="text-[6px] lg:text-[8px] uppercase tracking-[0.1em] text-muted-foreground">Passout</span>
-          </div>
-        </div>
+        {/* Floating Badge - Available for Hire */}
+        <motion.div 
+          className="scatter-element absolute bottom-[15%] left-[5%] px-4 py-2 lg:px-5 lg:py-3 border border-primary/40 rounded-full flex items-center gap-2 backdrop-blur-sm bg-card/80"
+          animate={{ y: [0, -8, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+          <span className="text-xs lg:text-sm font-medium text-foreground">Available for Hire</span>
+        </motion.div>
         
         {/* Other decorative elements */}
         <div className="scatter-element absolute top-[30%] right-[25%] w-3 h-3 bg-primary rounded-full" />
