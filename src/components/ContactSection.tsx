@@ -107,7 +107,7 @@ export const ContactSection = () => {
     <section 
       ref={sectionRef} 
       id="contact" 
-      className="h-screen flex flex-col justify-start pt-12 md:pt-16 lg:pt-20 px-6 lg:px-12 relative overflow-hidden bg-transparent dark:bg-background"
+      className="h-screen flex flex-col justify-start pt-12 md:pt-16 lg:pt-20 px-6 lg:px-12 relative overflow-hidden"
     >
       {/* Subtle pattern */}
       <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.04]" 

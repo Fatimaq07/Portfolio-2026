@@ -86,7 +86,7 @@ export const ProjectsSection = () => {
 
   return (
     <section 
-      className="relative h-screen flex flex-col justify-center px-6 overflow-hidden cursor-none bg-transparent dark:bg-background" 
+      className="relative h-screen flex flex-col justify-center px-6 overflow-hidden cursor-none" 
       onMouseMove={handleMouseMove}
     >
       {/* Subtle pattern */}
