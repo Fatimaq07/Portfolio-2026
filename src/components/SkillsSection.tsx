@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion, AnimatePresence } from 'framer-motion';
-import skillsBg from '@/assets/skills-bg.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -212,17 +211,10 @@ export const SkillsSection = () => {
   const currentRightSkill = rightSkills[activeIndex.right];
 
   return (
-    <section ref={sectionRef} id="skills" className="relative h-screen flex flex-col justify-center overflow-hidden"
+    <section ref={sectionRef} id="skills" className="relative h-screen flex flex-col justify-center overflow-hidden bg-background"
     >
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <img 
-          src={skillsBg} 
-          alt="" 
-          className="w-full h-full object-cover opacity-60"
-        />
-        <div className="absolute inset-0 bg-background/30" />
-      </div>
+      {/* Simple Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/20" />
 
       <div className="container mx-auto px-6 lg:px-12 mb-6">
         <div className="skills-header text-center">
