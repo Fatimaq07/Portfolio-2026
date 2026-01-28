@@ -131,9 +131,7 @@ const Index = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden dark:block"
         style={{ backgroundImage: `url(${darkThemeBg})` }}
-      >
-        <div className="absolute inset-0 bg-background/40" />
-      </div>
+      />
       {/* Theme Toggle - Top Right */}
       <div className="fixed top-6 right-6 z-50">
         <ThemeToggle />
