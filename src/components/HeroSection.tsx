@@ -1,14 +1,15 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { TextPlugin } from 'gsap/TextPlugin';
 import { motion } from 'framer-motion';
-import { MessageCircle, Download, ArrowDownRight } from 'lucide-react';
+import { MessageCircle, Download, ArrowDownRight, MousePointerClick } from 'lucide-react';
 import profilePhoto from '@/assets/profile-photo.jpg';
 
 gsap.registerPlugin(TextPlugin);
 
 export const HeroSection = () => {
   const containerRef = useRef<HTMLElement>(null);
+  const [isFlipped, setIsFlipped] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -211,31 +212,91 @@ export const HeroSection = () => {
             </div>
           </div>
 
-          {/* Profile Photo - Asymmetric Position */}
+          {/* Profile Photo - Flip Card */}
           <div className="profile-editorial absolute -top-4 right-0 lg:right-[8%] w-32 h-40 md:w-48 md:h-60 lg:w-64 lg:h-80">
-            <div className="relative w-full h-full">
-              {/* Frame decoration */}
-              <div className="absolute -inset-2 border border-primary/40 rounded-sm" style={{ transform: 'rotate(3deg)' }} />
-              
-              <div className="relative w-full h-full overflow-hidden rounded-sm shadow-2xl">
-                <img 
-                  src={profilePhoto} 
-                  alt="Fatima Qureshi" 
-                  className="w-full h-full object-cover"
-                />
-                {/* Halftone overlay effect */}
-                <div className="absolute inset-0 mix-blend-overlay opacity-20" 
-                  style={{
-                    backgroundImage: 'radial-gradient(circle, hsl(var(--primary)) 1px, transparent 1px)',
-                    backgroundSize: '4px 4px'
-                  }}
-                />
-              </div>
+            {/* Click Me Arrow */}
+            <motion.div 
+              className="absolute -left-20 md:-left-24 lg:-left-28 top-1/2 -translate-y-1/2 flex items-center gap-2 cursor-pointer z-20"
+              animate={{ x: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              onClick={() => setIsFlipped(!isFlipped)}
+            >
+              <span className="text-xs md:text-sm font-medium text-primary whitespace-nowrap">Click Me!</span>
+              <MousePointerClick className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+            </motion.div>
 
-              {/* Photo label */}
-              <div className="scatter-element absolute -bottom-6 -left-4 bg-primary/10 backdrop-blur-md border border-primary/30 px-3 py-1.5 rounded-sm">
-                <span className="text-[10px] uppercase tracking-widest text-foreground/70">Est. 2023</span>
-              </div>
+            <div 
+              className="relative w-full h-full cursor-pointer"
+              style={{ perspective: '1000px' }}
+              onClick={() => setIsFlipped(!isFlipped)}
+            >
+              <motion.div
+                className="relative w-full h-full"
+                style={{ transformStyle: 'preserve-3d' }}
+                animate={{ rotateY: isFlipped ? 180 : 0 }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+              >
+                {/* Front - Profile Photo */}
+                <div 
+                  className="absolute inset-0"
+                  style={{ backfaceVisibility: 'hidden' }}
+                >
+                  {/* Frame decoration */}
+                  <div className="absolute -inset-2 border border-primary/40 rounded-sm" style={{ transform: 'rotate(3deg)' }} />
+                  
+                  <div className="relative w-full h-full overflow-hidden rounded-sm shadow-2xl">
+                    <img 
+                      src={profilePhoto} 
+                      alt="Fatima Qureshi" 
+                      className="w-full h-full object-cover"
+                    />
+                    {/* Halftone overlay effect */}
+                    <div className="absolute inset-0 mix-blend-overlay opacity-20" 
+                      style={{
+                        backgroundImage: 'radial-gradient(circle, hsl(var(--primary)) 1px, transparent 1px)',
+                        backgroundSize: '4px 4px'
+                      }}
+                    />
+                  </div>
+
+                  {/* Photo label */}
+                  <div className="scatter-element absolute -bottom-6 -left-4 bg-primary/10 backdrop-blur-md border border-primary/30 px-3 py-1.5 rounded-sm">
+                    <span className="text-[10px] uppercase tracking-widest text-foreground/70">Est. 2023</span>
+                  </div>
+                </div>
+
+                {/* Back - About Me */}
+                <div 
+                  className="absolute inset-0 bg-card border border-border rounded-sm shadow-2xl p-3 md:p-4 lg:p-5 overflow-hidden"
+                  style={{ 
+                    backfaceVisibility: 'hidden',
+                    transform: 'rotateY(180deg)'
+                  }}
+                >
+                  <div className="h-full flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-sm md:text-base lg:text-lg font-bold text-foreground mb-2 font-serif">About Me</h3>
+                      <div className="space-y-1.5 md:space-y-2">
+                        <p className="text-[9px] md:text-[10px] lg:text-xs text-muted-foreground leading-relaxed">
+                          🎓 <span className="text-foreground font-medium">BTech Graduate</span> from LNCT Group of Colleges, Bhopal (May 2025)
+                        </p>
+                        <p className="text-[9px] md:text-[10px] lg:text-xs text-muted-foreground leading-relaxed">
+                          💻 Hands-on experience in <span className="text-primary font-medium">MERN Stack</span> development
+                        </p>
+                        <p className="text-[9px] md:text-[10px] lg:text-xs text-muted-foreground leading-relaxed">
+                          🤖 Skilled in <span className="text-primary font-medium">n8n</span> workflow automation & AI integrations
+                        </p>
+                        <p className="text-[9px] md:text-[10px] lg:text-xs text-muted-foreground leading-relaxed">
+                          🚀 Passionate about building scalable web applications & AI-powered solutions
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-2 pt-2 border-t border-border/50">
+                      <p className="text-[8px] md:text-[9px] text-muted-foreground italic">Click to flip back →</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>
