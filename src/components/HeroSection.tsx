@@ -4,8 +4,7 @@ import { TextPlugin } from 'gsap/TextPlugin';
 import { motion } from 'framer-motion';
 import { MessageCircle, Download, ArrowDownRight } from 'lucide-react';
 import profilePhoto from '@/assets/profile-photo.jpg';
-import heroBg1 from '@/assets/hero-bg-1.jpg';
-import heroBg2 from '@/assets/hero-bg-2.png';
+import heroBg from '@/assets/hero-bg.png';
 
 gsap.registerPlugin(TextPlugin);
 
@@ -125,20 +124,15 @@ export const HeroSection = () => {
       id="hero" 
       className="h-screen flex items-center px-6 lg:px-16 relative overflow-hidden"
     >
-      {/* Background Images */}
+      {/* Background Image */}
       <div className="absolute inset-0">
         <img 
-          src={heroBg1} 
+          src={heroBg} 
           alt="" 
-          className="hero-bg-layer absolute inset-0 w-full h-full object-cover"
-        />
-        <img 
-          src={heroBg2} 
-          alt="" 
-          className="hero-bg-layer absolute inset-0 w-full h-full object-cover mix-blend-soft-light opacity-70"
+          className="hero-bg-layer absolute inset-0 w-full h-full object-cover opacity-80"
         />
         {/* Overlay for readability */}
-        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-background/20" />
       </div>
 
       {/* Main Content */}
