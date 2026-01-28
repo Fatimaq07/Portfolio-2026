@@ -1,270 +1,229 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Linkedin, Twitter, Github } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
+import { Phone, Mail, Linkedin, Twitter, Github } from 'lucide-react';
 
 interface SocialLink {
   name: string;
   icon: React.ComponentType<{ className?: string }>;
   href: string;
-  hoverText?: string;
-  isClickable: boolean;
+  displayText?: string;
+  position: 'left' | 'right' | 'center';
 }
 
-const socialLinks: SocialLink[] = [
+const contactItems: SocialLink[] = [
   { 
     name: 'Phone', 
     icon: Phone, 
     href: 'tel:+919399723080',
-    hoverText: '+91 9399723080',
-    isClickable: false
+    displayText: '+91 9399723080',
+    position: 'left'
   },
   { 
     name: 'Email', 
     icon: Mail, 
     href: 'mailto:qfatima504@gmail.com',
-    hoverText: 'qfatima504@gmail.com',
-    isClickable: true
+    displayText: 'qfatima504@gmail.com',
+    position: 'right'
   },
+];
+
+const socialLinks: SocialLink[] = [
   { 
     name: 'LinkedIn', 
     icon: Linkedin, 
     href: 'https://www.linkedin.com/in/fatima-qureshi-94a798230/',
-    isClickable: true
+    position: 'center'
   },
   { 
     name: 'Twitter', 
     icon: Twitter, 
     href: 'https://x.com/resilientfoxx',
-    isClickable: true
+    position: 'center'
   },
   { 
     name: 'GitHub', 
     icon: Github, 
     href: 'https://github.com/Fatimaq07',
-    isClickable: true
+    position: 'center'
   },
 ];
-
-const HexagonIcon = ({ 
-  social, 
-  index, 
-  isCenter = false 
-}: { 
-  social?: SocialLink; 
-  index: number;
-  isCenter?: boolean;
-}) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  if (isCenter) {
-    return (
-      <motion.div
-        className="hexagon-icon relative flex items-center justify-center"
-        initial={{ opacity: 0, scale: 0.8 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        <div 
-          className="w-28 h-32 md:w-36 md:h-40 flex items-center justify-center relative z-10"
-          style={{
-            background: 'linear-gradient(145deg, hsl(var(--primary)), hsl(var(--accent)))',
-            clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-          }}
-        >
-          <span className="text-3xl md:text-4xl text-primary-foreground font-bold">@</span>
-        </div>
-      </motion.div>
-    );
-  }
-
-  if (!social) return null;
-
-  const IconComponent = social.icon;
-
-  const handleClick = () => {
-    if (social.isClickable) {
-      window.open(social.href, social.href.startsWith('mailto') ? '_self' : '_blank');
-    }
-  };
-
-  return (
-    <motion.div
-      className="hexagon-icon relative flex items-center justify-center cursor-pointer group"
-      initial={{ opacity: 0, scale: 0.8 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={handleClick}
-      whileHover={{ scale: 1.1, y: -5 }}
-    >
-      <div 
-        className="w-20 h-24 md:w-24 md:h-28 flex items-center justify-center relative transition-all duration-300"
-        style={{
-          background: isHovered 
-            ? 'linear-gradient(145deg, hsl(var(--primary)), hsl(var(--accent)))' 
-            : 'linear-gradient(145deg, hsl(var(--muted)), hsl(var(--secondary)))',
-          clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-        }}
-      >
-        <IconComponent 
-          className={`w-6 h-6 md:w-8 md:h-8 transition-colors duration-300 ${
-            isHovered ? 'text-primary-foreground' : 'text-muted-foreground'
-          }`}
-        />
-        
-        {/* Connection dots */}
-        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-border" />
-        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-border" />
-      </div>
-
-      {/* Hover tooltip */}
-      {social.hoverText && isHovered && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap bg-foreground text-background px-4 py-2 rounded-lg text-sm font-medium z-20"
-        >
-          {social.hoverText}
-          <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-foreground rotate-45" />
-        </motion.div>
-      )}
-    </motion.div>
-  );
-};
 
 export const ContactSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.contact-header', {
-        y: 60,
-        opacity: 0
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+      tl.fromTo('.contact-title', {
+        y: 80,
+        opacity: 0,
+        clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)'
       }, {
         y: 0,
         opacity: 1,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 70%',
-          toggleActions: 'play none none reverse',
-        }
-      });
+        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+        duration: 1
+      }, 0.2);
 
-      gsap.fromTo('.hexagon-grid', {
+      tl.fromTo('.contact-subtitle', {
         y: 40,
         opacity: 0
       }, {
         y: 0,
         opacity: 1,
+        duration: 0.8
+      }, 0.5);
+
+      tl.fromTo('.contact-card', {
+        y: 60,
+        opacity: 0,
+        scale: 0.9
+      }, {
+        y: 0,
+        opacity: 1,
+        scale: 1,
         duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.hexagon-grid',
-          start: 'top 75%',
-          toggleActions: 'play none none reverse',
-        }
-      });
+        stagger: 0.15
+      }, 0.6);
+
+      tl.fromTo('.social-icon', {
+        y: 30,
+        opacity: 0
+      }, {
+        y: 0,
+        opacity: 1,
+        duration: 0.5,
+        stagger: 0.1
+      }, 1.0);
+
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} id="contact" className="relative min-h-screen py-32 lg:py-48 overflow-hidden bg-background"
+    <section 
+      ref={sectionRef} 
+      id="contact" 
+      className="h-screen flex flex-col justify-start pt-12 md:pt-16 lg:pt-20 px-6 lg:px-12 relative overflow-hidden bg-background"
     >
       {/* Subtle pattern */}
-      <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]" 
+      <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.04]" 
         style={{
           backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--muted-foreground)) 1px, transparent 0)',
-          backgroundSize: '40px 40px'
+          backgroundSize: '50px 50px'
         }}
       />
 
-      <div className="container mx-auto px-6 lg:px-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="contact-header text-center mb-20">
-            <motion.h2 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight font-serif mb-4"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
+      <div className="w-full max-w-5xl mx-auto relative z-10 flex-1 flex flex-col">
+        
+        {/* Header */}
+        <div className="text-center mb-8 lg:mb-12">
+          <div className="overflow-hidden">
+            <h2 className="contact-title text-4xl md:text-5xl lg:text-7xl font-bold text-foreground tracking-tight font-serif">
               Let's Connect<span className="text-primary">.</span>
-            </motion.h2>
-            <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-              Have a project in mind? I'd love to collaborate with you.
-            </p>
+            </h2>
           </div>
-
-          {/* Hexagon Grid */}
-          <div className="hexagon-grid flex flex-col items-center gap-4 md:gap-6">
-            {/* Top row - 2 hexagons */}
-            <div className="flex gap-4 md:gap-6">
-              <HexagonIcon social={socialLinks[0]} index={0} />
-              <HexagonIcon social={socialLinks[1]} index={1} />
-            </div>
-            
-            {/* Middle row - center icon + 2 side icons */}
-            <div className="flex items-center gap-4 md:gap-6 -mt-4">
-              <HexagonIcon social={socialLinks[2]} index={2} />
-              <HexagonIcon index={0} isCenter />
-              <HexagonIcon social={socialLinks[3]} index={3} />
-            </div>
-            
-            {/* Bottom row - 2 hexagons */}
-            <div className="flex gap-4 md:gap-6 -mt-4">
-              <HexagonIcon social={socialLinks[4]} index={4} />
-              {/* Empty hexagon for symmetry */}
-              <div 
-                className="w-20 h-24 md:w-24 md:h-28 flex items-center justify-center opacity-30"
-                style={{
-                  background: 'linear-gradient(145deg, hsl(var(--muted)), hsl(var(--secondary)))',
-                  clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Subtitle */}
-          <motion.p
-            className="text-center text-lg md:text-xl text-muted-foreground mt-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-          >
-            Verifying connections
-          </motion.p>
+          <p className="contact-subtitle text-base lg:text-lg text-muted-foreground mt-3 lg:mt-4 max-w-md mx-auto">
+            Have a project in mind? I'd love to collaborate with you.
+          </p>
         </div>
-      </div>
 
-      {/* Marquee Footer */}
-      <div className="mt-32 overflow-hidden border-t border-border pt-8">
-        <motion.div
-          className="flex whitespace-nowrap"
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{
-            duration: 20,
-            ease: 'linear',
-            repeat: Infinity,
-          }}
+        {/* Contact Cards - Phone Left, Email Right */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 mb-8 lg:mb-12">
+          {contactItems.map((item) => {
+            const IconComponent = item.icon;
+            return (
+              <motion.a
+                key={item.name}
+                href={item.href}
+                target={item.href.startsWith('tel') ? '_self' : '_self'}
+                className="contact-card group relative bg-card/70 backdrop-blur-sm border border-border rounded-2xl p-5 lg:p-6 flex items-center gap-4 hover:border-primary/50 transition-all duration-300"
+                whileHover={{ scale: 1.02, y: -4 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <IconComponent className="w-5 h-5 lg:w-6 lg:h-6 text-primary" />
+                </div>
+                <div>
+                  <span className="text-xs uppercase tracking-widest text-muted-foreground">{item.name}</span>
+                  <p className="text-base lg:text-lg font-medium text-foreground group-hover:text-primary transition-colors">
+                    {item.displayText}
+                  </p>
+                </div>
+                
+                {/* Arrow indicator */}
+                <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-primary text-xl">→</span>
+                </div>
+              </motion.a>
+            );
+          })}
+        </div>
+
+        {/* Social Links */}
+        <div className="flex justify-center gap-3 lg:gap-4 mb-8 lg:mb-10">
+          {socialLinks.map((social) => {
+            const IconComponent = social.icon;
+            return (
+              <motion.a
+                key={social.name}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-icon w-12 h-12 lg:w-14 lg:h-14 rounded-xl border border-border flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all duration-300 group"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label={social.name}
+              >
+                <IconComponent className="w-5 h-5 lg:w-6 lg:h-6 text-foreground group-hover:text-primary-foreground transition-colors" />
+              </motion.a>
+            );
+          })}
+        </div>
+
+        {/* CTA Card */}
+        <motion.div 
+          className="contact-card bg-gradient-to-br from-primary/10 via-card to-accent/10 border border-border rounded-2xl p-6 lg:p-8 text-center max-w-lg mx-auto"
+          whileHover={{ scale: 1.01 }}
         >
-          {[...Array(4)].map((_, i) => (
-            <span key={i} className="text-6xl lg:text-8xl font-bold text-muted/50 mx-8">
-              Available for Projects • Let's Collaborate • 
-            </span>
-          ))}
+          <h3 className="text-xl lg:text-2xl font-bold text-foreground font-serif mb-2 lg:mb-3">
+            Ready to start a project?
+          </h3>
+          <p className="text-muted-foreground text-sm lg:text-base mb-4 lg:mb-6">
+            Let's create something amazing together.
+          </p>
+          <motion.a
+            href="mailto:qfatima504@gmail.com"
+            className="inline-flex items-center gap-2 px-6 lg:px-8 py-3 lg:py-4 bg-foreground text-background rounded-full font-medium hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Mail className="w-4 h-4 lg:w-5 lg:h-5" />
+            Send an Email
+          </motion.a>
         </motion.div>
+
+        {/* Bottom Marquee */}
+        <div className="mt-auto pb-4 overflow-hidden">
+          <motion.div
+            className="flex whitespace-nowrap"
+            animate={{ x: ['0%', '-50%'] }}
+            transition={{
+              duration: 25,
+              ease: 'linear',
+              repeat: Infinity,
+            }}
+          >
+            {[...Array(4)].map((_, i) => (
+              <span key={i} className="text-3xl md:text-4xl lg:text-5xl font-bold text-muted/30 mx-6 lg:mx-8 font-serif">
+                Available for Projects • Let's Collaborate • 
+              </span>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );
