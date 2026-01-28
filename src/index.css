@@ -4,59 +4,62 @@
 
 @layer base {
   :root {
-    /* Baby Pink - Light Theme */
-    --background: 350 100% 98%;
-    --foreground: 350 30% 15%;
+    /* Lavender & Cream - Light Theme */
+    --background: 260 30% 97%;
+    --foreground: 260 25% 20%;
 
-    --card: 350 80% 97%;
-    --card-foreground: 350 30% 15%;
+    --card: 260 25% 96%;
+    --card-foreground: 260 25% 20%;
 
-    --popover: 350 100% 99%;
-    --popover-foreground: 350 30% 15%;
+    --popover: 260 30% 98%;
+    --popover-foreground: 260 25% 20%;
 
-    /* Baby Pink accent */
-    --primary: 350 80% 65%;
+    /* Lavender accent */
+    --primary: 260 50% 60%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 350 70% 75%;
+    --primary-glow: 260 45% 70%;
 
-    --secondary: 350 50% 94%;
-    --secondary-foreground: 350 30% 20%;
+    --secondary: 260 25% 94%;
+    --secondary-foreground: 260 25% 25%;
 
-    --muted: 350 40% 92%;
-    --muted-foreground: 350 20% 40%;
+    --muted: 260 20% 92%;
+    --muted-foreground: 260 20% 45%;
 
-    --accent: 350 60% 70%;
+    --accent: 260 45% 65%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 350 40% 88%;
-    --input: 350 50% 94%;
-    --ring: 350 80% 65%;
+    --border: 260 20% 88%;
+    --input: 260 25% 94%;
+    --ring: 260 50% 60%;
 
     --radius: 0.75rem;
 
     /* Custom tokens */
-    --gradient-hero: linear-gradient(180deg, hsl(350 100% 98%) 0%, hsl(350 60% 95%) 100%);
-    --gradient-primary: linear-gradient(135deg, hsl(350 80% 65%), hsl(340 70% 70%));
-    --gradient-card: linear-gradient(145deg, hsl(350 80% 98%), hsl(350 50% 96%));
+    --gradient-hero: linear-gradient(180deg, hsl(260 30% 97%) 0%, hsl(260 25% 94%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(260 50% 60%), hsl(280 45% 65%));
+    --gradient-card: linear-gradient(145deg, hsl(260 25% 98%), hsl(260 20% 95%));
     
-    --shadow-glow: 0 0 60px hsl(350 80% 65% / 0.15);
-    --shadow-card: 0 10px 40px -10px hsl(350 50% 50% / 0.1);
-    --shadow-elevated: 0 25px 60px -15px hsl(350 50% 40% / 0.15);
+    --shadow-glow: 0 0 60px hsl(260 50% 60% / 0.15);
+    --shadow-card: 0 10px 40px -10px hsl(260 35% 50% / 0.1);
+    --shadow-elevated: 0 25px 60px -15px hsl(260 35% 40% / 0.15);
     
     --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     --transition-bounce: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-    --sidebar-background: 350 80% 97%;
-    --sidebar-foreground: 350 30% 15%;
-    --sidebar-primary: 350 80% 65%;
+    --sidebar-background: 260 25% 97%;
+    --sidebar-foreground: 260 25% 20%;
+    --sidebar-primary: 260 50% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 350 50% 95%;
-    --sidebar-accent-foreground: 350 30% 20%;
-    --sidebar-border: 350 40% 90%;
-    --sidebar-ring: 350 80% 65%;
+    --sidebar-accent: 260 25% 95%;
+    --sidebar-accent-foreground: 260 25% 25%;
+    --sidebar-border: 260 20% 90%;
+    --sidebar-ring: 260 50% 60%;
+
+    /* Light theme background image */
+    --theme-bg-image: url('@/assets/light-theme-bg.jpg');
   }
 
   .dark {
