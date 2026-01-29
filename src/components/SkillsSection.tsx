@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion, AnimatePresence } from 'framer-motion';
+import skillsLightBg from '@/assets/skills-light-bg.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -302,8 +303,13 @@ export const SkillsSection = () => {
   return (
     <section ref={sectionRef} id="skills" className="relative h-screen flex flex-col justify-center overflow-hidden"
     >
-      {/* Simple Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-muted/10" />
+      {/* Light theme background image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat dark:hidden"
+        style={{ backgroundImage: `url(${skillsLightBg})` }}
+      />
+      {/* Optional subtle overlay for text contrast */}
+      <div className="absolute inset-0 bg-background/30 dark:hidden" />
 
       <div className="container mx-auto px-6 lg:px-12 mb-6">
         <div className="skills-header text-center">
